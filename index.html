@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jobs & Workplaces — ESOL English Learning</title>
+<style>
+  :root {
+    --blue: #2563eb;
+    --blue-light: #dbeafe;
+    --green: #16a34a;
+    --green-light: #dcfce7;
+    --orange: #ea580c;
+    --orange-light: #ffedd5;
+    --purple: #7c3aed;
+    --purple-light: #ede9fe;
+    --pink: #db2777;
+    --pink-light: #fce7f3;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --red: #dc2626;
+    --red-light: #fee2e2;
+    --yellow: #ca8a04;
+    --yellow-light: #fef9c3;
+    --gray: #6b7280;
+    --gray-light: #f3f4f6;
+    --white: #ffffff;
+    --text: #1f2937;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f0f4ff;
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+    color: white;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.2);
+    position: sticky; top: 0; z-index: 100;
+  }
+  header h1 { font-size: 1.4rem; font-weight: 700; }
+  header p { font-size: 0.85rem; opacity: .85; }
+  .header-icon { font-size: 2rem; }
+
+  /* ── Navigation ── */
+  nav {
+    background: white;
+    border-bottom: 2px solid #e5e7eb;
+    padding: 0 16px;
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+  }
+  nav button {
+    border: none;
+    background: none;
+    padding: 14px 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--gray);
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: all .2s;
+    scroll-snap-align: start;
+  }
+  nav button.active { color: var(--blue); border-bottom-color: var(--blue); }
+  nav button:hover:not(.active) { color: var(--text); background: var(--gray-light); }
+
+  /* ── Main container ── */
+  main { max-width: 900px; margin: 0 auto; padding: 24px 16px; }
+
+  /* ── Section pages ── */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── Section headings ── */
+  .section-title {
+    font-size: 1.6rem; font-weight: 800; margin-bottom: 6px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-subtitle { color: var(--gray); font-size: 0.95rem; margin-bottom: 24px; }
+
+  /* ── Cards grid ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  /* ── Vocabulary card ── */
+  .vocab-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px 12px;
+    text-align: center;
+    cursor: pointer;
+    border: 3px solid transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    transition: all .25s;
+    position: relative;
+  }
+  .vocab-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.14); }
+  .vocab-card.selected { border-color: var(--blue); background: var(--blue-light); }
+  .vocab-card .emoji { font-size: 3rem; display: block; margin-bottom: 8px; }
+  .vocab-card .word { font-size: 1.05rem; font-weight: 700; }
+  .vocab-card .place { font-size: 0.78rem; color: var(--gray); margin-top: 4px; }
+  .vocab-card .speak-btn {
+    position: absolute; top: 8px; right: 8px;
+    background: var(--blue-light); border: none; border-radius: 50%;
+    width: 28px; height: 28px; cursor: pointer; font-size: .85rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: background .2s;
+  }
+  .vocab-card .speak-btn:hover { background: var(--blue); color: white; }
+
+  /* ── Flashcard ── */
+  .flashcard-container { perspective: 1000px; max-width: 400px; margin: 0 auto 24px; }
+  .flashcard {
+    width: 100%; height: 280px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .6s;
+    cursor: pointer;
+  }
+  .flashcard.flipped { transform: rotateY(180deg); }
+  .flashcard-front, .flashcard-back {
+    position: absolute; inset: 0;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.12);
+  }
+  .flashcard-front {
+    background: linear-gradient(135deg, #1e40af, #7c3aed);
+    color: white;
+  }
+  .flashcard-back {
+    background: white;
+    transform: rotateY(180deg);
+    border: 3px solid var(--blue-light);
+  }
+  .flashcard-front .big-emoji { font-size: 5rem; margin-bottom: 12px; }
+  .flashcard-front .fc-word { font-size: 2rem; font-weight: 800; }
+  .flashcard-front .hint { font-size: .85rem; opacity: .8; margin-top: 8px; }
+  .flashcard-back .fc-def { font-size: 1rem; line-height: 1.6; text-align: center; color: var(--text); }
+  .flashcard-back .fc-example { font-size: .95rem; color: var(--blue); font-style: italic; margin-top: 12px; font-weight: 600; }
+  .flashcard-back .fc-place { margin-top: 8px; font-size: .85rem; color: var(--gray); }
+
+  .fc-controls { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .fc-counter { text-align: center; font-size: .9rem; color: var(--gray); margin-bottom: 12px; }
+
+  /* ── Buttons ── */
+  .btn {
+    padding: 12px 24px; border-radius: 10px; border: none;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer;
+    transition: all .2s; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary { background: var(--blue); color: white; }
+  .btn-primary:hover { background: #1d4ed8; transform: translateY(-1px); }
+  .btn-success { background: var(--green); color: white; }
+  .btn-success:hover { background: #15803d; }
+  .btn-outline {
+    background: white; color: var(--blue);
+    border: 2px solid var(--blue);
+  }
+  .btn-outline:hover { background: var(--blue-light); }
+  .btn-sm { padding: 8px 16px; font-size: .85rem; border-radius: 8px; }
+  .btn-speak { background: var(--teal-light); color: var(--teal); border: 2px solid var(--teal); }
+  .btn-speak:hover { background: var(--teal); color: white; }
+
+  /* ── Phrase cards ── */
+  .phrase-card {
+    background: white;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+    border-left: 5px solid var(--blue);
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .phrase-card.green { border-left-color: var(--green); }
+  .phrase-card.orange { border-left-color: var(--orange); }
+  .phrase-card.purple { border-left-color: var(--purple); }
+  .phrase-text { flex: 1; }
+  .phrase-english { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+  .phrase-use { font-size: .85rem; color: var(--gray); font-style: italic; }
+
+  /* ── Conversation ── */
+  .convo-card {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  }
+  .convo-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; color: var(--purple); }
+  .bubble-wrap { margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px; }
+  .bubble {
+    display: flex; gap: 10px; align-items: flex-start;
+  }
+  .bubble.right { flex-direction: row-reverse; }
+  .bubble-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; flex-shrink: 0;
+    background: var(--blue-light);
+  }
+  .bubble.right .bubble-avatar { background: var(--green-light); }
+  .bubble-text {
+    max-width: 75%;
+    padding: 10px 14px;
+    border-radius: 16px;
+    font-size: .95rem;
+    line-height: 1.5;
+    background: var(--blue-light);
+    color: var(--text);
+    border-bottom-left-radius: 4px;
+  }
+  .bubble.right .bubble-text {
+    background: var(--green-light);
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 4px;
+  }
+  .bubble-name { font-size: .72rem; color: var(--gray); margin-bottom: 2px; font-weight: 600; }
+  .bubble.right .bubble-name { text-align: right; }
+  .convo-speak { margin-top: 12px; }
+
+  /* ── Matching game ── */
+  .match-area { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .match-col { display: flex; flex-direction: column; gap: 10px; }
+  .match-col h3 { font-size: .9rem; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .match-item {
+    background: white;
+    border: 3px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    display: flex; align-items: center; gap: 8px;
+    user-select: none;
+  }
+  .match-item:hover { border-color: var(--blue); background: var(--blue-light); }
+  .match-item.selected { border-color: var(--blue); background: var(--blue-light); transform: scale(1.02); }
+  .match-item.matched-correct { border-color: var(--green); background: var(--green-light); cursor: default; }
+  .match-item.matched-wrong { border-color: var(--red); background: var(--red-light); animation: shake .3s; }
+  @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+  /* ── Sentence builder ── */
+  .sentence-display {
+    min-height: 60px;
+    background: white;
+    border: 3px dashed var(--blue);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--blue);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .word-chip {
+    background: var(--blue-light);
+    border: 2px solid var(--blue);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    user-select: none;
+  }
+  .word-chip:hover { background: var(--blue); color: white; }
+  .word-bank { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+  .word-bank .word-chip { background: white; border-color: #d1d5db; color: var(--text); }
+  .word-bank .word-chip:hover { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+  .word-bank .word-chip.used { opacity: .35; cursor: not-allowed; pointer-events: none; }
+
+  /* ── Fill in blanks ── */
+  .fill-sentence {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    line-height: 2;
+  }
+  .fill-input {
+    display: inline-block;
+    border: none;
+    border-bottom: 3px solid var(--blue);
+    background: transparent;
+    font-size: 1.1rem;
+    font-weight: 700;
+    width: 120px;
+    text-align: center;
+    color: var(--blue);
+    outline: none;
+    padding: 0 4px;
+  }
+  .fill-input.correct { border-color: var(--green); color: var(--green); }
+  .fill-input.wrong { border-color: var(--red); color: var(--red); }
+
+  /* ── Quiz ── */
+  .quiz-question {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.08);
+  }
+  .quiz-q-text { font-size: 1.15rem; font-weight: 700; margin-bottom: 6px; }
+  .quiz-q-emoji { font-size: 3rem; margin-bottom: 12px; }
+  .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+  .quiz-option {
+    background: var(--gray-light);
+    border: 3px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: .95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    text-align: center;
+  }
+  .quiz-option:hover:not(.answered) { border-color: var(--blue); background: var(--blue-light); }
+  .quiz-option.correct { border-color: var(--green); background: var(--green-light); color: var(--green); }
+  .quiz-option.wrong { border-color: var(--red); background: var(--red-light); color: var(--red); }
+  .quiz-feedback { margin-top: 10px; font-weight: 700; font-size: .95rem; display: none; }
+  .quiz-feedback.show { display: block; }
+  .quiz-feedback.good { color: var(--green); }
+  .quiz-feedback.bad { color: var(--red); }
+
+  /* ── Score bar ── */
+  .score-bar {
+    background: white;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
+  }
+  .score-star { font-size: 1.6rem; }
+  .score-text { font-size: 1rem; font-weight: 700; }
+  .score-sub { font-size: .8rem; color: var(--gray); }
+  .progress-bar { flex: 1; height: 10px; background: #e5e7eb; border-radius: 5px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--blue), var(--purple)); border-radius: 5px; transition: width .4s; }
+
+  /* ── Home page ── */
+  .home-banner {
+    background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%);
+    color: white;
+    border-radius: 20px;
+    padding: 32px 28px;
+    margin-bottom: 28px;
+    text-align: center;
+  }
+  .home-banner .banner-emoji { font-size: 4rem; margin-bottom: 12px; }
+  .home-banner h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; }
+  .home-banner p { opacity: .9; font-size: 1rem; line-height: 1.6; }
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+  }
+  .module-card {
+    background: white;
+    border-radius: 16px;
+    padding: 22px 18px;
+    cursor: pointer;
+    border: 3px solid transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    transition: all .25s;
+    text-align: center;
+  }
+  .module-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.14); border-color: var(--blue); }
+  .module-card .mod-emoji { font-size: 2.4rem; margin-bottom: 10px; }
+  .module-card .mod-title { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+  .module-card .mod-desc { font-size: .8rem; color: var(--gray); }
+  .module-card .mod-badge {
+    display: inline-block; margin-top: 8px;
+    padding: 3px 10px; border-radius: 20px;
+    font-size: .72rem; font-weight: 700;
+  }
+
+  /* ── Tip box ── */
+  .tip-box {
+    background: var(--yellow-light);
+    border: 2px solid #fde047;
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    font-size: .9rem;
+    line-height: 1.6;
+  }
+  .tip-box strong { color: var(--yellow); }
+
+  /* ── Result box ── */
+  .result-box {
+    background: white;
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,.1);
+    margin-top: 20px;
+  }
+  .result-emoji { font-size: 4rem; margin-bottom: 12px; }
+  .result-score { font-size: 2rem; font-weight: 800; color: var(--blue); }
+  .result-message { font-size: 1rem; color: var(--gray); margin-top: 8px; }
+
+  /* ── Tag pills ── */
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: .75rem; font-weight: 700; margin-right: 4px; }
+  .tag-blue { background: var(--blue-light); color: var(--blue); }
+  .tag-green { background: var(--green-light); color: var(--green); }
+  .tag-orange { background: var(--orange-light); color: var(--orange); }
+  .tag-purple { background: var(--purple-light); color: var(--purple); }
+
+  /* ── Writing practice ── */
+  .write-box {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.07);
+  }
+  .write-prompt { font-size: 1rem; font-weight: 700; margin-bottom: 10px; color: var(--purple); }
+  .write-area {
+    width: 100%;
+    border: 2px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: .95rem;
+    font-family: inherit;
+    resize: vertical;
+    min-height: 80px;
+    outline: none;
+    transition: border-color .2s;
+  }
+  .write-area:focus { border-color: var(--blue); }
+  .write-example { margin-top: 10px; font-size: .85rem; color: var(--gray); }
+  .write-example strong { color: var(--green); }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    .match-area { grid-template-columns: 1fr; }
+    .quiz-options { grid-template-columns: 1fr; }
+    .cards-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+    .module-grid { grid-template-columns: 1fr 1fr; }
+    header h1 { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-icon">🏢</div>
+  <div>
+    <h1>Jobs &amp; Workplaces</h1>
+    <p>ESOL English Learning — Beginner Level</p>
+  </div>
+</header>
+
+<nav id="mainNav">
+  <button class="active" onclick="showPage('home', this)">🏠 Home</button>
+  <button onclick="showPage('vocabulary', this)">📚 Vocabulary</button>
+  <button onclick="showPage('flashcards', this)">🃏 Flashcards</button>
+  <button onclick="showPage('phrases', this)">💬 Phrases</button>
+  <button onclick="showPage('conversations', this)">🗣️ Conversations</button>
+  <button onclick="showPage('matching', this)">🔗 Matching</button>
+  <button onclick="showPage('sentences', this)">✏️ Sentences</button>
+  <button onclick="showPage('writing', this)">📝 Writing</button>
+  <button onclick="showPage('quiz', this)">🏆 Quiz</button>
+</nav>
+
+<main>
+
+<!-- ══════════════ HOME ══════════════ -->
+<section class="page active" id="page-home">
+  <div class="home-banner">
+    <div class="banner-emoji">👷‍♀️👨‍⚕️👩‍🏫👨‍🍳</div>
+    <h2>Learn About Jobs!</h2>
+    <p>Learn words, phrases, and conversations about jobs and workplaces.<br>
+       Practise reading, listening, writing, and speaking!</p>
+  </div>
+
+  <div class="module-grid">
+    <div class="module-card" onclick="showPage('vocabulary', document.querySelectorAll('nav button')[1])">
+      <div class="mod-emoji">📚</div>
+      <div class="mod-title">Vocabulary</div>
+      <div class="mod-desc">Learn 20 job words with pictures</div>
+      <span class="mod-badge tag-blue">20 words</span>
+    </div>
+    <div class="module-card" onclick="showPage('flashcards', document.querySelectorAll('nav button')[2])">
+      <div class="mod-emoji">🃏</div>
+      <div class="mod-title">Flashcards</div>
+      <div class="mod-desc">Flip cards to learn and remember</div>
+      <span class="mod-badge tag-purple">Study</span>
+    </div>
+    <div class="module-card" onclick="showPage('phrases', document.querySelectorAll('nav button')[3])">
+      <div class="mod-emoji">💬</div>
+      <div class="mod-title">Key Phrases</div>
+      <div class="mod-desc">Common sentences about jobs</div>
+      <span class="mod-badge tag-green">Speaking</span>
+    </div>
+    <div class="module-card" onclick="showPage('conversations', document.querySelectorAll('nav button')[4])">
+      <div class="mod-emoji">🗣️</div>
+      <div class="mod-title">Conversations</div>
+      <div class="mod-desc">Real dialogues to read and listen</div>
+      <span class="mod-badge tag-orange">Listening</span>
+    </div>
+    <div class="module-card" onclick="showPage('matching', document.querySelectorAll('nav button')[5])">
+      <div class="mod-emoji">🔗</div>
+      <div class="mod-title">Matching</div>
+      <div class="mod-desc">Match jobs to their workplaces</div>
+      <span class="mod-badge tag-blue">Game</span>
+    </div>
+    <div class="module-card" onclick="showPage('sentences', document.querySelectorAll('nav button')[6])">
+      <div class="mod-emoji">✏️</div>
+      <div class="mod-title">Build Sentences</div>
+      <div class="mod-desc">Put words in the right order</div>
+      <span class="mod-badge tag-purple">Grammar</span>
+    </div>
+    <div class="module-card" onclick="showPage('writing', document.querySelectorAll('nav button')[7])">
+      <div class="mod-emoji">📝</div>
+      <div class="mod-title">Writing</div>
+      <div class="mod-desc">Write sentences about jobs</div>
+      <span class="mod-badge tag-green">Writing</span>
+    </div>
+    <div class="module-card" onclick="showPage('quiz', document.querySelectorAll('nav button')[8])">
+      <div class="mod-emoji">🏆</div>
+      <div class="mod-title">Quiz</div>
+      <div class="mod-desc">Test what you know!</div>
+      <span class="mod-badge tag-orange">Test</span>
+    </div>
+  </div>
+
+  <div class="tip-box" style="margin-top: 24px;">
+    <strong>💡 Tip:</strong> Press the 🔊 speaker button to <strong>hear</strong> any word or phrase read aloud.
+    Start with <strong>Vocabulary</strong>, then try <strong>Flashcards</strong>.
+    Finish with the <strong>Quiz</strong>!
+  </div>
+</section>
+
+<!-- ══════════════ VOCABULARY ══════════════ -->
+<section class="page" id="page-vocabulary">
+  <div class="section-title">📚 Jobs Vocabulary</div>
+  <div class="section-subtitle">Click 🔊 to hear the word. Click a card to see information.</div>
+
+  <div class="tip-box">
+    <strong>🔤 How to study:</strong> Look at the picture. Say the word. Listen to the pronunciation. Read where the person works.
+  </div>
+
+  <div class="cards-grid" id="vocabGrid"></div>
+
+  <div id="vocabDetail" style="display:none; background:white; border-radius:16px; padding:24px; box-shadow:0 4px 20px rgba(0,0,0,.12); margin-bottom:20px;">
+    <div style="display:flex; align-items:center; gap:16px; margin-bottom:16px;">
+      <span id="vdEmoji" style="font-size:3.5rem;"></span>
+      <div>
+        <div id="vdWord" style="font-size:1.6rem; font-weight:800;"></div>
+        <div id="vdPlace" style="color:var(--gray); font-size:.9rem;"></div>
+      </div>
+      <button class="btn btn-speak btn-sm" onclick="speakText(currentVocab.word)">🔊 Hear it</button>
+    </div>
+    <div style="margin-bottom:12px;">
+      <span class="tag tag-blue">What they do:</span>
+      <span id="vdDesc" style="font-size:.95rem; margin-left:6px;"></span>
+    </div>
+    <div style="margin-bottom:12px;">
+      <span class="tag tag-green">Example:</span>
+      <em id="vdExample" style="font-size:.95rem; color:var(--blue); margin-left:6px;"></em>
+      <button class="btn btn-speak btn-sm" onclick="speakText(document.getElementById('vdExample').textContent)" style="margin-left:8px;">🔊</button>
+    </div>
+    <div>
+      <span class="tag tag-orange">Question:</span>
+      <em id="vdQuestion" style="font-size:.95rem; margin-left:6px;"></em>
+      <button class="btn btn-speak btn-sm" onclick="speakText(document.getElementById('vdQuestion').textContent)" style="margin-left:8px;">🔊</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FLASHCARDS ══════════════ -->
+<section class="page" id="page-flashcards">
+  <div class="section-title">🃏 Flashcards</div>
+  <div class="section-subtitle">Click the card to see the meaning. Use the arrows to go through all jobs.</div>
+
+  <div class="fc-counter"><span id="fcCurrent">1</span> of <span id="fcTotal">20</span></div>
+
+  <div class="flashcard-container">
+    <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <div class="flashcard-front">
+        <span class="big-emoji" id="fcEmoji">👨‍⚕️</span>
+        <div class="fc-word" id="fcWord">Doctor</div>
+        <div class="hint">👆 Click to see meaning</div>
+      </div>
+      <div class="flashcard-back">
+        <div class="fc-def" id="fcDef"></div>
+        <div class="fc-example" id="fcExample"></div>
+        <div class="fc-place" id="fcPlace"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="fc-controls">
+    <button class="btn btn-outline" onclick="fcMove(-1)">◀ Previous</button>
+    <button class="btn btn-speak" onclick="speakCard()">🔊 Listen</button>
+    <button class="btn btn-primary" onclick="fcMove(1)">Next ▶</button>
+  </div>
+
+  <div style="margin-top:20px; text-align:center;">
+    <button class="btn btn-outline btn-sm" onclick="shuffleFlashcards()">🔀 Shuffle Cards</button>
+  </div>
+</section>
+
+<!-- ══════════════ PHRASES ══════════════ -->
+<section class="page" id="page-phrases">
+  <div class="section-title">💬 Key Phrases</div>
+  <div class="section-subtitle">Important phrases to talk about jobs. Click 🔊 to hear them.</div>
+
+  <div style="margin-bottom: 28px;">
+    <div style="font-size:1rem; font-weight:700; color:var(--blue); margin-bottom:12px;">
+      🔵 Saying what job you have
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-text">
+        <div class="phrase-english">I am a doctor.</div>
+        <div class="phrase-use">Use this to say YOUR job.</div>
+      </div>
+      <button class="btn btn-speak btn-sm" onclick="speakText('I am a doctor.')">🔊</button>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-text">
+        <div class="phrase-english">She is a teacher. / He is a teacher.</div>
+        <div class="phrase-use">Use this to say someone else's job.</div>
+      </div>
+      <button class="btn btn-speak btn-sm" onclick="speakText('She is a teacher. He is a teacher.')">🔊</button>
+    </div>
+    <div class="phrase-card">
+      <div class="phrase-text">
+        <div class="phrase-english">I am not a doctor. I am a nurse.</div>
+        <div class="phrase-use">Use this to correct a mistake.</div>
+      </div>
+      <button class="btn btn-speak btn-sm" onclick="speakText('I am not a doctor. I am a nurse.')">🔊</button>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 28px;">
+    <div style="font-size:1rem; font-weight:700; color:var(--green); margin-bottom:12px;">
+      🟢 Saying where you work
+    </div>
+    <div class="phrase-card green">
+      <div class="phrase-text">
+        <div class="phrase-english">I work at a hospital.</div>
+        <div class="phrase-use">Use <em>at</em> for a building or place.</div>
+      </div>
+      <button class="btn btn-speak btn-sm" onclick="speakText('I work at a hospital.')">🔊</button>
+    </div>
+    <div class="phrase-card green">
+      <div class="phrase-text">
+        <div class="phrase-english">She works at a school.</div>
+        <div class="phrase-use">Add <em>s</em> to work when saying he/she/it.</div>
+      </div>
+      <button class="btn btn-speak btn-sm" onclick="speakText('She works at a school.')">🔊</button>
+    </div>
+    <div class="phrase-card green">
+      <div class="phrase-text">
+        <div class="phrase-english">He works in an office.</div>
+        <div class="phrase-use">Use <em>in</em> for rooms or open spaces inside.</div>
+      </div>
+      <button class="btn btn-speak btn-sm" onclick="speakText('He works in an office.')">🔊</button>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 28px;">
+    <div style="font-size:1rem; font-weight:700; color:var(--orange); margin-bottom:12px;">
+      🟠 Asking about jobs (Questions)
+    </div>
+    <div class="phrase-card orange">
+      <div class="phrase-text">
+        <div class="phrase-english">"What do you do?" → "I am a chef."</div>
+        <div class="phrase-use">Ask someone about their job.</div>
+      </div>
+      <button class="btn btn-speak btn-sm" onclick="speakText('What do you do? I am a chef.')">🔊</button>
+    </div>
+    <div class="phrase-card orange">
+      <div class="phrase-text">
+        <div class="phrase-english">"Where do you work?" → "I work at a restaurant."</div>
+        <div class="phrase-use">Ask someone where they work.</div>
+      </div>
+      <button class="btn btn-speak btn-sm" onclick="speakText('Where do you work? I work at a restaurant.')">🔊</button>
+    </div>
+    <div class="phrase-card orange">
+      <div class="phrase-text">
+        <div class="phrase-english">"Do you like your job?" → "Yes, I like my job."</div>
+        <div class="phrase-use">Ask if someone enjoys their work.</div>
+      </div>
+      <button class="btn btn-speak btn-sm" onclick="speakText('Do you like your job? Yes, I like my job.')">🔊</button>
+    </div>
+    <div class="phrase-card orange">
+      <div class="phrase-text">
+        <div class="phrase-english">"What time do you start work?" → "I start at nine o'clock."</div>
+        <div class="phrase-use">Ask about work hours.</div>
+      </div>
+      <button class="btn btn-speak btn-sm" onclick="speakText('What time do you start work? I start at nine o\'clock.')">🔊</button>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 28px;">
+    <div style="font-size:1rem; font-weight:700; color:var(--purple); margin-bottom:12px;">
+      🟣 Job interview phrases
+    </div>
+    <div class="phrase-card purple">
+      <div class="phrase-text">
+        <div class="phrase-english">"Can you tell me about yourself?" → "My name is Ana. I am from Poland."</div>
+        <div class="phrase-use">Introduce yourself in an interview.</div>
+      </div>
+      <button class="btn btn-speak btn-sm" onclick="speakText('Can you tell me about yourself? My name is Ana. I am from Poland.')">🔊</button>
+    </div>
+    <div class="phrase-card purple">
+      <div class="phrase-text">
+        <div class="phrase-english">"I can work hard." / "I am a good worker."</div>
+        <div class="phrase-use">Talk about your skills.</div>
+      </div>
+      <button class="btn btn-speak btn-sm" onclick="speakText('I can work hard. I am a good worker.')">🔊</button>
+    </div>
+    <div class="phrase-card purple">
+      <div class="phrase-text">
+        <div class="phrase-english">"I worked at a hotel for two years."</div>
+        <div class="phrase-use">Talk about past experience. Use <em>worked</em> (past tense).</div>
+      </div>
+      <button class="btn btn-speak btn-sm" onclick="speakText('I worked at a hotel for two years.')">🔊</button>
+    </div>
+  </div>
+
+  <div class="tip-box">
+    <strong>📖 Grammar note:</strong> <br>
+    I <strong>am</strong> a doctor. &nbsp;|&nbsp; He/She <strong>is</strong> a doctor.<br>
+    I <strong>work</strong> at a hospital. &nbsp;|&nbsp; He/She <strong>works</strong> at a hospital.
+  </div>
+</section>
+
+<!-- ══════════════ CONVERSATIONS ══════════════ -->
+<section class="page" id="page-conversations">
+  <div class="section-title">🗣️ Conversations</div>
+  <div class="section-subtitle">Read the conversations. Click 🔊 to listen. Practise reading aloud!</div>
+
+  <!-- Convo 1 -->
+  <div class="convo-card">
+    <div class="convo-title">💼 Conversation 1: Meeting someone new</div>
+    <div class="bubble-wrap">
+      <div class="bubble">
+        <div class="bubble-avatar">👩</div>
+        <div>
+          <div class="bubble-name">Maria</div>
+          <div class="bubble-text">Hello! My name is Maria. What is your name?</div>
+        </div>
+      </div>
+      <div class="bubble right">
+        <div class="bubble-avatar">👨</div>
+        <div>
+          <div class="bubble-name">James</div>
+          <div class="bubble-text">Hi Maria! I am James. Nice to meet you.</div>
+        </div>
+      </div>
+      <div class="bubble">
+        <div class="bubble-avatar">👩</div>
+        <div>
+          <div class="bubble-name">Maria</div>
+          <div class="bubble-text">Nice to meet you too! What do you do, James?</div>
+        </div>
+      </div>
+      <div class="bubble right">
+        <div class="bubble-avatar">👨</div>
+        <div>
+          <div class="bubble-name">James</div>
+          <div class="bubble-text">I am a bus driver. I work at the bus station. What about you?</div>
+        </div>
+      </div>
+      <div class="bubble">
+        <div class="bubble-avatar">👩</div>
+        <div>
+          <div class="bubble-name">Maria</div>
+          <div class="bubble-text">I am a nurse. I work at the hospital.</div>
+        </div>
+      </div>
+      <div class="bubble right">
+        <div class="bubble-avatar">👨</div>
+        <div>
+          <div class="bubble-name">James</div>
+          <div class="bubble-text">That is a great job! Do you like it?</div>
+        </div>
+      </div>
+      <div class="bubble">
+        <div class="bubble-avatar">👩</div>
+        <div>
+          <div class="bubble-name">Maria</div>
+          <div class="bubble-text">Yes, I love my job. I help sick people every day.</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-speak btn-sm" onclick="speakText('Hello! My name is Maria. What is your name? Hi Maria! I am James. Nice to meet you. Nice to meet you too! What do you do, James? I am a bus driver. I work at the bus station. What about you? I am a nurse. I work at the hospital. That is a great job! Do you like it? Yes, I love my job. I help sick people every day.')">🔊 Listen to conversation</button>
+    <div class="tip-box" style="margin-top:14px; margin-bottom:0;">
+      <strong>💡 Key phrases:</strong> "What do you do?" · "I am a ___." · "I work at ___." · "Do you like it?"
+    </div>
+  </div>
+
+  <!-- Convo 2 -->
+  <div class="convo-card">
+    <div class="convo-title">📋 Conversation 2: Job interview</div>
+    <div class="bubble-wrap">
+      <div class="bubble">
+        <div class="bubble-avatar">👔</div>
+        <div>
+          <div class="bubble-name">Manager</div>
+          <div class="bubble-text">Good morning. Please sit down. Can you tell me about yourself?</div>
+        </div>
+      </div>
+      <div class="bubble right">
+        <div class="bubble-avatar">👩</div>
+        <div>
+          <div class="bubble-name">Ana</div>
+          <div class="bubble-text">Good morning. My name is Ana. I am from Romania. I am 32 years old.</div>
+        </div>
+      </div>
+      <div class="bubble">
+        <div class="bubble-avatar">👔</div>
+        <div>
+          <div class="bubble-name">Manager</div>
+          <div class="bubble-text">What work experience do you have?</div>
+        </div>
+      </div>
+      <div class="bubble right">
+        <div class="bubble-avatar">👩</div>
+        <div>
+          <div class="bubble-name">Ana</div>
+          <div class="bubble-text">I worked as a cleaner in a hotel for three years. I am a hard worker.</div>
+        </div>
+      </div>
+      <div class="bubble">
+        <div class="bubble-avatar">👔</div>
+        <div>
+          <div class="bubble-name">Manager</div>
+          <div class="bubble-text">Can you work weekends?</div>
+        </div>
+      </div>
+      <div class="bubble right">
+        <div class="bubble-avatar">👩</div>
+        <div>
+          <div class="bubble-name">Ana</div>
+          <div class="bubble-text">Yes, I can work weekends and evenings.</div>
+        </div>
+      </div>
+      <div class="bubble">
+        <div class="bubble-avatar">👔</div>
+        <div>
+          <div class="bubble-name">Manager</div>
+          <div class="bubble-text">Very good. Thank you, Ana. We will call you soon.</div>
+        </div>
+      </div>
+      <div class="bubble right">
+        <div class="bubble-avatar">👩</div>
+        <div>
+          <div class="bubble-name">Ana</div>
+          <div class="bubble-text">Thank you very much. Goodbye!</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-speak btn-sm" onclick="speakText('Good morning. Please sit down. Can you tell me about yourself? Good morning. My name is Ana. I am from Romania. I am 32 years old. What work experience do you have? I worked as a cleaner in a hotel for three years. I am a hard worker. Can you work weekends? Yes, I can work weekends and evenings. Very good. Thank you Ana. We will call you soon. Thank you very much. Goodbye!')">🔊 Listen to conversation</button>
+    <div class="tip-box" style="margin-top:14px; margin-bottom:0;">
+      <strong>💡 Key phrases:</strong> "I worked as a ___." · "I am a hard worker." · "I can work ___."
+    </div>
+  </div>
+
+  <!-- Convo 3 -->
+  <div class="convo-card">
+    <div class="convo-title">🏪 Conversation 3: At the supermarket</div>
+    <div class="bubble-wrap">
+      <div class="bubble">
+        <div class="bubble-avatar">🛒</div>
+        <div>
+          <div class="bubble-name">Customer</div>
+          <div class="bubble-text">Excuse me. Where is the bread, please?</div>
+        </div>
+      </div>
+      <div class="bubble right">
+        <div class="bubble-avatar">🏪</div>
+        <div>
+          <div class="bubble-name">Shop assistant</div>
+          <div class="bubble-text">Go straight. Turn right. The bread is on the left.</div>
+        </div>
+      </div>
+      <div class="bubble">
+        <div class="bubble-avatar">🛒</div>
+        <div>
+          <div class="bubble-name">Customer</div>
+          <div class="bubble-text">Thank you. Do you work here every day?</div>
+        </div>
+      </div>
+      <div class="bubble right">
+        <div class="bubble-avatar">🏪</div>
+        <div>
+          <div class="bubble-name">Shop assistant</div>
+          <div class="bubble-text">Yes, I work Monday to Friday. I am a shop assistant.</div>
+        </div>
+      </div>
+      <div class="bubble">
+        <div class="bubble-avatar">🛒</div>
+        <div>
+          <div class="bubble-name">Customer</div>
+          <div class="bubble-text">Do you like your job?</div>
+        </div>
+      </div>
+      <div class="bubble right">
+        <div class="bubble-avatar">🏪</div>
+        <div>
+          <div class="bubble-name">Shop assistant</div>
+          <div class="bubble-text">Yes, I like helping people. It is a good job!</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-speak btn-sm" onclick="speakText('Excuse me. Where is the bread, please? Go straight. Turn right. The bread is on the left. Thank you. Do you work here every day? Yes, I work Monday to Friday. I am a shop assistant. Do you like your job? Yes, I like helping people. It is a good job!')">🔊 Listen to conversation</button>
+  </div>
+
+  <!-- Convo 4 -->
+  <div class="convo-card">
+    <div class="convo-title">🏥 Conversation 4: At the doctor</div>
+    <div class="bubble-wrap">
+      <div class="bubble">
+        <div class="bubble-avatar">😷</div>
+        <div>
+          <div class="bubble-name">Patient</div>
+          <div class="bubble-text">Hello. I have an appointment. My name is Carlos.</div>
+        </div>
+      </div>
+      <div class="bubble right">
+        <div class="bubble-avatar">👩‍⚕️</div>
+        <div>
+          <div class="bubble-name">Receptionist</div>
+          <div class="bubble-text">Hello Carlos. Please sit and wait. The doctor will see you soon.</div>
+        </div>
+      </div>
+      <div class="bubble">
+        <div class="bubble-avatar">😷</div>
+        <div>
+          <div class="bubble-name">Patient</div>
+          <div class="bubble-text">Thank you.</div>
+        </div>
+      </div>
+      <div class="bubble right">
+        <div class="bubble-avatar">👨‍⚕️</div>
+        <div>
+          <div class="bubble-name">Doctor</div>
+          <div class="bubble-text">Hello Carlos. I am Doctor Smith. What is the problem?</div>
+        </div>
+      </div>
+      <div class="bubble">
+        <div class="bubble-avatar">😷</div>
+        <div>
+          <div class="bubble-name">Patient</div>
+          <div class="bubble-text">I have a headache and I feel very tired.</div>
+        </div>
+      </div>
+      <div class="bubble right">
+        <div class="bubble-avatar">👨‍⚕️</div>
+        <div>
+          <div class="bubble-name">Doctor</div>
+          <div class="bubble-text">I see. Do you work long hours?</div>
+        </div>
+      </div>
+      <div class="bubble">
+        <div class="bubble-avatar">😷</div>
+        <div>
+          <div class="bubble-name">Patient</div>
+          <div class="bubble-text">Yes. I am a delivery driver. I work 10 hours a day.</div>
+        </div>
+      </div>
+      <div class="bubble right">
+        <div class="bubble-avatar">👨‍⚕️</div>
+        <div>
+          <div class="bubble-name">Doctor</div>
+          <div class="bubble-text">You need to rest. Here is your prescription. Take these tablets twice a day.</div>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-speak btn-sm" onclick="speakText('Hello. I have an appointment. My name is Carlos. Hello Carlos. Please sit and wait. The doctor will see you soon. Thank you. Hello Carlos. I am Doctor Smith. What is the problem? I have a headache and I feel very tired. I see. Do you work long hours? Yes. I am a delivery driver. I work 10 hours a day. You need to rest. Here is your prescription. Take these tablets twice a day.')">🔊 Listen to conversation</button>
+    <div class="tip-box" style="margin-top:14px; margin-bottom:0;">
+      <strong>💡 Useful vocab:</strong> appointment · prescription · tablets · receptionist
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ MATCHING ══════════════ -->
+<section class="page" id="page-matching">
+  <div class="section-title">🔗 Job Matching</div>
+  <div class="section-subtitle">Click a job, then click the matching workplace. Find all pairs!</div>
+
+  <div class="score-bar">
+    <div class="score-star">⭐</div>
+    <div>
+      <div class="score-text">Score: <span id="matchScore">0</span> / <span id="matchTotal">10</span></div>
+      <div class="score-sub">Match jobs to workplaces</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="matchProgress" style="width:0%"></div></div>
+    <button class="btn btn-outline btn-sm" onclick="initMatching()">🔄 New Game</button>
+  </div>
+
+  <div class="match-area">
+    <div class="match-col">
+      <h3>💼 Jobs</h3>
+      <div id="matchJobs"></div>
+    </div>
+    <div class="match-col">
+      <h3>🏢 Workplaces</h3>
+      <div id="matchPlaces"></div>
+    </div>
+  </div>
+
+  <div id="matchComplete" style="display:none;" class="result-box">
+    <div class="result-emoji">🎉</div>
+    <div class="result-score">All matched!</div>
+    <div class="result-message">Well done! You matched all jobs to their workplaces.</div>
+    <button class="btn btn-primary" style="margin-top:16px;" onclick="initMatching()">Play Again 🔄</button>
+  </div>
+</section>
+
+<!-- ══════════════ SENTENCE BUILDER ══════════════ -->
+<section class="page" id="page-sentences">
+  <div class="section-title">✏️ Build Sentences</div>
+  <div class="section-subtitle">Click words to build a correct sentence. Click a word in your sentence to remove it.</div>
+
+  <div class="score-bar">
+    <div class="score-star">⭐</div>
+    <div>
+      <div class="score-text">Sentence <span id="sbCurrent">1</span> of <span id="sbTotal">8</span></div>
+      <div class="score-sub">Score: <span id="sbScore">0</span> correct</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="sbProgress" style="width:0%"></div></div>
+  </div>
+
+  <div class="tip-box" id="sbInstruction">
+    <strong>📌 Task:</strong> <span id="sbTask"></span>
+  </div>
+
+  <div class="sentence-display" id="sbDisplay">
+    <span style="color:#9ca3af; font-weight:400;">Click words below to build your sentence...</span>
+  </div>
+
+  <div class="word-bank" id="sbWordBank"></div>
+
+  <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:20px;">
+    <button class="btn btn-primary" onclick="checkSentence()">✓ Check Answer</button>
+    <button class="btn btn-outline" onclick="clearSentence()">🗑️ Clear</button>
+    <button class="btn btn-speak" onclick="speakSentence()">🔊 Listen</button>
+  </div>
+
+  <div id="sbFeedback" style="display:none;" class="tip-box"></div>
+
+  <div id="sbComplete" style="display:none;" class="result-box">
+    <div class="result-emoji">🏆</div>
+    <div class="result-score" id="sbFinalScore"></div>
+    <div class="result-message">You finished all sentences!</div>
+    <button class="btn btn-primary" style="margin-top:16px;" onclick="initSentenceBuilder()">Try Again 🔄</button>
+  </div>
+</section>
+
+<!-- ══════════════ WRITING ══════════════ -->
+<section class="page" id="page-writing">
+  <div class="section-title">📝 Writing Practice</div>
+  <div class="section-subtitle">Read the task and write your answer. There are example answers to help you.</div>
+
+  <div class="tip-box">
+    <strong>✍️ How to practise:</strong> Read the question. Write your answer in the box. You can use the example to help you.
+    Read your answer aloud — this helps you speak too!
+  </div>
+
+  <div class="write-box">
+    <div class="write-prompt">1. Write your name and job (or a job you want).</div>
+    <div class="fill-sentence">My name is <input class="fill-input" style="width:150px;" placeholder="your name"> and I am a <input class="fill-input" style="width:150px;" placeholder="job">.</div>
+    <div class="write-example"><strong>Example:</strong> My name is Maria and I am a nurse.</div>
+  </div>
+
+  <div class="write-box">
+    <div class="write-prompt">2. Write where you work (or want to work).</div>
+    <div class="fill-sentence">I work at <input class="fill-input" style="width:180px;" placeholder="place of work">.</div>
+    <div class="write-example"><strong>Example:</strong> I work at a school.</div>
+  </div>
+
+  <div class="write-box">
+    <div class="write-prompt">3. Write about what a doctor does.</div>
+    <textarea class="write-area" placeholder="Write 1 or 2 sentences about a doctor..."></textarea>
+    <div class="write-example"><strong>Example:</strong> A doctor helps sick people. A doctor works at a hospital.</div>
+  </div>
+
+  <div class="write-box">
+    <div class="write-prompt">4. Write about your daily routine at work.</div>
+    <textarea class="write-area" placeholder="What time do you start? What do you do at work?"></textarea>
+    <div class="write-example"><strong>Example:</strong> I start work at 8 o'clock. I teach children. I finish at 4 o'clock.</div>
+  </div>
+
+  <div class="write-box">
+    <div class="write-prompt">5. Write 3 sentences about a job you know.</div>
+    <textarea class="write-area" style="min-height:120px;" placeholder="Write 3 sentences. Example: She is a chef. She works at a restaurant. She cooks food every day."></textarea>
+    <div class="write-example"><strong>Example:</strong> He is a mechanic. He works at a garage. He fixes cars every day.</div>
+  </div>
+
+  <div class="write-box">
+    <div class="write-prompt">6. Fill in the blanks. Use: <em>work, works, is, are, at, in</em></div>
+
+    <div class="fill-sentence" style="line-height:2.4;">
+      She <input class="fill-input" id="fb1" style="width:80px;" placeholder="___"> a teacher.
+      <button class="btn btn-outline btn-sm" onclick="checkFill('fb1','is')" style="margin-left:4px;">✓</button>
+    </div>
+    <div class="fill-sentence" style="line-height:2.4;">
+      He <input class="fill-input" id="fb2" style="width:80px;" placeholder="___"> at a hospital.
+      <button class="btn btn-outline btn-sm" onclick="checkFill('fb2','works')" style="margin-left:4px;">✓</button>
+    </div>
+    <div class="fill-sentence" style="line-height:2.4;">
+      They <input class="fill-input" id="fb3" style="width:80px;" placeholder="___"> farmers.
+      <button class="btn btn-outline btn-sm" onclick="checkFill('fb3','are')" style="margin-left:4px;">✓</button>
+    </div>
+    <div class="fill-sentence" style="line-height:2.4;">
+      I <input class="fill-input" id="fb4" style="width:80px;" placeholder="___"> at a supermarket.
+      <button class="btn btn-outline btn-sm" onclick="checkFill('fb4','work')" style="margin-left:4px;">✓</button>
+    </div>
+    <div class="fill-sentence" style="line-height:2.4;">
+      She works <input class="fill-input" id="fb5" style="width:80px;" placeholder="___"> an office.
+      <button class="btn btn-outline btn-sm" onclick="checkFill('fb5','in')" style="margin-left:4px;">✓</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ QUIZ ══════════════ -->
+<section class="page" id="page-quiz">
+  <div class="section-title">🏆 Jobs Quiz</div>
+  <div class="section-subtitle">Test your knowledge! Choose the correct answer.</div>
+
+  <div class="score-bar">
+    <div class="score-star">⭐</div>
+    <div>
+      <div class="score-text">Question <span id="qzCurrent">1</span> of <span id="qzTotal">12</span></div>
+      <div class="score-sub">Score: <span id="qzScore">0</span> correct</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="qzProgress" style="width:0%"></div></div>
+  </div>
+
+  <div id="quizArea"></div>
+
+  <div id="qzComplete" style="display:none;" class="result-box">
+    <div class="result-emoji" id="qzResultEmoji">🎉</div>
+    <div class="result-score" id="qzResultScore"></div>
+    <div class="result-message" id="qzResultMsg"></div>
+    <button class="btn btn-primary" style="margin-top:16px;" onclick="initQuiz()">Try Again 🔄</button>
+    <button class="btn btn-outline" style="margin-top:16px;" onclick="showPage('vocabulary', document.querySelectorAll(\'nav button\')[1])">Review Vocabulary 📚</button>
+  </div>
+</section>
+
+</main>
+
+<script>
+// ══════════════ DATA ══════════════
+const JOBS = [
+  { word: 'doctor', emoji: '👨‍⚕️', place: 'hospital', def: 'A doctor helps sick people. A doctor examines patients and gives medicine.', example: 'The doctor works at the hospital.', question: 'What does a doctor do?' },
+  { word: 'teacher', emoji: '👩‍🏫', place: 'school', def: 'A teacher helps students learn. A teacher works with children or adults in a classroom.', example: 'She is a teacher. She works at a school.', question: 'Where does a teacher work?' },
+  { word: 'nurse', emoji: '👩‍⚕️', place: 'hospital', def: 'A nurse looks after sick people. A nurse works with doctors in a hospital or clinic.', example: 'He is a nurse. He works at the hospital.', question: 'What does a nurse do?' },
+  { word: 'chef', emoji: '👨‍🍳', place: 'restaurant', def: 'A chef cooks food. A chef works in a restaurant or hotel kitchen.', example: 'The chef works at a restaurant.', question: 'Where does a chef work?' },
+  { word: 'police officer', emoji: '👮', place: 'police station', def: 'A police officer keeps people safe. A police officer works at a police station.', example: 'She is a police officer. She works at the police station.', question: 'What does a police officer do?' },
+  { word: 'firefighter', emoji: '🧑‍🚒', place: 'fire station', def: 'A firefighter puts out fires. A firefighter helps people in emergencies.', example: 'He is a firefighter. He works at the fire station.', question: 'What does a firefighter do?' },
+  { word: 'bus driver', emoji: '🚌', place: 'bus / bus station', def: 'A bus driver drives a bus. A bus driver takes people to different places.', example: 'The bus driver drives to the city centre.', question: 'What does a bus driver do?' },
+  { word: 'farmer', emoji: '👨‍🌾', place: 'farm', def: 'A farmer grows food. A farmer looks after animals and plants on a farm.', example: 'She is a farmer. She works on a farm.', question: 'Where does a farmer work?' },
+  { word: 'cashier', emoji: '💰', place: 'supermarket / shop', def: 'A cashier works at the checkout. A cashier takes money from customers.', example: 'He is a cashier at the supermarket.', question: 'What does a cashier do?' },
+  { word: 'waiter', emoji: '🍽️', place: 'restaurant / café', def: 'A waiter serves food and drinks. A waiter looks after customers in a restaurant.', example: 'She is a waitress. She works at a café.', question: 'Where does a waiter work?' },
+  { word: 'cleaner', emoji: '🧹', place: 'office / hotel', def: 'A cleaner keeps places clean. A cleaner mops floors and cleans rooms.', example: 'She is a cleaner. She works at a hotel.', question: 'What does a cleaner do?' },
+  { word: 'mechanic', emoji: '🔧', place: 'garage', def: 'A mechanic fixes cars. A mechanic works at a garage.', example: 'He is a mechanic. He fixes cars at the garage.', question: 'Where does a mechanic work?' },
+  { word: 'builder', emoji: '👷', place: 'building site', def: 'A builder builds houses and buildings. A builder works outdoors on a building site.', example: 'They are builders. They work on a building site.', question: 'What does a builder do?' },
+  { word: 'office worker', emoji: '💼', place: 'office', def: 'An office worker works with computers and papers. An office worker sits at a desk in an office.', example: 'She is an office worker. She works in an office.', question: 'Where does an office worker work?' },
+  { word: 'delivery driver', emoji: '🚚', place: 'on the road / warehouse', def: 'A delivery driver brings packages and food to people. A delivery driver drives a van or truck.', example: 'He is a delivery driver. He delivers packages.', question: 'What does a delivery driver do?' },
+  { word: 'hairdresser', emoji: '✂️', place: 'hair salon', def: 'A hairdresser cuts and styles hair. A hairdresser works in a hair salon.', example: 'She is a hairdresser. She cuts hair at the salon.', question: 'Where does a hairdresser work?' },
+  { word: 'dentist', emoji: '🦷', place: 'dental clinic', def: 'A dentist looks after teeth. A dentist checks and fixes teeth at a dental clinic.', example: 'He is a dentist. He works at a dental clinic.', question: 'What does a dentist do?' },
+  { word: 'shop assistant', emoji: '🛍️', place: 'shop / store', def: 'A shop assistant helps customers. A shop assistant works in a shop or store.', example: 'She is a shop assistant at the clothes shop.', question: 'Where does a shop assistant work?' },
+  { word: 'security guard', emoji: '🛡️', place: 'shopping centre / building', def: 'A security guard keeps buildings safe. A security guard checks people and watches for problems.', example: 'He is a security guard at the shopping centre.', question: 'What does a security guard do?' },
+  { word: 'librarian', emoji: '📚', place: 'library', def: 'A librarian looks after books. A librarian helps people find books at a library.', example: 'She is a librarian. She works at the library.', question: 'What does a librarian do?' },
+];
+
+// ══════════════ SPEECH ══════════════
+function speakText(text) {
+  if (!window.speechSynthesis) return;
+  speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  utt.lang = 'en-GB';
+  utt.rate = 0.85;
+  speechSynthesis.speak(utt);
+}
+
+// ══════════════ PAGE NAV ══════════════
+function showPage(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+}
+
+// ══════════════ VOCABULARY ══════════════
+let currentVocab = JOBS[0];
+
+function buildVocabGrid() {
+  const grid = document.getElementById('vocabGrid');
+  grid.innerHTML = '';
+  JOBS.forEach((job, i) => {
+    const card = document.createElement('div');
+    card.className = 'vocab-card';
+    card.innerHTML = `
+      <button class="speak-btn" onclick="event.stopPropagation(); speakText('${job.word}')">🔊</button>
+      <span class="emoji">${job.emoji}</span>
+      <div class="word">${cap(job.word)}</div>
+      <div class="place">📍 ${job.place}</div>
+    `;
+    card.onclick = () => showVocabDetail(job, card);
+    grid.appendChild(card);
+  });
+}
+
+function showVocabDetail(job, card) {
+  currentVocab = job;
+  document.querySelectorAll('.vocab-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  document.getElementById('vdEmoji').textContent = job.emoji;
+  document.getElementById('vdWord').textContent = cap(job.word);
+  document.getElementById('vdPlace').textContent = '📍 Works at: ' + job.place;
+  document.getElementById('vdDesc').textContent = job.def;
+  document.getElementById('vdExample').textContent = job.example;
+  document.getElementById('vdQuestion').textContent = job.question;
+  const detail = document.getElementById('vocabDetail');
+  detail.style.display = 'block';
+  detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ══════════════ FLASHCARDS ══════════════
+let fcIndex = 0;
+let fcOrder = [...Array(JOBS.length).keys()];
+
+function updateFlashcard() {
+  const job = JOBS[fcOrder[fcIndex]];
+  const card = document.getElementById('flashcard');
+  card.classList.remove('flipped');
+  setTimeout(() => {
+    document.getElementById('fcEmoji').textContent = job.emoji;
+    document.getElementById('fcWord').textContent = cap(job.word);
+    document.getElementById('fcDef').textContent = job.def;
+    document.getElementById('fcExample').textContent = job.example;
+    document.getElementById('fcPlace').textContent = '📍 ' + job.place;
+    document.getElementById('fcCurrent').textContent = fcIndex + 1;
+    document.getElementById('fcTotal').textContent = JOBS.length;
+  }, 300);
+}
+
+function flipCard() {
+  document.getElementById('flashcard').classList.toggle('flipped');
+}
+
+function fcMove(dir) {
+  fcIndex = (fcIndex + dir + JOBS.length) % JOBS.length;
+  updateFlashcard();
+}
+
+function speakCard() {
+  const job = JOBS[fcOrder[fcIndex]];
+  speakText(job.word + '. ' + job.def + ' ' + job.example);
+}
+
+function shuffleFlashcards() {
+  fcOrder = fcOrder.sort(() => Math.random() - .5);
+  fcIndex = 0;
+  updateFlashcard();
+}
+
+// ══════════════ MATCHING ══════════════
+const MATCH_PAIRS = [
+  { job: '👨‍⚕️ Doctor', place: '🏥 Hospital' },
+  { job: '👩‍🏫 Teacher', place: '🏫 School' },
+  { job: '👨‍🍳 Chef', place: '🍽️ Restaurant' },
+  { job: '👮 Police officer', place: '🚔 Police station' },
+  { job: '🔧 Mechanic', place: '🚗 Garage' },
+  { job: '👷 Builder', place: '🏗️ Building site' },
+  { job: '✂️ Hairdresser', place: '💇 Hair salon' },
+  { job: '📚 Librarian', place: '📖 Library' },
+  { job: '🦷 Dentist', place: '🏨 Dental clinic' },
+  { job: '🧹 Cleaner', place: '🏨 Hotel' },
+];
+
+let matchSelected = null;
+let matchCorrect = 0;
+let matchData = [];
+
+function shuffle(arr) { return [...arr].sort(() => Math.random() - .5); }
+
+function initMatching() {
+  matchCorrect = 0;
+  matchSelected = null;
+  matchData = shuffle(MATCH_PAIRS).slice(0, 8);
+  const jobsEl = document.getElementById('matchJobs');
+  const placesEl = document.getElementById('matchPlaces');
+  document.getElementById('matchScore').textContent = '0';
+  document.getElementById('matchTotal').textContent = matchData.length;
+  document.getElementById('matchProgress').style.width = '0%';
+  document.getElementById('matchComplete').style.display = 'none';
+
+  const shuffledJobs = shuffle(matchData.map(p => p.job));
+  const shuffledPlaces = shuffle(matchData.map(p => p.place));
+
+  jobsEl.innerHTML = '';
+  placesEl.innerHTML = '';
+
+  shuffledJobs.forEach(job => {
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.textContent = job;
+    el.dataset.value = job;
+    el.dataset.type = 'job';
+    el.onclick = () => handleMatchClick(el);
+    jobsEl.appendChild(el);
+  });
+
+  shuffledPlaces.forEach(place => {
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.textContent = place;
+    el.dataset.value = place;
+    el.dataset.type = 'place';
+    el.onclick = () => handleMatchClick(el);
+    placesEl.appendChild(el);
+  });
+}
+
+function handleMatchClick(el) {
+  if (el.classList.contains('matched-correct')) return;
+
+  if (!matchSelected) {
+    document.querySelectorAll('.match-item').forEach(i => i.classList.remove('selected'));
+    el.classList.add('selected');
+    matchSelected = el;
+  } else {
+    if (matchSelected === el) {
+      el.classList.remove('selected');
+      matchSelected = null;
+      return;
+    }
+
+    const a = matchSelected, b = el;
+    const job = a.dataset.type === 'job' ? a.dataset.value : b.dataset.value;
+    const place = a.dataset.type === 'place' ? a.dataset.value : b.dataset.value;
+
+    const pair = matchData.find(p => p.job === job && p.place === place);
+    if (pair) {
+      a.classList.remove('selected'); a.classList.add('matched-correct');
+      b.classList.add('matched-correct');
+      a.onclick = null; b.onclick = null;
+      matchCorrect++;
+      document.getElementById('matchScore').textContent = matchCorrect;
+      document.getElementById('matchProgress').style.width = (matchCorrect / matchData.length * 100) + '%';
+      if (matchCorrect === matchData.length) {
+        setTimeout(() => document.getElementById('matchComplete').style.display = 'block', 500);
+      }
+      speakText('Correct!');
+    } else {
+      a.classList.add('matched-wrong'); b.classList.add('matched-wrong');
+      setTimeout(() => {
+        a.classList.remove('matched-wrong', 'selected');
+        b.classList.remove('matched-wrong');
+      }, 700);
+      speakText('Try again.');
+    }
+    matchSelected = null;
+  }
+}
+
+// ══════════════ SENTENCE BUILDER ══════════════
+const SENTENCES = [
+  { task: 'Put these words in order to say what job someone has.', words: ['She', 'is', 'a', 'teacher', '.'], answer: 'She is a teacher .' },
+  { task: 'Say where he works.', words: ['He', 'works', 'at', 'a', 'hospital', '.'], answer: 'He works at a hospital .' },
+  { task: 'Ask someone about their job.', words: ['What', 'do', 'you', 'do', '?'], answer: 'What do you do ?' },
+  { task: 'Say where you work.', words: ['I', 'work', 'in', 'an', 'office', '.'], answer: 'I work in an office .' },
+  { task: 'Ask where someone works.', words: ['Where', 'do', 'you', 'work', '?'], answer: 'Where do you work ?' },
+  { task: 'Say you like your job.', words: ['I', 'like', 'my', 'job', 'very', 'much', '.'], answer: 'I like my job very much .' },
+  { task: 'Say you are a hard worker (job interview).', words: ['I', 'am', 'a', 'hard', 'worker', '.'], answer: 'I am a hard worker .' },
+  { task: 'Say about past work experience.', words: ['I', 'worked', 'at', 'a', 'hotel', 'for', 'two', 'years', '.'], answer: 'I worked at a hotel for two years .' },
+];
+
+let sbIndex = 0;
+let sbScore = 0;
+let sbBuilt = [];
+let sbUsed = {};
+
+function initSentenceBuilder() {
+  sbIndex = 0;
+  sbScore = 0;
+  sbBuilt = [];
+  sbUsed = {};
+  document.getElementById('sbComplete').style.display = 'none';
+  document.getElementById('sbFeedback').style.display = 'none';
+  document.getElementById('sbTotal').textContent = SENTENCES.length;
+  loadSentence();
+}
+
+function loadSentence() {
+  if (sbIndex >= SENTENCES.length) {
+    document.getElementById('sbComplete').style.display = 'block';
+    document.getElementById('sbFinalScore').textContent = sbScore + ' / ' + SENTENCES.length + ' correct!';
+    return;
+  }
+  const s = SENTENCES[sbIndex];
+  document.getElementById('sbCurrent').textContent = sbIndex + 1;
+  document.getElementById('sbScore').textContent = sbScore;
+  document.getElementById('sbProgress').style.width = (sbIndex / SENTENCES.length * 100) + '%';
+  document.getElementById('sbTask').textContent = s.task;
+  document.getElementById('sbFeedback').style.display = 'none';
+  sbBuilt = [];
+  sbUsed = {};
+  renderWordBank(shuffle(s.words));
+  renderDisplay();
+}
+
+function renderWordBank(words) {
+  const bank = document.getElementById('sbWordBank');
+  bank.innerHTML = '';
+  words.forEach((w, i) => {
+    const chip = document.createElement('span');
+    chip.className = 'word-chip';
+    chip.textContent = w;
+    chip.dataset.index = i;
+    chip.onclick = () => addWord(w, i, chip);
+    bank.appendChild(chip);
+  });
+}
+
+function renderDisplay() {
+  const disp = document.getElementById('sbDisplay');
+  if (sbBuilt.length === 0) {
+    disp.innerHTML = '<span style="color:#9ca3af;font-weight:400;">Click words below to build your sentence...</span>';
+    return;
+  }
+  disp.innerHTML = '';
+  sbBuilt.forEach((item, i) => {
+    const chip = document.createElement('span');
+    chip.className = 'word-chip';
+    chip.textContent = item.word;
+    chip.onclick = () => removeWord(i, item.bankIndex);
+    disp.appendChild(chip);
+  });
+}
+
+function addWord(word, bankIndex, chipEl) {
+  if (sbUsed[bankIndex]) return;
+  sbUsed[bankIndex] = true;
+  chipEl.classList.add('used');
+  sbBuilt.push({ word, bankIndex });
+  renderDisplay();
+}
+
+function removeWord(buildIndex, bankIndex) {
+  sbBuilt.splice(buildIndex, 1);
+  sbUsed[bankIndex] = false;
+  document.querySelectorAll('#sbWordBank .word-chip')[bankIndex].classList.remove('used');
+  renderDisplay();
+}
+
+function clearSentence() {
+  sbBuilt = [];
+  sbUsed = {};
+  document.querySelectorAll('#sbWordBank .word-chip').forEach(c => c.classList.remove('used'));
+  renderDisplay();
+}
+
+function speakSentence() {
+  const text = sbBuilt.map(i => i.word).join(' ').replace(' .', '.').replace(' ?', '?');
+  if (text) speakText(text);
+}
+
+function checkSentence() {
+  const built = sbBuilt.map(i => i.word).join(' ');
+  const answer = SENTENCES[sbIndex].answer;
+  const fb = document.getElementById('sbFeedback');
+  fb.style.display = 'block';
+  if (built.toLowerCase() === answer.toLowerCase()) {
+    fb.style.background = 'var(--green-light)';
+    fb.style.borderColor = '#86efac';
+    fb.innerHTML = '✅ <strong>Correct!</strong> ' + answer.replace(' .', '.').replace(' ?', '?');
+    sbScore++;
+    speakText('Correct! ' + answer.replace(' .', '.').replace(' ?', '?'));
+    setTimeout(() => { sbIndex++; loadSentence(); }, 2200);
+  } else {
+    fb.style.background = 'var(--red-light)';
+    fb.style.borderColor = '#fca5a5';
+    fb.innerHTML = '❌ <strong>Not quite.</strong> Try again! The answer is: <strong>' + answer.replace(' .', '.').replace(' ?', '?') + '</strong>';
+    speakText('Try again. The answer is: ' + answer.replace(' .', '.').replace(' ?', '?'));
+    setTimeout(() => { sbIndex++; loadSentence(); }, 3000);
+  }
+}
+
+// ══════════════ FILL IN BLANKS ══════════════
+function checkFill(id, correct) {
+  const input = document.getElementById(id);
+  const val = input.value.trim().toLowerCase();
+  if (val === correct.toLowerCase()) {
+    input.classList.add('correct');
+    input.classList.remove('wrong');
+    speakText('Correct!');
+  } else {
+    input.classList.add('wrong');
+    input.classList.remove('correct');
+    speakText('Try again. The answer is ' + correct);
+    setTimeout(() => { input.value = correct; input.classList.remove('wrong'); input.classList.add('correct'); }, 1500);
+  }
+}
+
+// ══════════════ QUIZ ══════════════
+const QUIZ_QUESTIONS = [
+  { q: 'What is this job?', emoji: '👨‍⚕️', options: ['Doctor', 'Teacher', 'Chef', 'Builder'], answer: 0 },
+  { q: 'Where does a teacher work?', emoji: '👩‍🏫', options: ['Hospital', 'School', 'Restaurant', 'Garage'], answer: 1 },
+  { q: 'Which sentence is correct?', emoji: '💬', options: ['I am doctor.', 'I am a doctor.', 'I is a doctor.', 'I a doctor.'], answer: 1 },
+  { q: 'What is this job?', emoji: '🔧', options: ['Builder', 'Driver', 'Mechanic', 'Farmer'], answer: 2 },
+  { q: 'Where does a chef work?', emoji: '👨‍🍳', options: ['School', 'Hospital', 'Restaurant', 'Library'], answer: 2 },
+  { q: 'Choose the correct word: "She ___ at a school."', emoji: '📝', options: ['work', 'works', 'working', 'am'], answer: 1 },
+  { q: 'What does a firefighter do?', emoji: '🧑‍🚒', options: ['Fixes cars', 'Teaches children', 'Puts out fires', 'Cooks food'], answer: 2 },
+  { q: 'Which is correct to say your past job?', emoji: '💼', options: ['I work at hotel.', 'I worked at a hotel.', 'I am work hotel.', 'I working hotel.'], answer: 1 },
+  { q: 'What is this job?', emoji: '📚', options: ['Teacher', 'Librarian', 'Office worker', 'Cleaner'], answer: 1 },
+  { q: 'What do you say to ask about someone\'s job?', emoji: '❓', options: ['Where you work?', 'What do you do?', 'What is job you?', 'Do work you?'], answer: 1 },
+  { q: 'Where does a dentist work?', emoji: '🦷', options: ['Hospital', 'School', 'Dental clinic', 'Pharmacy'], answer: 2 },
+  { q: 'Choose the correct sentence.', emoji: '✏️', options: ['I work at hospital.', 'I work in hospital.', 'I work at a hospital.', 'I work on hospital.'], answer: 2 },
+];
+
+let qzIndex = 0;
+let qzScore = 0;
+let qzOrder = [];
+
+function initQuiz() {
+  qzIndex = 0;
+  qzScore = 0;
+  qzOrder = shuffle([...Array(QUIZ_QUESTIONS.length).keys()]);
+  document.getElementById('qzTotal').textContent = QUIZ_QUESTIONS.length;
+  document.getElementById('qzComplete').style.display = 'none';
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const area = document.getElementById('quizArea');
+  if (qzIndex >= QUIZ_QUESTIONS.length) {
+    area.innerHTML = '';
+    document.getElementById('qzComplete').style.display = 'block';
+    const pct = Math.round(qzScore / QUIZ_QUESTIONS.length * 100);
+    document.getElementById('qzResultEmoji').textContent = pct >= 80 ? '🎉' : pct >= 50 ? '👍' : '📚';
+    document.getElementById('qzResultScore').textContent = qzScore + ' / ' + QUIZ_QUESTIONS.length + ' correct (' + pct + '%)';
+    document.getElementById('qzResultMsg').textContent = pct >= 80 ? 'Excellent! You know your jobs vocabulary very well!' : pct >= 50 ? 'Good work! Review the vocabulary to improve.' : 'Keep practising! Go back to Vocabulary and Flashcards.';
+    return;
+  }
+
+  const q = QUIZ_QUESTIONS[qzOrder[qzIndex]];
+  document.getElementById('qzCurrent').textContent = qzIndex + 1;
+  document.getElementById('qzScore').textContent = qzScore;
+  document.getElementById('qzProgress').style.width = (qzIndex / QUIZ_QUESTIONS.length * 100) + '%';
+
+  const optionsHTML = q.options.map((opt, i) =>
+    `<div class="quiz-option" onclick="answerQuiz(this, ${i}, ${q.answer})">${opt}</div>`
+  ).join('');
+
+  area.innerHTML = `
+    <div class="quiz-question">
+      <div class="quiz-q-emoji">${q.emoji}</div>
+      <div class="quiz-q-text">${q.q}</div>
+      <div class="quiz-options">${optionsHTML}</div>
+      <div class="quiz-feedback" id="qzFeedback"></div>
+    </div>
+  `;
+}
+
+function answerQuiz(el, chosen, correct) {
+  const opts = document.querySelectorAll('.quiz-option');
+  if ([...opts].some(o => o.classList.contains('answered'))) return;
+  opts.forEach(o => o.classList.add('answered'));
+
+  const fb = document.getElementById('qzFeedback');
+  fb.classList.add('show');
+
+  if (chosen === correct) {
+    el.classList.add('correct');
+    fb.classList.add('good');
+    fb.textContent = '✅ Correct! Well done!';
+    qzScore++;
+    speakText('Correct! Well done!');
+  } else {
+    el.classList.add('wrong');
+    opts[correct].classList.add('correct');
+    const correctText = QUIZ_QUESTIONS[qzOrder[qzIndex]].options[correct];
+    fb.classList.add('bad');
+    fb.textContent = '❌ Not quite. The correct answer is: ' + correctText;
+    speakText('The correct answer is ' + correctText);
+  }
+
+  setTimeout(() => { qzIndex++; renderQuestion(); }, 2200);
+}
+
+// ══════════════ HELPERS ══════════════
+function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
+
+// ══════════════ INIT ══════════════
+buildVocabGrid();
+updateFlashcard();
+initMatching();
+initSentenceBuilder();
+initQuiz();
+</script>
+</body>
+</html>
