@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Number Games</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-season="spring">
+
+  <header>
+    <h1><span id="title-emoji">🌸</span> Number Games</h1>
+    <nav class="seasons" aria-label="Season selector">
+      <button class="season-btn active" data-season="spring" aria-pressed="true">🌸 Spring</button>
+      <button class="season-btn" data-season="summer" aria-pressed="false">☀️ Summer</button>
+      <button class="season-btn" data-season="autumn" aria-pressed="false">🍂 Autumn</button>
+      <button class="season-btn" data-season="winter" aria-pressed="false">❄️ Winter</button>
+    </nav>
+  </header>
+
+  <nav class="tabs" aria-label="Section selector">
+    <button class="tab-btn active" data-tab="numbers" aria-selected="true">Numbers</button>
+    <button class="tab-btn" data-tab="sounds" aria-selected="false">Sounds</button>
+    <button class="tab-btn" data-tab="blending" aria-selected="false">Blending Words</button>
+  </nav>
+
+  <main>
+    <section id="numbers-section" class="content-section active" aria-label="Numbers 1 to 20">
+      <div class="cards-grid" id="numbers-grid"></div>
+    </section>
+
+    <section id="sounds-section" class="content-section" aria-label="Letter sounds A to Z">
+      <div class="cards-grid" id="sounds-grid"></div>
+    </section>
+
+    <section id="blending-section" class="content-section" aria-label="Blending words">
+      <div class="cards-grid blending-grid" id="blending-grid"></div>
+    </section>
+  </main>
+
+  <!-- Voice Recording Modal -->
+  <div class="modal-overlay" id="record-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal">
+      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+
+      <h2 id="modal-title">Record Your Voice</h2>
+      <p class="modal-for">Recording for: <strong id="modal-item-label"></strong></p>
+
+      <div class="recorder-viz" aria-hidden="true">
+        <span class="viz-idle" id="viz-idle">🎙️</span>
+        <div class="waveform" id="waveform"></div>
+      </div>
+
+      <p class="record-timer" id="record-timer" aria-live="off"></p>
+
+      <div class="recorder-controls">
+        <button class="btn btn-record" id="btn-record">
+          <span class="btn-icon">🎙️</span>
+          <span class="btn-label">Record</span>
+        </button>
+        <button class="btn btn-preview" id="btn-play-preview" disabled>
+          <span class="btn-icon">▶️</span>
+          <span class="btn-label">Preview</span>
+        </button>
+        <button class="btn btn-save" id="btn-save" disabled>
+          <span class="btn-icon">💾</span>
+          <span class="btn-label">Save</span>
+        </button>
+      </div>
+
+      <button class="btn-delete-rec" id="btn-delete" style="display:none">
+        🗑️ Remove custom recording
+      </button>
+
+      <p class="record-status" id="record-status" aria-live="polite">Click Record to start</p>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
