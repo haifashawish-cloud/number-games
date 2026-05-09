@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#0093E9">
+<title>Learn English – Phonics &amp; Numbers 🌟</title>
+<style>
+:root{
+  --r:20px;
+  --shadow:0 8px 28px rgba(0,0,0,.18);
+  --bg1:#0093E9;
+  --bg2:#80D0C7;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  background:linear-gradient(160deg,var(--bg1) 0%,var(--bg2) 100%);
+  display:flex;flex-direction:column;
+  color:#222;
+  user-select:none;
+}
+
+/* ── PAGES ── */
+.page{display:none;flex-direction:column;height:100%}
+.page.active{display:flex}
+
+/* ── HEADER ── */
+.hdr{
+  background:rgba(255,255,255,.18);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  padding:12px 15px;
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid rgba(255,255,255,.3);
+  flex-shrink:0;
+  min-height:54px;
+}
+.hdr-title{font-size:1.05em;font-weight:800;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.25);text-align:center;flex:1}
+.back-btn{
+  background:rgba(255,255,255,.92);border:none;border-radius:50px;
+  padding:7px 16px;cursor:pointer;font-size:.85em;font-weight:700;
+  color:#444;white-space:nowrap;min-width:65px;
+  box-shadow:0 3px 10px rgba(0,0,0,.12);
+}
+.spacer{min-width:65px}
+
+/* ── SCROLL CONTENT ── */
+.sc{flex:1;overflow-y:auto;padding:18px 14px 50px;-webkit-overflow-scrolling:touch}
+
+/* ── HOME ── */
+.home-hero{text-align:center;padding:22px 10px 10px;color:#fff}
+.home-logo{font-size:3.8em;display:block;animation:bob 2.5s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.home-title{font-size:2em;font-weight:900;text-shadow:0 3px 12px rgba(0,0,0,.25);margin:8px 0 4px}
+.home-sub{font-size:.9em;opacity:.9}
+.home-flag{font-size:.9em;opacity:.8;margin-top:3px}
+
+.menu-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:13px;
+  padding:14px;max-width:520px;margin:0 auto;
+}
+.mc{
+  background:#fff;border-radius:var(--r);padding:22px 12px;
+  cursor:pointer;text-align:center;box-shadow:var(--shadow);
+  border:none;display:flex;flex-direction:column;
+  align-items:center;gap:8px;min-height:130px;justify-content:center;
+  transition:transform .15s,box-shadow .15s;
+}
+.mc:active{transform:scale(.94)}
+.mc-icon{font-size:2.6em}
+.mc-label{font-size:.95em;font-weight:800;color:#333;line-height:1.2}
+.mc-sub{font-size:.72em;color:#777}
+.mc.alpha{background:linear-gradient(135deg,#ff9a9e,#fecfef)}
+.mc.blend{background:linear-gradient(135deg,#a18cd1,#fbc2eb)}
+.mc.days{background:linear-gradient(135deg,#43e97b,#38f9d7)}
+.mc.months{background:linear-gradient(135deg,#4facfe,#00f2fe)}
+.mc.nums{background:linear-gradient(135deg,#f7971e,#ffd200)}
+.mc.count{background:linear-gradient(135deg,#f093fb,#f5576c)}
+.mc.wide{grid-column:span 2}
+
+.share-box{
+  background:rgba(255,255,255,.88);border-radius:15px;
+  padding:13px 18px;margin:8px 14px 20px;text-align:center;
+  font-size:.8em;color:#555;line-height:1.6;
+}
+.share-box strong{color:#333}
+
+/* ── LETTER GRID ── */
+.letter-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:9px;
+}
+@media(min-width:380px){.letter-grid{grid-template-columns:repeat(5,1fr)}}
+@media(min-width:500px){.letter-grid{grid-template-columns:repeat(6,1fr)}}
+
+.lcard{
+  background:#fff;border-radius:14px;padding:10px 4px;text-align:center;
+  cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.1);
+  transition:transform .15s;border:3px solid transparent;
+}
+.lcard:active{transform:scale(.9)}
+.lcard.playing{border-color:#fff;animation:pop .45s ease-in-out infinite alternate}
+@keyframes pop{from{transform:scale(1)}to{transform:scale(1.08)}}
+.l-big{font-size:1.7em;font-weight:900;line-height:1}
+.l-small{font-size:1.1em;font-weight:700;opacity:.55;line-height:1}
+.l-emoji{font-size:1.15em;margin:3px 0}
+.l-word{font-size:.6em;font-weight:600;color:#666}
+
+/* ── LETTER MODAL ── */
+.modal-wrap{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.7);z-index:300;
+  align-items:center;justify-content:center;padding:20px;
+}
+.modal-wrap.show{display:flex}
+.modal-card{
+  background:#fff;border-radius:28px;padding:35px 25px;
+  text-align:center;max-width:290px;width:100%;position:relative;
+  animation:popIn .3s cubic-bezier(.175,.885,.32,1.275);
+}
+@keyframes popIn{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.m-letter{font-size:4.5em;font-weight:900;line-height:1;margin-bottom:8px}
+.m-emoji{font-size:3em;margin:8px 0}
+.m-word{font-size:1.7em;font-weight:800;margin-bottom:4px}
+.m-sound{font-size:.9em;color:#777;margin-bottom:18px}
+.m-example{margin-top:12px;font-size:.82em;color:#999;font-style:italic}
+.close-btn{
+  position:absolute;top:14px;right:14px;
+  background:#eee;border:none;border-radius:50%;
+  width:34px;height:34px;font-size:1.1em;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+}
+.play-btn{
+  background:linear-gradient(135deg,#667eea,#764ba2);
+  color:#fff;border:none;border-radius:50px;
+  padding:14px 30px;font-size:1.05em;font-weight:700;
+  cursor:pointer;box-shadow:0 5px 18px rgba(102,126,234,.4);
+  display:inline-flex;align-items:center;gap:8px;
+  transition:transform .15s;
+}
+.play-btn:active{transform:scale(.95)}
+
+/* ── BLENDING ── */
+.blend-section-title{
+  color:rgba(255,255,255,.9);font-size:.9em;font-weight:700;
+  text-align:center;margin-bottom:14px;
+}
+.blend-pick-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;
+}
+.bpick{
+  background:#fff;border-radius:16px;padding:16px 8px;
+  text-align:center;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.1);
+  transition:transform .15s;border:none;
+}
+.bpick:active{transform:scale(.93)}
+.bpick.playing{background:linear-gradient(135deg,#a18cd1,#fbc2eb);animation:pop .45s infinite alternate}
+.bpick-emoji{font-size:1.6em;display:block;margin-bottom:4px}
+.bpick-word{font-size:1.1em;font-weight:900;color:#333}
+.bpick-sounds{font-size:.65em;color:#999;letter-spacing:2px;margin-top:2px}
+
+/* Blend game */
+.blend-game{
+  background:rgba(255,255,255,.15);border-radius:22px;
+  padding:22px 16px;text-align:center;margin-bottom:18px;
+}
+.blend-word-label{color:#fff;font-size:1.3em;font-weight:900;margin-bottom:6px}
+.blend-tip{color:rgba(255,255,255,.75);font-size:.85em;margin-bottom:18px}
+.bubbles-row{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:16px 0}
+.bubble{
+  background:#fff;border-radius:50%;width:70px;height:70px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.9em;font-weight:900;cursor:pointer;
+  box-shadow:var(--shadow);transition:all .15s;color:#333;border:none;
+}
+.bubble:active,.bubble.lit{
+  background:linear-gradient(135deg,#f093fb,#f5576c);color:#fff;transform:scale(1.12);
+}
+.sep{color:rgba(255,255,255,.7);font-size:1.5em;font-weight:900}
+.blend-btn{
+  background:linear-gradient(135deg,#43e97b,#38f9d7);
+  color:#1a6b3a;border:none;border-radius:50px;
+  padding:16px 36px;font-size:1.2em;font-weight:900;cursor:pointer;
+  box-shadow:0 5px 18px rgba(67,233,123,.4);
+  display:inline-flex;align-items:center;gap:8px;margin:12px 8px;
+  transition:transform .15s;
+}
+.blend-btn:active{transform:scale(.95)}
+.back-to-list{
+  background:rgba(255,255,255,.85);border:none;border-radius:50px;
+  padding:10px 22px;font-size:.88em;font-weight:700;color:#555;
+  cursor:pointer;margin:6px 8px;
+}
+.blend-result{
+  font-size:2.2em;font-weight:900;color:#fff;
+  text-shadow:0 2px 10px rgba(0,0,0,.2);
+  min-height:55px;display:flex;align-items:center;justify-content:center;
+}
+
+.cat-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:14px}
+.cat-btn{
+  background:rgba(255,255,255,.85);border:none;border-radius:50px;
+  padding:7px 16px;font-size:.8em;font-weight:700;color:#555;cursor:pointer;
+}
+.cat-btn.active{background:#fff;color:#764ba2;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.all-words-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+
+/* ── DAYS ── */
+.days-col{display:flex;flex-direction:column;gap:11px}
+.day-card{
+  background:#fff;border-radius:18px;padding:18px 20px;
+  cursor:pointer;box-shadow:var(--shadow);
+  display:flex;align-items:center;gap:16px;transition:transform .15s;
+  position:relative;overflow:hidden;border:none;width:100%;text-align:left;
+}
+.day-card:active{transform:scale(.97)}
+.day-card.playing{animation:pop .4s infinite alternate}
+.day-num{
+  border-radius:50%;width:42px;height:42px;
+  display:flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:1.1em;flex-shrink:0;
+}
+.day-name{font-size:1.3em;font-weight:800;flex:1}
+.day-emoji{font-size:1.6em}
+.today-badge{
+  font-size:.65em;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,#f7971e,#ffd200);
+  border-radius:50px;padding:3px 10px;margin-left:8px;
+  display:inline-block;vertical-align:middle;
+}
+.hear-all-btn{
+  background:rgba(255,255,255,.9);border:none;border-radius:50px;
+  padding:10px 24px;font-size:.9em;font-weight:700;cursor:pointer;color:#218c74;
+  display:block;margin:0 auto 16px;
+}
+
+/* ── MONTHS ── */
+.months-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.month-card{
+  background:#fff;border-radius:18px;padding:18px 14px;
+  cursor:pointer;box-shadow:var(--shadow);text-align:center;
+  transition:transform .15s;border:none;border-left:5px solid #ccc;
+}
+.month-card:active{transform:scale(.94)}
+.month-card.playing{animation:pop .4s infinite alternate}
+.month-num-tag{
+  font-size:.72em;font-weight:700;border-radius:50px;
+  padding:2px 10px;display:inline-block;margin-bottom:6px;
+}
+.month-name{font-size:1.1em;font-weight:800;display:block;margin-bottom:4px}
+.month-emoji{font-size:1.6em}
+.month-season{font-size:.68em;color:#888;margin-top:4px}
+.this-month{font-size:.65em;font-weight:800;color:#fff;
+  background:linear-gradient(135deg,#4facfe,#00f2fe);
+  border-radius:50px;padding:2px 8px;display:inline-block;margin-top:3px}
+
+/* ── NUMBERS ── */
+.num-browser{text-align:center;margin-bottom:20px}
+.num-big-card{
+  background:#fff;border-radius:28px;padding:28px 20px;
+  max-width:270px;margin:0 auto 18px;box-shadow:var(--shadow);
+  cursor:pointer;transition:transform .15s;
+}
+.num-big-card:active{transform:scale(.97)}
+.num-big{
+  font-size:5em;font-weight:900;line-height:1;
+  background:linear-gradient(135deg,#f7971e,#ffd200);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.num-word{font-size:1.6em;font-weight:700;color:#555;margin-top:8px;text-transform:capitalize}
+.num-dots{font-size:1.4em;margin:12px 0;line-height:1.5;min-height:55px}
+.num-tap-label{color:#bbb;font-size:.8em;margin-top:8px}
+
+.num-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:18px}
+.nav-arrow{
+  background:#fff;border:none;border-radius:50%;width:52px;height:52px;
+  font-size:1.4em;cursor:pointer;box-shadow:var(--shadow);
+  display:flex;align-items:center;justify-content:center;transition:transform .15s;
+}
+.nav-arrow:active{transform:scale(.9)}
+.nav-arrow:disabled{opacity:.35;cursor:not-allowed}
+.nav-progress{color:rgba(255,255,255,.85);font-size:.88em;font-weight:700;min-width:90px;text-align:center}
+
+.num-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:16px}
+@media(min-width:380px){.num-grid{grid-template-columns:repeat(6,1fr)}}
+.ngb{
+  background:#fff;border:none;border-radius:11px;
+  padding:10px 3px;font-size:1em;font-weight:700;cursor:pointer;
+  box-shadow:0 3px 8px rgba(0,0,0,.1);transition:transform .15s;
+}
+.ngb:active{transform:scale(.88)}
+.ngb.sel{background:linear-gradient(135deg,#f7971e,#ffd200);color:#fff;transform:scale(1.06)}
+
+/* ── COUNTING ── */
+.count-setup{text-align:center;margin-bottom:16px}
+.range-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.range-btn{
+  background:rgba(255,255,255,.85);border:none;border-radius:50px;
+  padding:9px 18px;font-size:.88em;font-weight:700;color:#555;cursor:pointer;
+}
+.range-btn.active{background:#fff;color:#f7971e;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.emoji-pick-row{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+.ep-btn{
+  background:rgba(255,255,255,.35);border:none;border-radius:10px;
+  padding:7px;font-size:1.5em;cursor:pointer;width:44px;height:44px;
+  display:flex;align-items:center;justify-content:center;transition:all .15s;
+}
+.ep-btn.sel{background:rgba(255,255,255,.95)}
+
+.count-area{background:rgba(255,255,255,.15);border-radius:22px;padding:22px 14px;text-align:center}
+.count-question{color:#fff;font-size:1.1em;font-weight:800;margin-bottom:16px}
+.emoji-grid{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;min-height:90px;margin:14px 0}
+.ce{
+  font-size:1.8em;cursor:pointer;border-radius:10px;
+  padding:5px;background:rgba(255,255,255,.2);
+  width:52px;height:52px;display:flex;align-items:center;justify-content:center;
+  transition:all .2s;border:2px solid transparent;
+}
+.ce.counted{background:rgba(67,233,123,.4);border-color:#43e97b;transform:scale(1.1)}
+.count-num{font-size:3.2em;font-weight:900;color:#fff;text-shadow:0 3px 10px rgba(0,0,0,.2);margin:10px 0 4px}
+.count-word{font-size:1.3em;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:14px;min-height:32px}
+.count-btns{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+.cbtn{
+  background:#fff;border:none;border-radius:50px;
+  padding:11px 22px;font-size:.9em;font-weight:700;cursor:pointer;
+  box-shadow:var(--shadow);display:inline-flex;align-items:center;gap:6px;transition:transform .15s;
+}
+.cbtn:active{transform:scale(.93)}
+.cbtn.hot{background:linear-gradient(135deg,#f093fb,#f5576c);color:#fff}
+
+.count-by-box{
+  margin-top:22px;background:rgba(255,255,255,.15);
+  border-radius:22px;padding:18px 14px;text-align:center;
+}
+.count-by-title{color:#fff;font-weight:800;font-size:1.05em;margin-bottom:14px}
+.count-by-row{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
+
+/* ── CONFETTI ── */
+.conf{
+  position:fixed;pointer-events:none;z-index:999;font-size:1.4em;
+  animation:flyUp 1.4s ease-out forwards;
+}
+@keyframes flyUp{
+  0%{transform:translateY(0) scale(1) rotate(0deg);opacity:1}
+  100%{transform:translateY(-180px) scale(0) rotate(540deg);opacity:0}
+}
+
+/* ── SECTION SUBTITLE ── */
+.sec-sub{
+  text-align:center;color:rgba(255,255,255,.88);
+  font-size:.9em;margin-bottom:14px;line-height:1.5;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HOME ═══════════════ -->
+<div id="pg-home" class="page active">
+  <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch">
+    <div class="home-hero">
+      <span class="home-logo">🌟</span>
+      <h1 class="home-title">Learn English</h1>
+      <p class="home-sub">Phonics &amp; Numbers for Beginners</p>
+      <p class="home-flag">New Zealand English 🇳🇿</p>
+    </div>
+    <div class="menu-grid">
+      <button class="mc alpha" onclick="go('pg-alpha')">
+        <span class="mc-icon">🔤</span>
+        <span class="mc-label">Letters &amp; Sounds</span>
+        <span class="mc-sub">A to Z phonics</span>
+      </button>
+      <button class="mc blend" onclick="go('pg-blend')">
+        <span class="mc-icon">🔗</span>
+        <span class="mc-label">Word Blending</span>
+        <span class="mc-sub">c–a–t → cat</span>
+      </button>
+      <button class="mc days" onclick="go('pg-days')">
+        <span class="mc-icon">📅</span>
+        <span class="mc-label">Days of Week</span>
+        <span class="mc-sub">Monday to Sunday</span>
+      </button>
+      <button class="mc months" onclick="go('pg-months')">
+        <span class="mc-icon">🗓️</span>
+        <span class="mc-label">Months of Year</span>
+        <span class="mc-sub">January to December</span>
+      </button>
+      <button class="mc nums" onclick="go('pg-nums')">
+        <span class="mc-icon">🔢</span>
+        <span class="mc-label">Numbers 0–100</span>
+        <span class="mc-sub">Read &amp; hear numbers</span>
+      </button>
+      <button class="mc count" onclick="go('pg-count')">
+        <span class="mc-icon">🧮</span>
+        <span class="mc-label">Counting Fun!</span>
+        <span class="mc-sub">Count with emojis</span>
+      </button>
+    </div>
+    <div class="share-box">
+      <strong>📱 Share via WhatsApp</strong><br>
+      Save this file to your phone → Open in browser → Send the file in WhatsApp chat.<br>
+      <strong>Works offline — no internet needed! ✅</strong>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ ALPHABET ═══════════════ -->
+<div id="pg-alpha" class="page">
+  <div class="hdr">
+    <button class="back-btn" onclick="go('pg-home')">← Home</button>
+    <span class="hdr-title">🔤 Letters &amp; Sounds</span>
+    <div class="spacer"></div>
+  </div>
+  <div class="sc">
+    <p class="sec-sub">Tap any letter to hear its sound 🔊</p>
+    <div style="text-align:center;margin-bottom:14px">
+      <button onclick="readAlpha()" style="background:rgba(255,255,255,.9);border:none;border-radius:50px;padding:10px 24px;font-size:.9em;font-weight:700;cursor:pointer;color:#5f27cd;">
+        ▶ Hear all letters A to Z
+      </button>
+    </div>
+    <div class="letter-grid" id="letterGrid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ BLENDING ═══════════════ -->
+<div id="pg-blend" class="page">
+  <div class="hdr">
+    <button class="back-btn" onclick="go('pg-home')">← Home</button>
+    <span class="hdr-title">🔗 Word Blending</span>
+    <div class="spacer"></div>
+  </div>
+  <div class="sc">
+    <p class="sec-sub">Tap sounds one by one, then blend! 🔊</p>
+
+    <!-- Word picker grid -->
+    <div id="blendPicker">
+      <p class="blend-section-title">⭐ Tap a word to practise blending:</p>
+      <div class="blend-pick-grid" id="blendPickGrid"></div>
+      <hr style="border-color:rgba(255,255,255,.25);margin:0 0 14px">
+      <p class="blend-section-title">📝 All CVC words — tap to hear:</p>
+      <div class="cat-row" id="catRow"></div>
+      <div class="all-words-grid" id="allWordsGrid"></div>
+    </div>
+
+    <!-- Blend game area -->
+    <div id="blendGame" style="display:none">
+      <div class="blend-game">
+        <div class="blend-word-label" id="bgLabel"></div>
+        <div class="blend-tip">Tap each sound bubble 👇</div>
+        <div class="bubbles-row" id="bubblesRow"></div>
+        <div>
+          <button class="blend-btn" onclick="blendIt()">🔗 Blend it!</button>
+          <button class="back-to-list" onclick="showBlendPicker()">← Back</button>
+          <button class="back-to-list" onclick="nextBlend()">Next word →</button>
+        </div>
+        <div class="blend-result" id="blendResult"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DAYS ═══════════════ -->
+<div id="pg-days" class="page">
+  <div class="hdr">
+    <button class="back-btn" onclick="go('pg-home')">← Home</button>
+    <span class="hdr-title">📅 Days of the Week</span>
+    <div class="spacer"></div>
+  </div>
+  <div class="sc">
+    <p class="sec-sub">Tap a day to hear it 🔊</p>
+    <button class="hear-all-btn" onclick="hearAllDays()">▶ Hear all days in order</button>
+    <div class="days-col" id="daysCol"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ MONTHS ═══════════════ -->
+<div id="pg-months" class="page">
+  <div class="hdr">
+    <button class="back-btn" onclick="go('pg-home')">← Home</button>
+    <span class="hdr-title">🗓️ Months of the Year</span>
+    <div class="spacer"></div>
+  </div>
+  <div class="sc">
+    <p class="sec-sub">Tap a month to hear it 🔊</p>
+    <button class="hear-all-btn" onclick="hearAllMonths()">▶ Hear all months in order</button>
+    <div class="months-grid" id="monthsGrid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ NUMBERS ═══════════════ -->
+<div id="pg-nums" class="page">
+  <div class="hdr">
+    <button class="back-btn" onclick="go('pg-home')">← Home</button>
+    <span class="hdr-title">🔢 Numbers 0–100</span>
+    <div class="spacer"></div>
+  </div>
+  <div class="sc">
+    <div class="num-browser">
+      <div class="num-big-card" onclick="playNum(curNum)">
+        <div class="num-big" id="nBig">0</div>
+        <div class="num-word" id="nWord">zero</div>
+        <div class="num-dots" id="nDots">⭕</div>
+        <div class="num-tap-label">🔊 Tap to hear</div>
+      </div>
+      <div class="num-nav">
+        <button class="nav-arrow" id="nPrev" onclick="stepNum(-1)">◀</button>
+        <div class="nav-progress" id="nProg">1 of 101</div>
+        <button class="nav-arrow" id="nNext" onclick="stepNum(1)">▶</button>
+      </div>
+    </div>
+    <p class="sec-sub">Or tap any number below:</p>
+    <div style="text-align:center;margin-bottom:10px;font-size:.78em;color:rgba(255,255,255,.75);">
+      🟦 = ten &nbsp;|&nbsp; 🟨 = one &nbsp;|&nbsp; ⭐ = 1–20
+    </div>
+    <div class="num-grid" id="numGrid"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ COUNTING ═══════════════ -->
+<div id="pg-count" class="page">
+  <div class="hdr">
+    <button class="back-btn" onclick="go('pg-home')">← Home</button>
+    <span class="hdr-title">🧮 Counting Fun!</span>
+    <div class="spacer"></div>
+  </div>
+  <div class="sc">
+    <div class="count-setup">
+      <p style="color:rgba(255,255,255,.9);font-size:.88em;font-weight:700;margin-bottom:10px">Count up to:</p>
+      <div class="range-row">
+        <button class="range-btn active" onclick="setMax(10,this)">1–10</button>
+        <button class="range-btn" onclick="setMax(20,this)">1–20</button>
+        <button class="range-btn" onclick="setMax(50,this)">1–50</button>
+        <button class="range-btn" onclick="setMax(100,this)">1–100</button>
+      </div>
+      <p style="color:rgba(255,255,255,.85);font-size:.82em;margin-bottom:8px">Choose your emoji:</p>
+      <div class="emoji-pick-row" id="emojiPickRow"></div>
+    </div>
+
+    <div class="count-area">
+      <div class="count-question" id="cQuestion">How many? Tap each one! 👇</div>
+      <div class="emoji-grid" id="emojiGrid"></div>
+      <div class="count-num" id="cNum">0</div>
+      <div class="count-word" id="cWord">Tap an emoji to start!</div>
+      <div class="count-btns">
+        <button class="cbtn" onclick="newCount()">🔄 New count</button>
+        <button class="cbtn" onclick="countAll()">📢 Count all!</button>
+        <button class="cbtn hot" onclick="randomCount()">🎲 Random!</button>
+      </div>
+    </div>
+
+    <div class="count-by-box">
+      <div class="count-by-title">🔢 Skip counting practice</div>
+      <div class="count-by-row">
+        <button class="cbtn" onclick="countBy(1)">Count by 1s</button>
+        <button class="cbtn" onclick="countBy(2)">Count by 2s</button>
+        <button class="cbtn" onclick="countBy(5)">Count by 5s</button>
+        <button class="cbtn" onclick="countBy(10)">Count by 10s</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ LETTER MODAL ═══════════════ -->
+<div class="modal-wrap" id="letterModal" onclick="closeMod(event)">
+  <div class="modal-card" id="modalCard">
+    <button class="close-btn" onclick="closeMod()">✕</button>
+    <div class="m-letter" id="mLetter">A a</div>
+    <div class="m-emoji" id="mEmoji">🍎</div>
+    <div class="m-word" id="mWord">apple</div>
+    <div class="m-sound" id="mSound">Sound: "ah"</div>
+    <button class="play-btn" onclick="playModalSound()">🔊 Hear the sound</button>
+    <div class="m-example" id="mExample"></div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════
+//  DATA
+// ════════════════════════════════════════
+
+const ALPHA = [
+  {L:'A',w:'apple',   e:'🍎',p:'aah',       d:'Sound: "ah" (like in apple)',   s:'A. The sound is ah. ah, ah, apple.'},
+  {L:'B',w:'ball',    e:'⚽', p:'buh',       d:'Sound: "buh" (like in ball)',   s:'B. buh, buh, ball.'},
+  {L:'C',w:'cat',     e:'🐱',p:'kuh',       d:'Sound: "kuh" (like in cat)',    s:'C. kuh, kuh, cat.'},
+  {L:'D',w:'dog',     e:'🐕', p:'duh',       d:'Sound: "duh" (like in dog)',    s:'D. duh, duh, dog.'},
+  {L:'E',w:'egg',     e:'🥚',p:'eh',        d:'Sound: "eh" (like in egg)',     s:'E. The sound is eh. eh, eh, egg.'},
+  {L:'F',w:'fish',    e:'🐟',p:'fff',       d:'Sound: "fff" (like in fish)',   s:'F. fff, fff, fish.'},
+  {L:'G',w:'go',      e:'🟢',p:'guh',       d:'Sound: "guh" (like in go)',     s:'G. guh, guh, go.'},
+  {L:'H',w:'hat',     e:'🎩',p:'huh',       d:'Sound: "huh" (like in hat)',    s:'H. huh, huh, hat.'},
+  {L:'I',w:'insect',  e:'🐛',p:'ih',        d:'Sound: "ih" (like in insect)',  s:'I. The sound is ih. ih, ih, insect.'},
+  {L:'J',w:'jump',    e:'🦘',p:'juh',       d:'Sound: "juh" (like in jump)',   s:'J. juh, juh, jump.'},
+  {L:'K',w:'kiwi',    e:'🥝',p:'kuh',       d:'Sound: "kuh" (like in kiwi)',   s:'K. kuh, kuh, kiwi.'},
+  {L:'L',w:'lion',    e:'🦁',p:'luh',       d:'Sound: "luh" (like in lion)',   s:'L. luh, luh, lion.'},
+  {L:'M',w:'mum',     e:'👩',p:'mmm',       d:'Sound: "mmm" (like in mum)',    s:'M. mmm, mmm, mum.'},
+  {L:'N',w:'nose',    e:'👃',p:'nnn',       d:'Sound: "nnn" (like in nose)',   s:'N. nnn, nnn, nose.'},
+  {L:'O',w:'orange',  e:'🍊',p:'oh',        d:'Sound: "oh" (like in orange)',  s:'O. The sound is oh. oh, oh, orange.'},
+  {L:'P',w:'pen',     e:'✏️', p:'puh',       d:'Sound: "puh" (like in pen)',    s:'P. puh, puh, pen.'},
+  {L:'Q',w:'queen',   e:'👸',p:'kwuh',      d:'Sound: "kwuh" (like in queen)', s:'Q. kwuh, kwuh, queen.'},
+  {L:'R',w:'run',     e:'🏃',p:'ruh',       d:'Sound: "ruh" (like in run)',    s:'R. ruh, ruh, run.'},
+  {L:'S',w:'sun',     e:'☀️', p:'sss',       d:'Sound: "sss" (like in sun)',    s:'S. sss, sss, sun.'},
+  {L:'T',w:'tree',    e:'🌲',p:'tuh',       d:'Sound: "tuh" (like in tree)',   s:'T. tuh, tuh, tree.'},
+  {L:'U',w:'umbrella',e:'☂️', p:'uh',        d:'Sound: "uh" (like in umbrella)',s:'U. The sound is uh. uh, uh, umbrella.'},
+  {L:'V',w:'van',     e:'🚐',p:'vvv',       d:'Sound: "vvv" (like in van)',    s:'V. vvv, vvv, van.'},
+  {L:'W',w:'water',   e:'💧',p:'wuh',       d:'Sound: "wuh" (like in water)',  s:'W. wuh, wuh, water.'},
+  {L:'X',w:'box',     e:'📦',p:'ks',        d:'Sound: "ks" (like in box)',     s:'X. ks, ks, box.'},
+  {L:'Y',w:'yellow',  e:'🌟',p:'yuh',       d:'Sound: "yuh" (like in yellow)', s:'Y. yuh, yuh, yellow.'},
+  {L:'Z',w:'zip',     e:'🤐',p:'zzz',       d:'Sound: "zzz" (like in zip)',    s:'Z. zzz, zzz, zip.'},
+];
+
+const L_COLORS = [
+  '#ff6b6b','#ff9f43','#feca57','#48dbfb','#ff9ff3','#54a0ff',
+  '#5f27cd','#c44569','#43e97b','#f7971e','#00d2d3','#ff6348',
+  '#2ed573','#eccc68','#a29bfe','#fd79a8','#6c5ce7','#fdcb6e',
+  '#e17055','#74b9ff','#55efc4','#d63031','#0984e3','#e84393',
+  '#00b894','#b2bec3'
+];
+
+const DAYS = [
+  {n:'Monday',    e:'💼',fun:'First day of the week.'},
+  {n:'Tuesday',   e:'📚',fun:'Second day of the week.'},
+  {n:'Wednesday', e:'🌿',fun:'Middle of the week!'},
+  {n:'Thursday',  e:'⚡',fun:'Almost Friday!'},
+  {n:'Friday',    e:'🎉',fun:'Last day of school or work!'},
+  {n:'Saturday',  e:'🎮',fun:'Weekend! Fun day!'},
+  {n:'Sunday',    e:'☀️', fun:'Weekend! Rest day!'},
+];
+
+const MONTHS = [
+  {n:'January',  e:'🎆',s:'Summer in NZ 🌞'},
+  {n:'February', e:'💝',s:'Summer in NZ 🌞'},
+  {n:'March',    e:'🍂',s:'Autumn in NZ 🍁'},
+  {n:'April',    e:'🌧️', s:'Autumn in NZ 🍁'},
+  {n:'May',      e:'🍁',s:'Autumn in NZ 🍁'},
+  {n:'June',     e:'❄️', s:'Winter in NZ ❄️'},
+  {n:'July',     e:'☃️', s:'Winter in NZ ❄️'},
+  {n:'August',   e:'🌱',s:'Winter in NZ ❄️'},
+  {n:'September',e:'🌸',s:'Spring in NZ 🌺'},
+  {n:'October',  e:'🌺',s:'Spring in NZ 🌺'},
+  {n:'November', e:'🌻',s:'Spring in NZ 🌺'},
+  {n:'December', e:'🎄',s:'Summer in NZ 🌞'},
+];
+
+const M_COLORS = [
+  '#ff6b6b','#ff9f43','#feca57','#48dbfb','#ff9ff3','#54a0ff',
+  '#5f27cd','#c44569','#218c74','#34ace0','#ff5252','#c0392b'
+];
+
+// Number words (programmatically generated)
+function makeNumWords(){
+  const ones=['','one','two','three','four','five','six','seven','eight','nine',
+    'ten','eleven','twelve','thirteen','fourteen','fifteen','sixteen',
+    'seventeen','eighteen','nineteen'];
+  const tens=['','','twenty','thirty','forty','fifty','sixty','seventy','eighty','ninety'];
+  const w=new Array(101);
+  w[0]='zero';
+  for(let i=1;i<=19;i++) w[i]=ones[i];
+  for(let i=20;i<=99;i++){
+    const t=Math.floor(i/10), o=i%10;
+    w[i]=tens[t]+(o?' '+ones[o]:'');
+  }
+  w[100]='one hundred';
+  return w;
+}
+const NUM_WORDS = makeNumWords();
+
+const CVC = [
+  // -at family
+  {w:'cat',s:['c','a','t'],p:['kuh','aah','tuh'],e:'🐱'},
+  {w:'bat',s:['b','a','t'],p:['buh','aah','tuh'],e:'🦇'},
+  {w:'rat',s:['r','a','t'],p:['ruh','aah','tuh'],e:'🐭'},
+  {w:'mat',s:['m','a','t'],p:['mmm','aah','tuh'],e:'🟫'},
+  {w:'sat',s:['s','a','t'],p:['sss','aah','tuh'],e:'🪑'},
+  {w:'hat',s:['h','a','t'],p:['huh','aah','tuh'],e:'🎩'},
+  {w:'fat',s:['f','a','t'],p:['fff','aah','tuh'],e:'🍩'},
+  {w:'pat',s:['p','a','t'],p:['puh','aah','tuh'],e:'🐾'},
+  // -an family
+  {w:'can',s:['c','a','n'],p:['kuh','aah','nnn'],e:'🥤'},
+  {w:'man',s:['m','a','n'],p:['mmm','aah','nnn'],e:'👨'},
+  {w:'pan',s:['p','a','n'],p:['puh','aah','nnn'],e:'🍳'},
+  {w:'van',s:['v','a','n'],p:['vvv','aah','nnn'],e:'🚐'},
+  {w:'ran',s:['r','a','n'],p:['ruh','aah','nnn'],e:'🏃'},
+  // -ag family
+  {w:'bag',s:['b','a','g'],p:['buh','aah','guh'],e:'👜'},
+  {w:'rag',s:['r','a','g'],p:['ruh','aah','guh'],e:'🧹'},
+  {w:'tag',s:['t','a','g'],p:['tuh','aah','guh'],e:'🏷️'},
+  {w:'wag',s:['w','a','g'],p:['wuh','aah','guh'],e:'🐕'},
+  // -ed family
+  {w:'bed',s:['b','e','d'],p:['buh','eh','duh'],e:'🛏️'},
+  {w:'red',s:['r','e','d'],p:['ruh','eh','duh'],e:'🔴'},
+  {w:'fed',s:['f','e','d'],p:['fff','eh','duh'],e:'🍽️'},
+  {w:'led',s:['l','e','d'],p:['luh','eh','duh'],e:'💡'},
+  // -en family
+  {w:'hen',s:['h','e','n'],p:['huh','eh','nnn'],e:'🐔'},
+  {w:'ten',s:['t','e','n'],p:['tuh','eh','nnn'],e:'🔟'},
+  {w:'pen',s:['p','e','n'],p:['puh','eh','nnn'],e:'✏️'},
+  {w:'men',s:['m','e','n'],p:['mmm','eh','nnn'],e:'👨‍👨‍👦'},
+  // -ig family
+  {w:'big',s:['b','i','g'],p:['buh','ih','guh'],e:'🐘'},
+  {w:'dig',s:['d','i','g'],p:['duh','ih','guh'],e:'⛏️'},
+  {w:'pig',s:['p','i','g'],p:['puh','ih','guh'],e:'🐷'},
+  {w:'wig',s:['w','i','g'],p:['wuh','ih','guh'],e:'💇'},
+  // -it family
+  {w:'bit',s:['b','i','t'],p:['buh','ih','tuh'],e:'🦷'},
+  {w:'sit',s:['s','i','t'],p:['sss','ih','tuh'],e:'🪑'},
+  {w:'hit',s:['h','i','t'],p:['huh','ih','tuh'],e:'🥊'},
+  {w:'fit',s:['f','i','t'],p:['fff','ih','tuh'],e:'💪'},
+  {w:'kit',s:['k','i','t'],p:['kuh','ih','tuh'],e:'🧰'},
+  // -og family
+  {w:'dog',s:['d','o','g'],p:['duh','oh','guh'],e:'🐕'},
+  {w:'log',s:['l','o','g'],p:['luh','oh','guh'],e:'🪵'},
+  {w:'fog',s:['f','o','g'],p:['fff','oh','guh'],e:'🌫️'},
+  {w:'jog',s:['j','o','g'],p:['juh','oh','guh'],e:'🏃'},
+  // -ot family
+  {w:'hot',s:['h','o','t'],p:['huh','oh','tuh'],e:'🌡️'},
+  {w:'pot',s:['p','o','t'],p:['puh','oh','tuh'],e:'🍲'},
+  {w:'lot',s:['l','o','t'],p:['luh','oh','tuh'],e:'💰'},
+  {w:'dot',s:['d','o','t'],p:['duh','oh','tuh'],e:'🔵'},
+  {w:'cot',s:['c','o','t'],p:['kuh','oh','tuh'],e:'🛏️'},
+  // -ug family
+  {w:'bug',s:['b','u','g'],p:['buh','uh','guh'],e:'🐛'},
+  {w:'mug',s:['m','u','g'],p:['mmm','uh','guh'],e:'☕'},
+  {w:'rug',s:['r','u','g'],p:['ruh','uh','guh'],e:'🪴'},
+  {w:'hug',s:['h','u','g'],p:['huh','uh','guh'],e:'🤗'},
+  // -un family
+  {w:'sun',s:['s','u','n'],p:['sss','uh','nnn'],e:'☀️'},
+  {w:'bun',s:['b','u','n'],p:['buh','uh','nnn'],e:'🍞'},
+  {w:'fun',s:['f','u','n'],p:['fff','uh','nnn'],e:'🎉'},
+  {w:'run',s:['r','u','n'],p:['ruh','uh','nnn'],e:'🏃'},
+  // -ut family
+  {w:'nut',s:['n','u','t'],p:['nnn','uh','tuh'],e:'🥜'},
+  {w:'cut',s:['c','u','t'],p:['kuh','uh','tuh'],e:'✂️'},
+  {w:'hut',s:['h','u','t'],p:['huh','uh','tuh'],e:'🏠'},
+  {w:'but',s:['b','u','t'],p:['buh','uh','tuh'],e:'↩️'},
+  // -up
+  {w:'cup',s:['c','u','p'],p:['kuh','uh','puh'],e:'☕'},
+  {w:'pup',s:['p','u','p'],p:['puh','uh','puh'],e:'🐶'},
+];
+
+const CATEGORIES = [
+  {n:'-at / -an / -ag',f:w=>['at','an','ag'].includes(w.w.slice(-2))},
+  {n:'-ed / -en',      f:w=>['ed','en'].includes(w.w.slice(-2))},
+  {n:'-ig / -it',      f:w=>['ig','it'].includes(w.w.slice(-2))},
+  {n:'-og / -ot',      f:w=>['og','ot'].includes(w.w.slice(-2))},
+  {n:'-ug / -un / -ut',f:w=>['ug','un','ut','up'].includes(w.w.slice(-2))},
+];
+
+const COUNT_EMOJIS = ['⭐','🍎','🐱','🐶','🌸','🚗','🍕','🎈','🦋','🏠'];
+
+// ════════════════════════════════════════
+//  SPEECH
+// ════════════════════════════════════════
+
+let _voices = [];
+window.speechSynthesis.onvoiceschanged = () => { _voices = window.speechSynthesis.getVoices(); };
+_voices = window.speechSynthesis.getVoices();
+
+function bestVoice(){
+  if(!_voices.length) _voices = window.speechSynthesis.getVoices();
+  return _voices.find(v=>v.lang==='en-NZ')
+      || _voices.find(v=>v.lang==='en-AU')
+      || _voices.find(v=>v.lang==='en-GB')
+      || _voices.find(v=>v.lang.startsWith('en') && /female|woman|samantha|karen|victoria|moira|tessa/i.test(v.name))
+      || _voices.find(v=>v.lang.startsWith('en'))
+      || null;
+}
+
+function say(text, opts={}, cb){
+  window.speechSynthesis.cancel();
+  if(_qTimer){ clearTimeout(_qTimer); _qTimer=null; }
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang   = 'en-NZ';
+  u.rate   = opts.rate  || 0.82;
+  u.pitch  = opts.pitch || 1.05;
+  u.volume = 1;
+  const v = bestVoice(); if(v) u.voice = v;
+  if(cb) u.onend = cb;
+  window.speechSynthesis.speak(u);
+}
+
+let _qTimer = null;
+function sayQ(items, idx=0){
+  if(idx>=items.length) return;
+  window.speechSynthesis.cancel();
+  if(_qTimer){ clearTimeout(_qTimer); _qTimer=null; }
+  const it = items[idx];
+  const u = new SpeechSynthesisUtterance(it.text);
+  u.lang   = 'en-NZ';
+  u.rate   = it.rate  || 0.82;
+  u.pitch  = it.pitch || 1.05;
+  u.volume = 1;
+  const v = bestVoice(); if(v) u.voice = v;
+  u.onend = () => {
+    const delay = it.delay || 0;
+    _qTimer = setTimeout(() => sayQ(items, idx+1), delay);
+  };
+  window.speechSynthesis.speak(u);
+}
+
+// ════════════════════════════════════════
+//  NAVIGATION
+// ════════════════════════════════════════
+
+function go(id){
+  window.speechSynthesis.cancel();
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const pg = document.getElementById(id);
+  if(pg) pg.classList.add('active');
+  const sc = pg && pg.querySelector('.sc');
+  if(sc) sc.scrollTop = 0;
+}
+
+// ════════════════════════════════════════
+//  ALPHABET
+// ════════════════════════════════════════
+
+let _curModal = null;
+
+function buildAlpha(){
+  document.getElementById('letterGrid').innerHTML = ALPHA.map((d,i)=>`
+    <div class="lcard" id="lc${i}" onclick="openModal(${i})"
+         style="background:linear-gradient(135deg,${L_COLORS[i]}22,${L_COLORS[i]}44)">
+      <div class="l-big" style="color:${L_COLORS[i]}">${d.L}</div>
+      <div class="l-small" style="color:${L_COLORS[i]}">${d.L.toLowerCase()}</div>
+      <div class="l-emoji">${d.e}</div>
+      <div class="l-word">${d.w}</div>
+    </div>`).join('');
+}
+
+function openModal(i){
+  const d = ALPHA[i];
+  _curModal = d;
+  document.getElementById('mLetter').textContent = d.L + '  ' + d.L.toLowerCase();
+  document.getElementById('mEmoji').textContent   = d.e;
+  document.getElementById('mWord').textContent    = d.w;
+  document.getElementById('mSound').textContent   = d.d;
+  document.getElementById('mExample').textContent = `"${d.L} is for ${d.w}"`;
+  document.getElementById('letterModal').classList.add('show');
+  setTimeout(()=>say(d.s, {rate:0.72}), 350);
+  pop();
+}
+
+function closeMod(evt){
+  if(!evt || evt.target===document.getElementById('letterModal')){
+    document.getElementById('letterModal').classList.remove('show');
+    window.speechSynthesis.cancel();
+  }
+}
+
+function playModalSound(){
+  if(_curModal) say(_curModal.s, {rate:0.72});
+  pop();
+}
+
+function readAlpha(){
+  sayQ(ALPHA.flatMap(d=>[
+    {text:d.L, rate:0.7, delay:150},
+    {text:d.p, rate:0.7, delay:500},
+  ]));
+}
+
+// ════════════════════════════════════════
+//  BLENDING
+// ════════════════════════════════════════
+
+let _curBlend = null;
+
+function buildBlend(){
+  // Featured 15 words (spread across families)
+  const featured = [CVC[0],CVC[8],CVC[13],CVC[17],CVC[21],CVC[25],CVC[30],
+                    CVC[35],CVC[38],CVC[43],CVC[46],CVC[49],CVC[52],CVC[53],CVC[55]];
+  document.getElementById('blendPickGrid').innerHTML = featured.map((w,i)=>{
+    const idx = CVC.indexOf(w);
+    return `<div class="bpick" onclick="startBlend(${idx})">
+      <span class="bpick-emoji">${w.e}</span>
+      <span class="bpick-word">${w.w}</span>
+      <span class="bpick-sounds">${w.s.join(' - ')}</span>
+    </div>`;
+  }).join('');
+
+  // Category buttons
+  document.getElementById('catRow').innerHTML = CATEGORIES.map((c,i)=>`
+    <button class="cat-btn ${i===0?'active':''}" onclick="filterCat(${i},this)">${c.n}</button>
+  `).join('');
+  filterCat(0, null);
+}
+
+function filterCat(idx, btn){
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  const words = CVC.filter(CATEGORIES[idx].f);
+  document.getElementById('allWordsGrid').innerHTML = words.map(w=>{
+    const i = CVC.indexOf(w);
+    return `<div class="bpick" onclick="quickPlayBlend(${i})">
+      <span class="bpick-emoji">${w.e}</span>
+      <span class="bpick-word">${w.w}</span>
+      <span class="bpick-sounds">${w.s.join(' - ')}</span>
+    </div>`;
+  }).join('');
+}
+
+function quickPlayBlend(i){
+  const w = CVC[i];
+  sayQ([
+    {text:w.p[0],rate:0.72,delay:200},
+    {text:w.p[1],rate:0.72,delay:200},
+    {text:w.p[2],rate:0.72,delay:350},
+    {text:w.w,   rate:0.88,delay:0},
+  ]);
+  pop();
+}
+
+function startBlend(i){
+  _curBlend = CVC[i];
+  document.getElementById('blendPicker').style.display = 'none';
+  document.getElementById('blendGame').style.display   = 'block';
+  document.getElementById('bgLabel').textContent = _curBlend.e + '  ' + _curBlend.w.toUpperCase();
+  document.getElementById('blendResult').textContent = '';
+
+  document.getElementById('bubblesRow').innerHTML = _curBlend.s.map((s,i)=>`
+    ${i>0?'<span class="sep">–</span>':''}
+    <button class="bubble" id="bb${i}" onclick="tapBubble(${i})">${s}</button>
+  `).join('');
+}
+
+function tapBubble(i){
+  if(!_curBlend) return;
+  const bb = document.getElementById('bb'+i);
+  bb.classList.add('lit');
+  say(_curBlend.p[i], {rate:0.7}, ()=>setTimeout(()=>bb.classList.remove('lit'),250));
+}
+
+function blendIt(){
+  if(!_curBlend) return;
+  const res = document.getElementById('blendResult');
+  res.textContent = '';
+
+  _curBlend.s.forEach((_,i)=>{
+    setTimeout(()=>{
+      const bb = document.getElementById('bb'+i);
+      if(bb){ bb.classList.add('lit'); setTimeout(()=>bb.classList.remove('lit'),350); }
+    }, i*350);
+  });
+
+  setTimeout(()=>{
+    res.textContent = _curBlend.e + '  ' + _curBlend.w + '!';
+    say(_curBlend.w, {rate:0.85, pitch:1.15});
+    celebrate();
+  }, _curBlend.s.length*350+200);
+}
+
+function showBlendPicker(){
+  document.getElementById('blendPicker').style.display = 'block';
+  document.getElementById('blendGame').style.display   = 'none';
+  _curBlend = null;
+  window.speechSynthesis.cancel();
+}
+
+function nextBlend(){
+  const cur = _curBlend ? CVC.indexOf(_curBlend) : -1;
+  const next = (cur + 1) % CVC.length;
+  startBlend(next);
+}
+
+// ════════════════════════════════════════
+//  DAYS
+// ════════════════════════════════════════
+
+const DAY_COLORS=['#ff6b6b','#ff9f43','#feca57','#48dbfb','#ff9ff3','#54a0ff','#5f27cd'];
+
+function buildDays(){
+  const today = new Date().getDay(); // 0=Sun
+  const todayIdx = today===0 ? 6 : today-1; // Mon=0 in our array
+  document.getElementById('daysCol').innerHTML = DAYS.map((d,i)=>`
+    <button class="day-card" id="dc${i}" onclick="playDay(${i})">
+      <div class="day-num" style="background:${DAY_COLORS[i]}22;color:${DAY_COLORS[i]}">${i+1}</div>
+      <span class="day-name">
+        ${d.n}${i===todayIdx?'<span class="today-badge">TODAY!</span>':''}
+      </span>
+      <span class="day-emoji">${d.e}</span>
+      <span style="font-size:1.3em;opacity:.4">🔊</span>
+    </button>`).join('');
+}
+
+function playDay(i){
+  const d = DAYS[i];
+  const card = document.getElementById('dc'+i);
+  card.classList.add('playing');
+  say(`${d.n}. ${d.n}. ${d.fun}`, {rate:0.82}, ()=>card.classList.remove('playing'));
+  pop();
+}
+
+function hearAllDays(){
+  sayQ(DAYS.map(d=>({text:d.n,rate:0.82,delay:500})));
+}
+
+// ════════════════════════════════════════
+//  MONTHS
+// ════════════════════════════════════════
+
+function buildMonths(){
+  const todayMonth = new Date().getMonth(); // 0=Jan
+  document.getElementById('monthsGrid').innerHTML = MONTHS.map((m,i)=>`
+    <div class="month-card" id="mc${i}" onclick="playMonth(${i})"
+         style="border-left-color:${M_COLORS[i]}">
+      <div class="month-num-tag" style="color:${M_COLORS[i]};background:${M_COLORS[i]}22">
+        Month ${i+1}
+      </div>
+      <span class="month-name">${m.n}</span>
+      <div class="month-emoji">${m.e}</div>
+      <div class="month-season">${m.s}</div>
+      ${i===todayMonth?'<span class="this-month">THIS MONTH!</span>':''}
+    </div>`).join('');
+}
+
+function playMonth(i){
+  const m = MONTHS[i];
+  const card = document.getElementById('mc'+i);
+  card.classList.add('playing');
+  say(`${m.n}. Month number ${i+1}. ${m.n}. ${m.s.replace('🌞','').replace('🍁','').replace('❄️','').replace('🌺','').trim()}`, {rate:0.82}, ()=>card.classList.remove('playing'));
+  pop();
+}
+
+function hearAllMonths(){
+  sayQ(MONTHS.map(m=>({text:m.n,rate:0.82,delay:500})));
+}
+
+// ════════════════════════════════════════
+//  NUMBERS
+// ════════════════════════════════════════
+
+let curNum = 0;
+
+function dots(n){
+  if(n===0) return '⭕';
+  if(n<=20) return '⭐'.repeat(n);
+  // Base-10 blocks: 🟦 = ten, 🟨 = one
+  const t=Math.floor(n/10), o=n%10;
+  return '🟦'.repeat(t)+(o?' '+'🟨'.repeat(o):'');
+}
+
+function buildNumGrid(){
+  document.getElementById('numGrid').innerHTML =
+    Array.from({length:101},(_,i)=>`
+      <button class="ngb ${i===0?'sel':''}" id="ng${i}" onclick="pickNum(${i})">${i}</button>
+    `).join('');
+}
+
+function refreshNumDisplay(){
+  const n = curNum;
+  document.getElementById('nBig').textContent  = n;
+  document.getElementById('nWord').textContent = NUM_WORDS[n];
+  document.getElementById('nDots').textContent = dots(n);
+  document.getElementById('nProg').textContent = `${n+1} of 101`;
+  document.getElementById('nPrev').disabled = n===0;
+  document.getElementById('nNext').disabled = n===100;
+}
+
+function pickNum(n){
+  document.querySelectorAll('.ngb').forEach(b=>b.classList.remove('sel'));
+  const btn = document.getElementById('ng'+n);
+  if(btn){ btn.classList.add('sel'); btn.scrollIntoView({behavior:'smooth',block:'nearest'}); }
+  curNum = n;
+  refreshNumDisplay();
+  playNum(n);
+}
+
+function stepNum(d){
+  const n = curNum+d;
+  if(n<0||n>100) return;
+  pickNum(n);
+}
+
+function playNum(n){
+  say(`${n}. ${NUM_WORDS[n]}`, {rate:0.82});
+  pop();
+}
+
+// ════════════════════════════════════════
+//  COUNTING
+// ════════════════════════════════════════
+
+let cMax=10, cTarget=5, cCurrent=0, cEmoji='⭐';
+
+function buildEmojiPicker(){
+  document.getElementById('emojiPickRow').innerHTML = COUNT_EMOJIS.map(e=>`
+    <button class="ep-btn ${e===cEmoji?'sel':''}" onclick="pickEmoji('${e}',this)">${e}</button>
+  `).join('');
+}
+
+function pickEmoji(e, btn){
+  cEmoji = e;
+  document.querySelectorAll('.ep-btn').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  randomCount();
+}
+
+function setMax(m, btn){
+  cMax = m;
+  document.querySelectorAll('.range-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  randomCount();
+}
+
+function randomCount(){
+  cTarget  = Math.floor(Math.random()*cMax)+1;
+  cCurrent = 0;
+  renderEmojis();
+  document.getElementById('cNum').textContent  = '0';
+  document.getElementById('cWord').textContent = 'Tap to start counting!';
+  document.getElementById('cQuestion').textContent = `How many ${cEmoji}? Tap each one! 👇`;
+  say(`How many? Count the objects!`, {rate:0.85});
+}
+
+function newCount(){
+  cTarget  = cMax > 0 ? cTarget : 5;
+  cCurrent = 0;
+  renderEmojis();
+  document.getElementById('cNum').textContent  = '0';
+  document.getElementById('cWord').textContent = 'Tap to start!';
+}
+
+function renderEmojis(){
+  document.getElementById('emojiGrid').innerHTML =
+    Array.from({length:cTarget},(_,i)=>`
+      <div class="ce ${i<cCurrent?'counted':''}" id="ce${i}" onclick="tapCount(${i})">${cEmoji}</div>
+    `).join('');
+}
+
+function tapCount(i){
+  if(i!==cCurrent) return; // must count in order
+  cCurrent++;
+  document.getElementById('ce'+i).classList.add('counted');
+  document.getElementById('cNum').textContent  = cCurrent;
+  document.getElementById('cWord').textContent = NUM_WORDS[cCurrent];
+  say(`${cCurrent}`, {rate:0.9});
+  if(cCurrent===cTarget){
+    setTimeout(()=>{
+      say(`${cTarget}! ${NUM_WORDS[cTarget]}. Well done! Great counting!`, {rate:0.82});
+      document.getElementById('cWord').textContent = NUM_WORDS[cTarget]+' 🎉';
+      celebrate();
+    }, 400);
+  }
+}
+
+function countAll(){
+  cCurrent = cTarget;
+  renderEmojis();
+  document.getElementById('cNum').textContent  = cTarget;
+  document.getElementById('cWord').textContent = NUM_WORDS[cTarget];
+  sayQ(Array.from({length:cTarget},(_,i)=>({text:`${i+1}`,rate:0.88,delay:150})));
+  celebrate();
+}
+
+function countBy(step){
+  const items = [];
+  for(let i=step;i<=100;i+=step) items.push({text:`${i}`,rate:0.85,delay:250});
+  say(`Counting by ${step}s!`, {rate:0.85}, ()=>sayQ(items));
+}
+
+// ════════════════════════════════════════
+//  CONFETTI / CELEBRATION
+// ════════════════════════════════════════
+
+function pop(){
+  const sparks = ['✨','⭐','💫','🌟'];
+  const el = document.createElement('div');
+  el.className = 'conf';
+  el.textContent = sparks[Math.random()*sparks.length|0];
+  el.style.left  = (15+Math.random()*70)+'%';
+  el.style.top   = (15+Math.random()*65)+'%';
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 1500);
+}
+
+function celebrate(){
+  for(let i=0;i<10;i++) setTimeout(pop, i*120);
+}
+
+// ════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════
+
+function init(){
+  buildAlpha();
+  buildBlend();
+  buildDays();
+  buildMonths();
+  buildNumGrid();
+  refreshNumDisplay();
+  buildEmojiPicker();
+  randomCount();
+  setTimeout(()=>say(
+    "Welcome! Let's learn English together! Tap a button to start!",
+    {rate:0.85, pitch:1.05}
+  ), 800);
+}
+
+window.addEventListener('load', init);
+</script>
+</body>
+</html>
