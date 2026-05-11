@@ -237,6 +237,43 @@ body{
   display:block;margin:0 auto 16px;
 }
 
+/* ── SEASONS ── */
+.seasons-col{display:flex;flex-direction:column;gap:14px}
+.season-card{
+  border-radius:22px;padding:22px 20px;cursor:pointer;
+  box-shadow:var(--shadow);border:none;width:100%;text-align:left;
+  transition:transform .15s;position:relative;overflow:hidden;
+}
+.season-card:active{transform:scale(.97)}
+.season-card.playing{animation:pop .4s infinite alternate}
+.season-top{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.season-icon{font-size:3em;flex-shrink:0}
+.season-name{font-size:1.8em;font-weight:900;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.25);line-height:1}
+.season-nz{font-size:.78em;color:rgba(255,255,255,.85);margin-top:3px;font-weight:600}
+.season-months-row{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.sm-chip{
+  background:rgba(255,255,255,.85);border-radius:50px;
+  padding:5px 12px;font-size:.8em;font-weight:700;color:#333;
+}
+.sm-chip.cur{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.season-words{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.sw-btn{
+  background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.5);
+  border-radius:50px;padding:7px 14px;font-size:.82em;font-weight:700;
+  color:#fff;cursor:pointer;transition:all .15s;
+}
+.sw-btn:active,.sw-btn.lit{background:rgba(255,255,255,.7);color:#333}
+.season-hear-btn{
+  background:rgba(255,255,255,.9);border:none;border-radius:50px;
+  padding:10px 22px;font-size:.88em;font-weight:700;color:#333;
+  cursor:pointer;display:inline-flex;align-items:center;gap:7px;
+}
+.season-now-badge{
+  position:absolute;top:14px;right:14px;
+  background:rgba(255,255,255,.95);border-radius:50px;
+  padding:4px 12px;font-size:.72em;font-weight:800;color:#333;
+}
+
 /* ── MONTHS ── */
 .months-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}
 .month-card{
@@ -397,12 +434,36 @@ body{
         <span class="mc-label">Counting Fun!</span>
         <span class="mc-sub">Count with emojis</span>
       </button>
+      <button class="mc wide" onclick="go('pg-seasons')"
+        style="background:linear-gradient(135deg,#f7971e 0%,#43e97b 50%,#4facfe 100%)">
+        <span class="mc-icon">🍂</span>
+        <span class="mc-label">Seasons of the Year</span>
+        <span class="mc-sub">Summer · Autumn · Winter · Spring (NZ)</span>
+      </button>
     </div>
     <div class="share-box">
       <strong>📱 Share via WhatsApp</strong><br>
       Save this file to your phone → Open in browser → Send the file in WhatsApp chat.<br>
       <strong>Works offline — no internet needed! ✅</strong>
     </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SEASONS ═══════════════ -->
+<div id="pg-seasons" class="page">
+  <div class="hdr">
+    <button class="back-btn" onclick="go('pg-home')">← Home</button>
+    <span class="hdr-title">🍂 Seasons of the Year</span>
+    <div class="spacer"></div>
+  </div>
+  <div class="sc">
+    <p class="sec-sub">New Zealand seasons 🇳🇿 — tap to hear! 🔊</p>
+    <div style="text-align:center;margin-bottom:16px">
+      <button onclick="hearAllSeasons()" style="background:rgba(255,255,255,.9);border:none;border-radius:50px;padding:10px 24px;font-size:.9em;font-weight:700;cursor:pointer;color:#218c74;">
+        ▶ Hear all seasons in order
+      </button>
+    </div>
+    <div class="seasons-col" id="seasonsCol"></div>
   </div>
 </div>
 
@@ -640,6 +701,69 @@ const MONTHS = [
   {n:'October',  e:'🌺',s:'Spring in NZ 🌺'},
   {n:'November', e:'🌻',s:'Spring in NZ 🌺'},
   {n:'December', e:'🎄',s:'Summer in NZ 🌞'},
+];
+
+const SEASONS = [
+  {
+    name:'Summer',
+    nz:'December · January · February',
+    monthIdx:[11,0,1],
+    icon:'☀️',
+    grad:'linear-gradient(135deg,#f7971e 0%,#ffd200 100%)',
+    textCol:'#7a4800',
+    words:[
+      {w:'hot',     e:'🌡️'},  {w:'sunny',   e:'☀️'},
+      {w:'beach',   e:'🏖️'},  {w:'swim',    e:'🏊'},
+      {w:'ice cream',e:'🍦'}, {w:'holiday', e:'🎉'},
+      {w:'warm',    e:'🌞'},  {w:'shorts',  e:'🩳'},
+    ],
+    desc:'Summer in New Zealand is hot and sunny! People go to the beach and swim.',
+  },
+  {
+    name:'Autumn',
+    nz:'March · April · May',
+    monthIdx:[2,3,4],
+    icon:'🍂',
+    grad:'linear-gradient(135deg,#e17055 0%,#fdcb6e 100%)',
+    textCol:'#7a2f00',
+    words:[
+      {w:'leaves',  e:'🍁'},  {w:'fall',    e:'🍂'},
+      {w:'cool',    e:'🌬️'},  {w:'rain',    e:'🌧️'},
+      {w:'wind',    e:'💨'},  {w:'harvest', e:'🌾'},
+      {w:'jacket',  e:'🧥'},  {w:'orange',  e:'🟠'},
+    ],
+    desc:'Autumn in New Zealand brings cooler weather. Leaves change colour and fall from trees.',
+  },
+  {
+    name:'Winter',
+    nz:'June · July · August',
+    monthIdx:[5,6,7],
+    icon:'❄️',
+    grad:'linear-gradient(135deg,#4facfe 0%,#a8edea 100%)',
+    textCol:'#003a7a',
+    words:[
+      {w:'cold',    e:'🥶'},  {w:'snow',    e:'❄️'},
+      {w:'rain',    e:'🌧️'},  {w:'fog',     e:'🌫️'},
+      {w:'coat',    e:'🧥'},  {w:'scarf',   e:'🧣'},
+      {w:'hot drink',e:'☕'}, {w:'indoor',  e:'🏠'},
+    ],
+    desc:'Winter in New Zealand is cold and wet. Some mountains get snow. People wear warm clothes.',
+  },
+  {
+    name:'Spring',
+    nz:'September · October · November',
+    monthIdx:[8,9,10],
+    icon:'🌸',
+    grad:'linear-gradient(135deg,#43e97b 0%,#f9ca74 100%)',
+    textCol:'#1a5c00',
+    words:[
+      {w:'flowers', e:'🌸'},  {w:'warm',    e:'🌤️'},
+      {w:'grow',    e:'🌱'},  {w:'birds',   e:'🐦'},
+      {w:'bees',    e:'🐝'},  {w:'garden',  e:'🌻'},
+      {w:'new life',e:'🐣'},  {w:'rainbow', e:'🌈'},
+    ],
+    desc:'Spring in New Zealand is warm and beautiful! Flowers bloom and birds sing.',
+  },
 ];
 
 const M_COLORS = [
@@ -1182,11 +1306,83 @@ function celebrate(){
 //  INIT
 // ════════════════════════════════════════
 
+// ════════════════════════════════════════
+//  SEASONS
+// ════════════════════════════════════════
+
+function curSeason(){
+  const m = new Date().getMonth(); // 0=Jan
+  if([11,0,1].includes(m)) return 0;  // Summer
+  if([2,3,4].includes(m))  return 1;  // Autumn
+  if([5,6,7].includes(m))  return 2;  // Winter
+  return 3;                            // Spring
+}
+
+function buildSeasons(){
+  const nowSeason  = curSeason();
+  const nowMonth   = new Date().getMonth();
+
+  document.getElementById('seasonsCol').innerHTML = SEASONS.map((s,si)=>`
+    <div class="season-card" id="sc${si}" style="background:${s.grad}" onclick="playSeason(${si})">
+      ${si===nowSeason?'<div class="season-now-badge">🌟 NOW!</div>':''}
+      <div class="season-top">
+        <span class="season-icon">${s.icon}</span>
+        <div>
+          <div class="season-name">${s.name}</div>
+          <div class="season-nz">🇳🇿 ${s.nz}</div>
+        </div>
+      </div>
+      <div class="season-months-row">
+        ${s.monthIdx.map(mi=>`
+          <span class="sm-chip ${mi===nowMonth?'cur':''}">
+            ${MONTHS[mi].e} ${MONTHS[mi].n}
+          </span>`).join('')}
+      </div>
+      <div class="season-words">
+        ${s.words.map((w,wi)=>`
+          <button class="sw-btn" id="sw${si}_${wi}"
+            onclick="event.stopPropagation();playSeasonWord(${si},${wi})">
+            ${w.e} ${w.w}
+          </button>`).join('')}
+      </div>
+      <button class="season-hear-btn" onclick="event.stopPropagation();playSeason(${si})">
+        🔊 Hear about ${s.name}
+      </button>
+    </div>
+  `).join('');
+}
+
+function playSeason(si){
+  const s = SEASONS[si];
+  const card = document.getElementById('sc'+si);
+  card.classList.add('playing');
+  say(`${s.name}! ${s.desc}`, {rate:0.82}, ()=>card.classList.remove('playing'));
+  pop();
+}
+
+function playSeasonWord(si, wi){
+  const w = SEASONS[si].words[wi];
+  const btn = document.getElementById(`sw${si}_${wi}`);
+  btn.classList.add('lit');
+  say(w.w, {rate:0.8}, ()=>setTimeout(()=>btn.classList.remove('lit'),300));
+  pop();
+}
+
+function hearAllSeasons(){
+  sayQ(SEASONS.flatMap(s=>[
+    {text:s.name, rate:0.8,  delay:300},
+    {text:s.desc, rate:0.82, delay:600},
+  ]));
+}
+
+// ════════════════════════════════════════
+
 function init(){
   buildAlpha();
   buildBlend();
   buildDays();
   buildMonths();
+  buildSeasons();
   buildNumGrid();
   refreshNumDisplay();
   buildEmojiPicker();
