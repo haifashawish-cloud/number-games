@@ -375,6 +375,61 @@ body{
 .count-by-title{color:#fff;font-weight:800;font-size:1.05em;margin-bottom:14px}
 .count-by-row{display:flex;flex-wrap:wrap;gap:9px;justify-content:center}
 
+/* ── RECORDING ── */
+.rec-modal{
+  display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);
+  z-index:400;align-items:flex-end;justify-content:center;padding:14px;
+}
+.rec-modal.show{display:flex}
+.rec-sheet{
+  background:#fff;border-radius:28px;
+  padding:26px 20px 28px;width:100%;max-width:400px;text-align:center;
+}
+.rec-title{font-size:1.05em;font-weight:900;color:#333;margin-bottom:3px}
+.rec-subtitle{font-size:.8em;color:#999;margin-bottom:14px}
+.rec-status{
+  background:#f5f5f5;border-radius:12px;padding:10px 14px;
+  font-size:.82em;color:#555;margin-bottom:16px;min-height:38px;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+}
+.rec-mic-btn{
+  width:85px;height:85px;border-radius:50%;border:none;
+  font-size:2em;cursor:pointer;margin:0 auto 8px;display:flex;
+  align-items:center;justify-content:center;
+  box-shadow:0 5px 20px rgba(0,0,0,.2);transition:transform .15s;
+}
+.rec-mic-btn:active{transform:scale(.9)}
+.rec-mic-btn.idle{background:linear-gradient(135deg,#f5576c,#f093fb)}
+.rec-mic-btn.going{background:linear-gradient(135deg,#c0392b,#e74c3c);
+  animation:recpulse 1s ease-in-out infinite alternate}
+@keyframes recpulse{
+  from{box-shadow:0 0 0 0 rgba(231,76,60,.5)}
+  to{box-shadow:0 0 0 16px rgba(231,76,60,0)}
+}
+.rec-timer{font-size:1.2em;font-weight:800;color:#e74c3c;min-height:28px;margin-bottom:14px}
+.rec-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+.rab{
+  background:#f0f0f0;border:none;border-radius:50px;
+  padding:9px 16px;font-size:.82em;font-weight:700;cursor:pointer;
+  display:inline-flex;align-items:center;gap:5px;transition:transform .15s;
+}
+.rab:active{transform:scale(.92)}
+.rab.g{background:linear-gradient(135deg,#43e97b,#38f9d7);color:#1a5c00}
+.rab.r{background:linear-gradient(135deg,#f5576c,#f093fb);color:#fff}
+.rec-close{background:none;border:none;color:#bbb;font-size:.82em;cursor:pointer;padding:8px;margin-top:2px}
+/* green mic dot on cards that have a saved recording */
+.lcard{position:relative}
+.has-rec::after{
+  content:'🎙️';font-size:.55em;line-height:1;
+  position:absolute;top:4px;right:4px;
+}
+.rec-mini-btn{
+  background:rgba(255,255,255,.25);border:1.5px solid rgba(255,255,255,.5);
+  border-radius:50px;padding:5px 10px;font-size:.72em;font-weight:700;
+  color:#fff;cursor:pointer;white-space:nowrap;
+}
+.rec-mini-btn:active{background:rgba(255,255,255,.5)}
+
 /* ── CONFETTI ── */
 .conf{
   position:fixed;pointer-events:none;z-index:999;font-size:1.4em;
@@ -511,6 +566,7 @@ body{
         <div class="blend-word-label" id="bgLabel"></div>
         <div class="blend-tip">Tap each sound bubble 👇</div>
         <div class="bubbles-row" id="bubblesRow"></div>
+        <div id="blendRecRow" style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0 14px"></div>
         <div>
           <button class="blend-btn" onclick="blendIt()">🔗 Blend it!</button>
           <button class="back-to-list" onclick="showBlendPicker()">← Back</button>
@@ -633,6 +689,33 @@ body{
     <div class="m-sound" id="mSound">Sound: "ah"</div>
     <button class="play-btn" onclick="playModalSound()">🔊 Hear the sound</button>
     <div class="m-example" id="mExample"></div>
+    <div style="margin-top:16px;border-top:1px solid #eee;padding-top:14px">
+      <div id="mRecInfo" style="font-size:.75em;color:#aaa;margin-bottom:8px">No recording saved</div>
+      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <button id="mRecPlayBtn" class="rab" style="display:none" onclick="playMyLetter()">▶ My voice</button>
+        <button class="rab" onclick="openRecFromModal()">🎙️ Record my voice</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ RECORDING MODAL ═══════════════ -->
+<div class="rec-modal" id="recModal">
+  <div class="rec-sheet">
+    <div class="rec-title" id="recTitle">🎙️ Record your voice</div>
+    <div class="rec-subtitle" id="recSubtitle">Tap the microphone to start</div>
+    <div class="rec-status" id="recStatus">Ready to record</div>
+    <button class="rec-mic-btn idle" id="recMicBtn" onclick="recToggle()">🎙️</button>
+    <div class="rec-timer" id="recTimer"></div>
+    <div class="rec-row" id="recAfterRow" style="display:none">
+      <button class="rab" onclick="recPlayNew()">▶ Play back</button>
+      <button class="rab g" onclick="recSave()">✅ Save</button>
+    </div>
+    <div class="rec-row" id="recSavedRow" style="display:none">
+      <button class="rab" onclick="recPlaySaved()">▶ My recording</button>
+      <button class="rab r" onclick="recDelete()">🗑️ Delete</button>
+    </div>
+    <button class="rec-close" onclick="closeRec()">✕ Close</button>
   </div>
 </div>
 
@@ -960,10 +1043,28 @@ function openModal(i){
   document.getElementById('mWord').textContent    = d.w;
   document.getElementById('mSound').textContent   = d.d;
   document.getElementById('mExample').textContent = `"${d.L} is for ${d.w}"`;
+  const has = hasRec('letter_'+d.L);
+  document.getElementById('mRecInfo').textContent = has ? '✅ Your recording saved' : 'No recording saved';
+  document.getElementById('mRecPlayBtn').style.display = has ? 'inline-flex' : 'none';
   document.getElementById('letterModal').classList.add('show');
-  setTimeout(()=>say(d.s, {rate:0.72}), 350);
+  setTimeout(()=>playRec('letter_'+d.L, ()=>say(d.s,{rate:0.72})), 350);
   pop();
 }
+
+function openRecFromModal(){
+  if(!_curModal) return;
+  openRec('letter_'+_curModal.L,
+    '🎙️ Letter "'+_curModal.L+'"',
+    'Record: '+_curModal.p+' … '+_curModal.p+' … '+_curModal.w
+  );
+}
+
+function playMyLetter(){
+  if(!_curModal) return;
+  recPlaySavedKey('letter_'+_curModal.L);
+}
+
+function recPlaySavedKey(key){ const d=localStorage.getItem('rec_'+key); if(d) new Audio(d).play(); }
 
 function closeMod(evt){
   if(!evt || evt.target===document.getElementById('letterModal')){
@@ -973,7 +1074,8 @@ function closeMod(evt){
 }
 
 function playModalSound(){
-  if(_curModal) say(_curModal.s, {rate:0.72});
+  if(!_curModal) return;
+  playRec('letter_'+_curModal.L, ()=>say(_curModal.s,{rate:0.72}));
   pop();
 }
 
@@ -1042,17 +1144,33 @@ function startBlend(i){
   document.getElementById('bgLabel').textContent = _curBlend.e + '  ' + _curBlend.w.toUpperCase();
   document.getElementById('blendResult').textContent = '';
 
-  document.getElementById('bubblesRow').innerHTML = _curBlend.s.map((s,i)=>`
-    ${i>0?'<span class="sep">–</span>':''}
-    <button class="bubble" id="bb${i}" onclick="tapBubble(${i})">${s}</button>
+  document.getElementById('bubblesRow').innerHTML = _curBlend.s.map((s,idx)=>`
+    ${idx>0?'<span class="sep">–</span>':''}
+    <button class="bubble" id="bb${idx}" onclick="tapBubble(${idx})">${s}</button>
   `).join('');
+
+  // Record buttons: one per phoneme + one for the whole word
+  const w = _curBlend.w;
+  document.getElementById('blendRecRow').innerHTML =
+    _curBlend.s.map((_,idx)=>`
+      <button class="rec-mini-btn" onclick="openRec('sound_${w}_${idx}','🎙️ Sound: ${_curBlend.s[idx]}','Record the sound &quot;${_curBlend.p[idx]}&quot; as in &quot;${w}&quot;')">
+        🎙️ ${_curBlend.s[idx]}
+      </button>`).join('')
+    + `<button class="rec-mini-btn" style="background:rgba(255,255,255,.45);"
+         onclick="openRec('word_${w}','🎙️ Word: ${w}','Record the whole word: ${w}')">
+         🎙️ "${w}"
+       </button>`;
 }
 
 function tapBubble(i){
   if(!_curBlend) return;
   const bb = document.getElementById('bb'+i);
   bb.classList.add('lit');
-  say(_curBlend.p[i], {rate:0.7}, ()=>setTimeout(()=>bb.classList.remove('lit'),250));
+  const remove = ()=>setTimeout(()=>bb.classList.remove('lit'),250);
+  playRec('sound_'+_curBlend.w+'_'+i,
+    ()=>say(_curBlend.p[i], {rate:0.7}, remove),
+    remove
+  );
 }
 
 function blendIt(){
@@ -1069,7 +1187,7 @@ function blendIt(){
 
   setTimeout(()=>{
     res.textContent = _curBlend.e + '  ' + _curBlend.w + '!';
-    say(_curBlend.w, {rate:0.85, pitch:1.15});
+    playRec('word_'+_curBlend.w, ()=>say(_curBlend.w,{rate:0.85,pitch:1.15}));
     celebrate();
   }, _curBlend.s.length*350+200);
 }
@@ -1094,24 +1212,27 @@ function nextBlend(){
 const DAY_COLORS=['#ff6b6b','#ff9f43','#feca57','#48dbfb','#ff9ff3','#54a0ff','#5f27cd'];
 
 function buildDays(){
-  const today = new Date().getDay(); // 0=Sun
-  const todayIdx = today===0 ? 6 : today-1; // Mon=0 in our array
+  const today = new Date().getDay();
+  const todayIdx = today===0 ? 6 : today-1;
   document.getElementById('daysCol').innerHTML = DAYS.map((d,i)=>`
-    <button class="day-card" id="dc${i}" onclick="playDay(${i})">
+    <div class="day-card" id="dc${i}" onclick="playDay(${i})" style="cursor:pointer">
       <div class="day-num" style="background:${DAY_COLORS[i]}22;color:${DAY_COLORS[i]}">${i+1}</div>
       <span class="day-name">
         ${d.n}${i===todayIdx?'<span class="today-badge">TODAY!</span>':''}
       </span>
       <span class="day-emoji">${d.e}</span>
       <span style="font-size:1.3em;opacity:.4">🔊</span>
-    </button>`).join('');
+      <button class="rec-mini-btn" style="flex-shrink:0"
+        onclick="event.stopPropagation();openRec('day_${d.n}','📅 ${d.n}','Record the day: ${d.n}')">🎙️</button>
+    </div>`).join('');
 }
 
 function playDay(i){
   const d = DAYS[i];
   const card = document.getElementById('dc'+i);
   card.classList.add('playing');
-  say(`${d.n}. ${d.n}. ${d.fun}`, {rate:0.82}, ()=>card.classList.remove('playing'));
+  const done = ()=>card.classList.remove('playing');
+  playRec('day_'+d.n, ()=>say(`${d.n}. ${d.n}. ${d.fun}`,{rate:0.82},done), done);
   pop();
 }
 
@@ -1124,10 +1245,10 @@ function hearAllDays(){
 // ════════════════════════════════════════
 
 function buildMonths(){
-  const todayMonth = new Date().getMonth(); // 0=Jan
+  const todayMonth = new Date().getMonth();
   document.getElementById('monthsGrid').innerHTML = MONTHS.map((m,i)=>`
     <div class="month-card" id="mc${i}" onclick="playMonth(${i})"
-         style="border-left-color:${M_COLORS[i]}">
+         style="border-left-color:${M_COLORS[i]};cursor:pointer">
       <div class="month-num-tag" style="color:${M_COLORS[i]};background:${M_COLORS[i]}22">
         Month ${i+1}
       </div>
@@ -1135,6 +1256,8 @@ function buildMonths(){
       <div class="month-emoji">${m.e}</div>
       <div class="month-season">${m.s}</div>
       ${i===todayMonth?'<span class="this-month">THIS MONTH!</span>':''}
+      <button class="rec-mini-btn" style="margin-top:8px;background:${M_COLORS[i]}33;color:#333;border-color:${M_COLORS[i]}66"
+        onclick="event.stopPropagation();openRec('month_${m.n}','🗓️ ${m.n}','Record the month: ${m.n}')">🎙️</button>
     </div>`).join('');
 }
 
@@ -1142,7 +1265,9 @@ function playMonth(i){
   const m = MONTHS[i];
   const card = document.getElementById('mc'+i);
   card.classList.add('playing');
-  say(`${m.n}. Month number ${i+1}. ${m.n}. ${m.s.replace('🌞','').replace('🍁','').replace('❄️','').replace('🌺','').trim()}`, {rate:0.82}, ()=>card.classList.remove('playing'));
+  const done = ()=>card.classList.remove('playing');
+  const txt = `${m.n}. Month number ${i+1}. ${m.n}. ${m.s.replace(/[🌞🍁❄️🌺]/gu,'').trim()}`;
+  playRec('month_'+m.n, ()=>say(txt,{rate:0.82},done), done);
   pop();
 }
 
@@ -1307,6 +1432,130 @@ function celebrate(){
 // ════════════════════════════════════════
 
 // ════════════════════════════════════════
+//  VOICE RECORDING ENGINE
+// ════════════════════════════════════════
+
+let _rKey='', _rBlob=null, _rMR=null, _rChunks=[], _rStream=null, _rTimer=null, _rSecs=0;
+
+function openRec(key, title, subtitle){
+  _rKey=key; _rBlob=null;
+  document.getElementById('recTitle').textContent    = title    || '🎙️ Record';
+  document.getElementById('recSubtitle').textContent = subtitle || 'Tap the mic to record';
+  _recRefreshUI();
+  document.getElementById('recModal').classList.add('show');
+}
+
+function _recRefreshUI(){
+  const has = hasRec(_rKey);
+  document.getElementById('recStatus').textContent   = has
+    ? '✅ Saved recording found. Tap mic to re-record.'
+    : 'No recording yet. Tap the mic!';
+  document.getElementById('recSavedRow').style.display = has ? 'flex' : 'none';
+  document.getElementById('recAfterRow').style.display = 'none';
+  document.getElementById('recTimer').textContent = '';
+  const btn = document.getElementById('recMicBtn');
+  btn.className='rec-mic-btn idle'; btn.textContent='🎙️';
+}
+
+async function recToggle(){
+  if(_rMR && _rMR.state==='recording'){ _rMR.stop(); return; }
+  try{
+    _rStream = await navigator.mediaDevices.getUserMedia({audio:true,video:false});
+  }catch(e){
+    document.getElementById('recStatus').textContent =
+      '❌ Microphone blocked. Allow microphone access in your browser settings, then try again.';
+    return;
+  }
+  _rChunks=[]; _rSecs=0;
+  const mime=['audio/webm;codecs=opus','audio/webm','audio/ogg','audio/mp4','']
+    .find(t=>!t||MediaRecorder.isTypeSupported(t));
+  _rMR = new MediaRecorder(_rStream, mime?{mimeType:mime}:{});
+  _rMR.ondataavailable = e=>{ if(e.data.size>0) _rChunks.push(e.data); };
+  _rMR.onstop = ()=>{
+    clearInterval(_rTimer);
+    _rStream.getTracks().forEach(t=>t.stop()); _rStream=null;
+    _rBlob = new Blob(_rChunks,{type:_rMR.mimeType||'audio/webm'});
+    document.getElementById('recStatus').textContent = `✅ ${_rSecs}s recorded — play it back or save!`;
+    document.getElementById('recMicBtn').className='rec-mic-btn idle';
+    document.getElementById('recMicBtn').textContent='🎙️';
+    document.getElementById('recAfterRow').style.display='flex';
+    document.getElementById('recTimer').textContent='';
+  };
+  _rMR.start(200);
+  _rTimer=setInterval(()=>{ _rSecs++; document.getElementById('recTimer').textContent=`⏱ ${_rSecs}s`; if(_rSecs>=30)_rMR.stop(); },1000);
+  document.getElementById('recStatus').textContent='🔴 Recording… tap ⏹ to stop';
+  document.getElementById('recMicBtn').className='rec-mic-btn going';
+  document.getElementById('recMicBtn').textContent='⏹';
+  document.getElementById('recAfterRow').style.display='none';
+}
+
+function recPlayNew(){ if(_rBlob) new Audio(URL.createObjectURL(_rBlob)).play(); }
+
+function recPlaySaved(){ const d=localStorage.getItem('rec_'+_rKey); if(d) new Audio(d).play(); }
+
+function recSave(){
+  if(!_rBlob) return;
+  const fr=new FileReader();
+  fr.onload=()=>{
+    try{
+      localStorage.setItem('rec_'+_rKey, fr.result);
+      document.getElementById('recStatus').textContent='🎉 Saved! App will use your voice for this sound.';
+      document.getElementById('recAfterRow').style.display='none';
+      document.getElementById('recSavedRow').style.display='flex';
+      _rBlob=null;
+      _refreshRecDots();
+    }catch(e){
+      document.getElementById('recStatus').textContent='❌ Storage full — please delete some recordings first.';
+    }
+  };
+  fr.readAsDataURL(_rBlob);
+}
+
+function recDelete(){
+  localStorage.removeItem('rec_'+_rKey);
+  document.getElementById('recStatus').textContent='🗑️ Deleted. App will use the computer voice again.';
+  document.getElementById('recSavedRow').style.display='none';
+  _refreshRecDots();
+}
+
+function closeRec(){
+  if(_rMR&&_rMR.state==='recording') _rMR.stop();
+  if(_rStream){ _rStream.getTracks().forEach(t=>t.stop()); _rStream=null; }
+  clearInterval(_rTimer);
+  document.getElementById('recModal').classList.remove('show');
+}
+
+/* ── helpers ── */
+function hasRec(key){ return !!localStorage.getItem('rec_'+key); }
+
+function playRec(key, fallback, onEnd){
+  const d=localStorage.getItem('rec_'+key);
+  if(d){
+    window.speechSynthesis.cancel();
+    if(_qTimer){clearTimeout(_qTimer);_qTimer=null;}
+    const a=new Audio(d);
+    if(onEnd) a.onended=onEnd;
+    a.play(); pop(); return true;
+  }
+  fallback(); return false;
+}
+
+function _refreshRecDots(){
+  ALPHA.forEach((a,i)=>{
+    const el=document.getElementById('lc'+i);
+    if(el) el.classList.toggle('has-rec', hasRec('letter_'+a.L));
+  });
+  // refresh modal rec button if open
+  if(_curModal){
+    const has=hasRec('letter_'+_curModal.L);
+    const pb=document.getElementById('mRecPlayBtn');
+    const info=document.getElementById('mRecInfo');
+    if(pb) pb.style.display=has?'inline-flex':'none';
+    if(info) info.textContent=has?'✅ Your recording saved':'No recording saved';
+  }
+}
+
+// ════════════════════════════════════════
 //  SEASONS
 // ════════════════════════════════════════
 
@@ -1341,13 +1590,22 @@ function buildSeasons(){
       <div class="season-words">
         ${s.words.map((w,wi)=>`
           <button class="sw-btn" id="sw${si}_${wi}"
-            onclick="event.stopPropagation();playSeasonWord(${si},${wi})">
+            onclick="event.stopPropagation();playSeasonWord(${si},${wi})"
+            title="Tap to hear · long press to record">
             ${w.e} ${w.w}
-          </button>`).join('')}
+          </button>
+          <button class="sw-btn" style="padding:5px 8px;font-size:.85em;background:rgba(255,255,255,.15)"
+            onclick="event.stopPropagation();openRec('sw_${s.name}_${wi}','🎙️ ${w.w}','Record the word: ${w.w}')">🎙️</button>`).join('')}
       </div>
-      <button class="season-hear-btn" onclick="event.stopPropagation();playSeason(${si})">
-        🔊 Hear about ${s.name}
-      </button>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
+        <button class="season-hear-btn" onclick="event.stopPropagation();playSeason(${si})">
+          🔊 Hear about ${s.name}
+        </button>
+        <button class="season-hear-btn" style="background:rgba(255,255,255,.6)"
+          onclick="event.stopPropagation();openRec('season_${s.name}','🎙️ Season: ${s.name}','Record about ${s.name} — e.g. &quot;${s.desc}&quot;')">
+          🎙️ Record
+        </button>
+      </div>
     </div>
   `).join('');
 }
@@ -1356,7 +1614,8 @@ function playSeason(si){
   const s = SEASONS[si];
   const card = document.getElementById('sc'+si);
   card.classList.add('playing');
-  say(`${s.name}! ${s.desc}`, {rate:0.82}, ()=>card.classList.remove('playing'));
+  const done = ()=>card.classList.remove('playing');
+  playRec('season_'+s.name, ()=>say(`${s.name}! ${s.desc}`,{rate:0.82},done), done);
   pop();
 }
 
@@ -1364,7 +1623,9 @@ function playSeasonWord(si, wi){
   const w = SEASONS[si].words[wi];
   const btn = document.getElementById(`sw${si}_${wi}`);
   btn.classList.add('lit');
-  say(w.w, {rate:0.8}, ()=>setTimeout(()=>btn.classList.remove('lit'),300));
+  const done = ()=>setTimeout(()=>btn.classList.remove('lit'),300);
+  playRec('sw_'+SEASONS[si].name+'_'+wi,
+    ()=>say(w.w,{rate:0.8},done), done);
   pop();
 }
 
@@ -1387,6 +1648,7 @@ function init(){
   refreshNumDisplay();
   buildEmojiPicker();
   randomCount();
+  _refreshRecDots();
   setTimeout(()=>say(
     "Welcome! Let's learn English together! Tap a button to start!",
     {rate:0.85, pitch:1.05}
