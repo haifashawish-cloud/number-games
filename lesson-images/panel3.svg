@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 380" width="500" height="380">
+  <!-- Background -->
+  <rect width="500" height="380" fill="#F5F0E8"/>
+
+  <!-- Hands holding open wallet - close up view -->
+  <!-- Left hand -->
+  <ellipse cx="145" cy="240" rx="55" ry="28" fill="#FDDBB4"/>
+  <!-- Fingers left -->
+  <ellipse cx="105" cy="213" rx="13" ry="25" fill="#FDDBB4" transform="rotate(-10 105 213)"/>
+  <ellipse cx="125" cy="207" rx="13" ry="26" fill="#FDDBB4" transform="rotate(-5 125 207)"/>
+  <ellipse cx="147" cy="205" rx="13" ry="27" fill="#FDDBB4" transform="rotate(2 147 205)"/>
+  <ellipse cx="168" cy="208" rx="13" ry="25" fill="#FDDBB4" transform="rotate(8 168 208)"/>
+  <!-- Thumb left -->
+  <ellipse cx="92" cy="235" rx="14" ry="10" fill="#FDDBB4" transform="rotate(-30 92 235)"/>
+
+  <!-- Right hand -->
+  <ellipse cx="355" cy="240" rx="55" ry="28" fill="#FDDBB4"/>
+  <!-- Fingers right -->
+  <ellipse cx="395" cy="213" rx="13" ry="25" fill="#FDDBB4" transform="rotate(10 395 213)"/>
+  <ellipse cx="375" cy="207" rx="13" ry="26" fill="#FDDBB4" transform="rotate(5 375 207)"/>
+  <ellipse cx="353" cy="205" rx="13" ry="27" fill="#FDDBB4" transform="rotate(-2 353 205)"/>
+  <ellipse cx="332" cy="208" rx="13" ry="25" fill="#FDDBB4" transform="rotate(-8 332 208)"/>
+  <!-- Thumb right -->
+  <ellipse cx="408" cy="235" rx="14" ry="10" fill="#FDDBB4" transform="rotate(30 408 235)"/>
+
+  <!-- Open Wallet - black leather -->
+  <rect x="120" y="175" width="260" height="170" rx="12" fill="#1A1A1A"/>
+  <rect x="125" y="180" width="120" height="160" rx="8" fill="#2A2A2A"/> <!-- left side -->
+  <rect x="253" y="180" width="122" height="160" rx="8" fill="#252525"/> <!-- right side -->
+  <!-- Wallet stitching -->
+  <rect x="129" y="184" width="112" height="152" rx="6" fill="none" stroke="#444" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <rect x="257" y="184" width="114" height="152" rx="6" fill="none" stroke="#3A3A3A" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+  <!-- CASH - left pocket -->
+  <rect x="135" y="192" width="102" height="58" rx="4" fill="#85BB65"/>
+  <rect x="138" y="196" width="96" height="50" rx="3" fill="#90C96E"/>
+  <!-- Bill detail -->
+  <ellipse cx="186" cy="221" rx="18" ry="18" fill="#78B05A" opacity="0.5"/>
+  <text x="186" y="227" text-anchor="middle" font-family="serif" font-size="22" font-weight="bold" fill="#4A7535">$</text>
+  <line x1="142" y1="205" x2="230" y2="205" stroke="#78B05A" stroke-width="1" opacity="0.6"/>
+  <line x1="142" y1="238" x2="230" y2="238" stroke="#78B05A" stroke-width="1" opacity="0.6"/>
+
+  <!-- More cash peeking -->
+  <rect x="140" y="253" width="96" height="12" rx="2" fill="#7AAF5E"/>
+  <rect x="140" y="266" width="96" height="12" rx="2" fill="#82B862"/>
+
+  <!-- CREDIT CARD - right side, top -->
+  <rect x="261" y="188" width="108" height="68" rx="6" fill="#1E3A8A"/>
+  <rect x="264" y="191" width="102" height="62" rx="5" fill="#1A3070"/>
+  <!-- Card chip -->
+  <rect x="275" y="205" width="22" height="17" rx="3" fill="#D4AF37"/>
+  <line x1="275" y1="213" x2="297" y2="213" stroke="#B8962A" stroke-width="1"/>
+  <line x1="286" y1="205" x2="286" y2="222" stroke="#B8962A" stroke-width="1"/>
+  <!-- Card number -->
+  <text x="268" y="241" font-family="Courier, monospace" font-size="8" fill="#AAC0E8" letter-spacing="1">•••• •••• •••• 4872</text>
+  <!-- Card name -->
+  <text x="268" y="252" font-family="Arial" font-size="7" fill="#8A9EC8">R. PATEL</text>
+  <!-- Visa logo area -->
+  <text x="340" y="200" text-anchor="middle" font-family="serif" font-size="12" font-weight="bold" fill="#FFD700" font-style="italic">VISA</text>
+
+  <!-- SECOND CARD -->
+  <rect x="261" y="262" width="108" height="68" rx="6" fill="#8B2252"/>
+  <rect x="264" y="265" width="102" height="62" rx="5" fill="#6E1840"/>
+  <rect x="273" y="278" width="22" height="17" rx="3" fill="#D4AF37"/>
+  <line x1="273" y1="286" x2="295" y2="286" stroke="#B8962A" stroke-width="1"/>
+  <line x1="284" y1="278" x2="284" y2="295" stroke="#B8962A" stroke-width="1"/>
+  <text x="268" y="315" font-family="Courier, monospace" font-size="8" fill="#E8A8C8" letter-spacing="1">•••• •••• •••• 3391</text>
+  <text x="268" y="326" font-family="Arial" font-size="7" fill="#C888A8">R. PATEL</text>
+  <text x="340" y="274" text-anchor="middle" font-family="serif" font-size="10" font-weight="bold" fill="#E0E0E0">MC</text>
+
+  <!-- DRIVER'S LICENCE - overlapping left side bottom -->
+  <rect x="132" y="270" width="115" height="72" rx="5" fill="#F0E8D0"/>
+  <rect x="135" y="273" width="109" height="66" rx="4" fill="#EDE0C0"/>
+  <!-- NZ licence header -->
+  <rect x="135" y="273" width="109" height="14" rx="4" fill="#003F6B"/>
+  <text x="189" y="283" text-anchor="middle" font-family="Arial" font-size="7" font-weight="bold" fill="white">NEW ZEALAND DRIVER LICENCE</text>
+  <!-- Photo placeholder -->
+  <rect x="138" y="290" width="30" height="38" rx="2" fill="#CCBBAA"/>
+  <ellipse cx="153" cy="298" rx="8" ry="8" fill="#FDDBB4"/>
+  <ellipse cx="153" cy="312" rx="10" ry="8" fill="#8B6914"/>
+  <!-- Licence text -->
+  <text x="172" y="298" font-family="Arial" font-size="7" fill="#333">Rajesh Patel</text>
+  <text x="172" y="309" font-family="Arial" font-size="6" fill="#555">24 Valley Road</text>
+  <text x="172" y="319" font-family="Arial" font-size="6" fill="#555">Mt Eden, Auckland</text>
+  <text x="172" y="330" font-family="Arial" font-size="6" fill="#777">DOB: 12/04/1950</text>
+
+  <!-- Labels with arrows -->
+  <text x="55" y="225" font-family="Arial" font-size="13" font-weight="bold" fill="#2E8B57">Cash</text>
+  <line x1="108" y1="221" x2="133" y2="221" stroke="#2E8B57" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <text x="360" y="168" font-family="Arial" font-size="13" font-weight="bold" fill="#1E3A8A">Cards</text>
+  <line x1="395" y1="172" x2="370" y2="190" stroke="#1E3A8A" stroke-width="2"/>
+
+  <text x="52" y="315" font-family="Arial" font-size="13" font-weight="bold" fill="#8B4513">Licence</text>
+  <line x1="118" y1="311" x2="133" y2="305" stroke="#8B4513" stroke-width="2"/>
+
+  <!-- Caption -->
+  <rect x="0" y="345" width="500" height="35" fill="rgba(0,0,0,0.65)"/>
+  <text x="250" y="358" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="white">Picture 3: She picked it up. Inside, she found money,</text>
+  <text x="250" y="374" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="white">cards, and a driver's licence.</text>
+</svg>

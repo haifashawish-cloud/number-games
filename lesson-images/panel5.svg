@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 380" width="500" height="380">
+  <!-- Split scene: left=bus, right=house -->
+
+  <!-- LEFT SIDE - Bus scene -->
+  <rect x="0" y="0" width="245" height="380" fill="#87CEEB"/>
+
+  <!-- Street / road -->
+  <rect x="0" y="285" width="245" height="95" fill="#555045"/>
+  <line x1="0" y1="315" x2="245" y2="315" stroke="#FFD700" stroke-width="2" stroke-dasharray="20,10"/>
+
+  <!-- Bus stop pole -->
+  <rect x="28" y="170" width="6" height="120" fill="#888"/>
+  <rect x="22" y="165" width="55" height="28" rx="4" fill="#E8F0FF"/>
+  <rect x="25" y="168" width="49" height="22" rx="3" fill="#3050C0"/>
+  <text x="49" y="183" text-anchor="middle" font-family="Arial" font-size="9" font-weight="bold" fill="white">BUS STOP</text>
+
+  <!-- Buildings behind -->
+  <rect x="0" y="80" width="80" height="200" fill="#9B8EA0"/>
+  <rect x="90" y="100" width="70" height="180" fill="#B0A0BC"/>
+  <rect x="170" y="90" width="75" height="190" fill="#9E8FA8"/>
+  <rect x="5" y="90" width="68" height="188" fill="#A898B0"/>
+  <rect x="95" y="108" width="58" height="170" fill="#B8A8C0"/>
+  <rect x="175" y="98" width="63" height="180" fill="#A898B4"/>
+  <!-- Windows -->
+  <rect x="12" y="105" width="14" height="14" fill="#D8EEF8" rx="1"/>
+  <rect x="35" y="105" width="14" height="14" fill="#D8EEF8" rx="1"/>
+  <rect x="58" y="105" width="14" height="14" fill="#D8EEF8" rx="1"/>
+  <rect x="12" y="130" width="14" height="14" fill="#D8EEF8" rx="1"/>
+  <rect x="35" y="130" width="14" height="14" fill="#D8EEF8" rx="1"/>
+  <rect x="58" y="130" width="14" height="14" fill="#D8EEF8" rx="1"/>
+  <rect x="100" y="118" width="14" height="14" fill="#D8EEF8" rx="1"/>
+  <rect x="125" y="118" width="14" height="14" fill="#D8EEF8" rx="1"/>
+  <rect x="100" y="143" width="14" height="14" fill="#D8EEF8" rx="1"/>
+  <rect x="125" y="143" width="14" height="14" fill="#D8EEF8" rx="1"/>
+  <rect x="180" y="110" width="14" height="14" fill="#D8EEF8" rx="1"/>
+  <rect x="205" y="110" width="14" height="14" fill="#D8EEF8" rx="1"/>
+  <rect x="180" y="135" width="14" height="14" fill="#D8EEF8" rx="1"/>
+  <rect x="205" y="135" width="14" height="14" fill="#D8EEF8" rx="1"/>
+
+  <!-- BUS -->
+  <rect x="60" y="218" width="175" height="70" rx="10" fill="#CC2200"/>
+  <rect x="65" y="222" width="165" height="58" rx="8" fill="#DD3311"/>
+  <!-- Bus windows -->
+  <rect x="73" y="228" width="38" height="28" rx="4" fill="#B8D8F0"/>
+  <rect x="118" y="228" width="38" height="28" rx="4" fill="#B8D8F0"/>
+  <rect x="163" y="228" width="38" height="28" rx="4" fill="#B8D8F0"/>
+  <!-- Window dividers -->
+  <line x1="92" y1="228" x2="92" y2="256" stroke="#CC2200" stroke-width="2"/>
+  <line x1="137" y1="228" x2="137" y2="256" stroke="#CC2200" stroke-width="2"/>
+  <line x1="182" y1="228" x2="182" y2="256" stroke="#CC2200" stroke-width="2"/>
+  <!-- Bus door -->
+  <rect x="73" y="258" width="38" height="30" rx="3" fill="#BB2200"/>
+  <line x1="92" y1="258" x2="92" y2="288" stroke="#CC2200" stroke-width="2"/>
+  <!-- Bus number/sign -->
+  <rect x="68" y="218" width="80" height="14" rx="3" fill="#111"/>
+  <text x="108" y="228" text-anchor="middle" font-family="Arial" font-size="9" font-weight="bold" fill="#FFD700">MT EDEN  27</text>
+  <!-- Wheels -->
+  <circle cx="92" cy="292" r="14" fill="#222"/>
+  <circle cx="92" cy="292" r="8" fill="#555"/>
+  <circle cx="92" cy="292" r="3" fill="#888"/>
+  <circle cx="183" cy="292" r="14" fill="#222"/>
+  <circle cx="183" cy="292" r="8" fill="#555"/>
+  <circle cx="183" cy="292" r="3" fill="#888"/>
+
+  <!-- SARAH on bus - visible through window -->
+  <!-- Head in bus window -->
+  <ellipse cx="147" cy="241" rx="12" ry="13" fill="#FDDBB4"/>
+  <ellipse cx="147" cy="231" rx="12" ry="7" fill="#5C3317"/>
+  <!-- Hair sides -->
+  <ellipse cx="136" cy="238" rx="5" ry="9" fill="#5C3317"/>
+  <ellipse cx="158" cy="238" rx="5" ry="9" fill="#5C3317"/>
+  <!-- Eyes -->
+  <circle cx="143" cy="241" r="2" fill="#333"/>
+  <circle cx="151" cy="241" r="2" fill="#333"/>
+  <!-- Mouth - small smile -->
+  <path d="M 143 247 Q 147 251 151 247" stroke="#C07050" stroke-width="1.5" fill="none"/>
+
+  <!-- SARAH at bus stop waiting -->
+  <!-- Shadow -->
+  <ellipse cx="43" cy="288" rx="18" ry="5" fill="rgba(0,0,0,0.2)"/>
+  <!-- Legs -->
+  <line x1="36" y1="258" x2="34" y2="283" stroke="#2E5CA8" stroke-width="7" stroke-linecap="round"/>
+  <line x1="50" y1="258" x2="52" y2="281" stroke="#2E5CA8" stroke-width="7" stroke-linecap="round"/>
+  <ellipse cx="32" cy="286" rx="7" ry="3.5" fill="#222"/>
+  <ellipse cx="54" cy="284" rx="7" ry="3.5" fill="#222"/>
+  <!-- Body -->
+  <rect x="29" y="218" width="30" height="44" rx="5" fill="#E8506A"/>
+  <!-- Arms -->
+  <line x1="29" y1="228" x2="18" y2="245" stroke="#FDDBB4" stroke-width="5" stroke-linecap="round"/>
+  <line x1="59" y1="228" x2="68" y2="238" stroke="#FDDBB4" stroke-width="5" stroke-linecap="round"/>
+  <!-- Neck -->
+  <rect x="38" y="207" width="12" height="13" rx="3" fill="#FDDBB4"/>
+  <!-- Head -->
+  <ellipse cx="44" cy="197" rx="18" ry="20" fill="#FDDBB4"/>
+  <!-- Hair -->
+  <ellipse cx="44" cy="181" rx="18" ry="9" fill="#5C3317"/>
+  <ellipse cx="27" cy="191" rx="6" ry="12" fill="#5C3317"/>
+  <ellipse cx="61" cy="191" rx="6" ry="12" fill="#5C3317"/>
+  <!-- Eyes -->
+  <circle cx="38" cy="197" r="2.5" fill="#333"/>
+  <circle cx="50" cy="197" r="2.5" fill="#333"/>
+
+  <!-- DIVIDER -->
+  <rect x="242" y="0" width="6" height="380" fill="#DDD0C0"/>
+  <text x="245" y="200" text-anchor="middle" font-family="Arial" font-size="30" fill="#BBB" transform="rotate(90 245 200)">THEN</text>
+
+  <!-- RIGHT SIDE - House scene -->
+  <rect x="248" y="0" width="252" height="380" fill="#88C070"/>
+
+  <!-- Sky right -->
+  <rect x="248" y="0" width="252" height="160" fill="#A8D8F0"/>
+
+  <!-- Clouds -->
+  <ellipse cx="330" cy="40" rx="30" ry="18" fill="white" opacity="0.9"/>
+  <ellipse cx="355" cy="35" rx="25" ry="16" fill="white" opacity="0.9"/>
+  <ellipse cx="380" cy="42" rx="22" ry="14" fill="white" opacity="0.9"/>
+
+  <!-- Ground / lawn -->
+  <rect x="248" y="255" width="252" height="125" fill="#5A9A40"/>
+  <!-- Footpath to door -->
+  <rect x="355" y="255" width="40" height="95" fill="#C8B898"/>
+
+  <!-- House -->
+  <rect x="275" y="130" width="200" height="130" rx="4" fill="#D4A870"/>
+  <rect x="280" y="135" width="190" height="123" rx="3" fill="#DDB882"/>
+  <!-- Roof -->
+  <polygon points="265,130 375,60 485,130" fill="#8B4513"/>
+  <polygon points="272,130 375,65 478,130" fill="#A0522D"/>
+  <!-- Chimney -->
+  <rect x="420" y="72" width="22" height="45" fill="#8B4513"/>
+  <rect x="416" y="68" width="30" height="8" rx="2" fill="#7A3B10"/>
+
+  <!-- House number sign -->
+  <rect x="286" y="148" width="50" height="22" rx="3" fill="white"/>
+  <rect x="289" y="151" width="44" height="16" rx="2" fill="#003F6B"/>
+  <text x="311" y="163" text-anchor="middle" font-family="Arial" font-size="11" font-weight="bold" fill="white">24</text>
+
+  <!-- Windows -->
+  <rect x="290" y="175" width="55" height="48" rx="4" fill="#A8C8E8"/>
+  <line x1="317" y1="175" x2="317" y2="223" stroke="#888" stroke-width="2"/>
+  <line x1="290" y1="199" x2="345" y2="199" stroke="#888" stroke-width="2"/>
+  <!-- Window reflection -->
+  <rect x="292" y="177" width="12" height="10" rx="1" fill="white" opacity="0.4"/>
+
+  <rect x="405" y="175" width="55" height="48" rx="4" fill="#A8C8E8"/>
+  <line x1="432" y1="175" x2="432" y2="223" stroke="#888" stroke-width="2"/>
+  <line x1="405" y1="199" x2="460" y2="199" stroke="#888" stroke-width="2"/>
+  <rect x="407" y="177" width="12" height="10" rx="1" fill="white" opacity="0.4"/>
+
+  <!-- Door -->
+  <rect x="350" y="196" width="50" height="64" rx="4" fill="#5C3A1A"/>
+  <rect x="354" y="200" width="42" height="56" rx="3" fill="#6B4422"/>
+  <!-- Door panels -->
+  <rect x="358" y="204" width="16" height="20" rx="2" fill="#7A4E28"/>
+  <rect x="380" y="204" width="12" height="20" rx="2" fill="#7A4E28"/>
+  <rect x="358" y="230" width="34" height="20" rx="2" fill="#7A4E28"/>
+  <!-- Doorknob -->
+  <circle cx="390" cy="229" r="4" fill="#D4AF37"/>
+
+  <!-- Sarah knocking - at door -->
+  <!-- Shadow -->
+  <ellipse cx="333" cy="320" rx="18" ry="5" fill="rgba(0,0,0,0.2)"/>
+  <!-- Legs -->
+  <line x1="325" y1="290" x2="323" y2="315" stroke="#2E5CA8" stroke-width="7" stroke-linecap="round"/>
+  <line x1="340" y1="290" x2="343" y2="313" stroke="#2E5CA8" stroke-width="7" stroke-linecap="round"/>
+  <ellipse cx="321" cy="318" rx="7" ry="3.5" fill="#222"/>
+  <ellipse cx="345" cy="316" rx="7" ry="3.5" fill="#222"/>
+  <!-- Body - facing door (slightly turned) -->
+  <rect x="318" y="250" width="32" height="45" rx="5" fill="#E8506A" transform="rotate(-5 334 272)"/>
+  <!-- Arm raised to knock -->
+  <line x1="318" y1="260" x2="352" y2="238" stroke="#FDDBB4" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="355" cy="236" r="7" fill="#FDDBB4"/> <!-- fist knocking -->
+  <!-- Other arm -->
+  <line x1="350" y1="262" x2="362" y2="278" stroke="#FDDBB4" stroke-width="6" stroke-linecap="round"/>
+  <!-- Neck -->
+  <rect x="326" y="239" width="12" height="14" rx="3" fill="#FDDBB4"/>
+  <!-- Head -->
+  <ellipse cx="332" cy="229" rx="18" ry="20" fill="#FDDBB4"/>
+  <!-- Hair -->
+  <ellipse cx="332" cy="213" rx="18" ry="9" fill="#5C3317"/>
+  <ellipse cx="315" cy="223" rx="6" ry="12" fill="#5C3317"/>
+  <ellipse cx="349" cy="223" rx="6" ry="12" fill="#5C3317"/>
+  <!-- Eyes - looking at door -->
+  <circle cx="328" cy="229" r="2.5" fill="#333"/>
+  <circle cx="338" cy="229" r="2.5" fill="#333"/>
+
+  <!-- Knock marks on door -->
+  <text x="358" y="232" font-family="Arial" font-size="14" fill="#FF6622" font-weight="bold">*</text>
+  <text x="370" y="226" font-family="Arial" font-size="10" fill="#FF6622" font-weight="bold">*</text>
+
+  <!-- Trees -->
+  <rect x="462" y="205" width="10" height="60" fill="#5C3317"/>
+  <ellipse cx="467" cy="185" rx="28" ry="32" fill="#2D6A1A"/>
+  <ellipse cx="462" cy="195" rx="20" ry="24" fill="#388022"/>
+  <rect x="255" y="210" width="10" height="55" fill="#5C3317"/>
+  <ellipse cx="260" cy="192" rx="26" ry="30" fill="#2D6A1A"/>
+
+  <!-- Garden flowers -->
+  <rect x="278" y="253" width="4" height="18" fill="#3A8020"/>
+  <circle cx="280" cy="250" r="7" fill="#FF6688"/>
+  <rect x="290" y="253" width="4" height="15" fill="#3A8020"/>
+  <circle cx="292" cy="250" r="6" fill="#FFD700"/>
+  <rect x="458" y="253" width="4" height="18" fill="#3A8020"/>
+  <circle cx="460" cy="250" r="7" fill="#FF88AA"/>
+  <rect x="470" y="253" width="4" height="15" fill="#3A8020"/>
+  <circle cx="472" cy="250" r="6" fill="#FFB030"/>
+
+  <!-- Caption -->
+  <rect x="0" y="345" width="500" height="35" fill="rgba(0,0,0,0.65)"/>
+  <text x="250" y="358" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="white">Picture 5: Sarah took the bus to Mt Eden.</text>
+  <text x="250" y="374" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="white">She found the house and knocked on the door.</text>
+</svg>

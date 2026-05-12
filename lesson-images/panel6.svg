@@ -1,0 +1,126 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 380" width="500" height="380">
+  <!-- Background - outdoor with house door -->
+  <rect width="500" height="380" fill="#A8D8F0"/>
+
+  <!-- Sky -->
+  <rect width="500" height="200" fill="#A8D8F0"/>
+  <!-- Clouds - grey/overcast to match worried mood -->
+  <ellipse cx="100" cy="60" rx="55" ry="30" fill="#D8E8F0" opacity="0.9"/>
+  <ellipse cx="145" cy="52" rx="40" ry="25" fill="#D0E0EC" opacity="0.9"/>
+  <ellipse cx="380" cy="55" rx="60" ry="28" fill="#D8E8F0" opacity="0.9"/>
+  <ellipse cx="430" cy="48" rx="42" ry="22" fill="#D0E0EC" opacity="0.9"/>
+
+  <!-- House exterior wall -->
+  <rect x="0" y="100" width="500" height="280" fill="#DDB882"/>
+  <!-- Wall texture lines (subtle) -->
+  <line x1="0" y1="140" x2="500" y2="140" stroke="#C8A870" stroke-width="0.8" opacity="0.4"/>
+  <line x1="0" y1="180" x2="500" y2="180" stroke="#C8A870" stroke-width="0.8" opacity="0.4"/>
+  <line x1="0" y1="220" x2="500" y2="220" stroke="#C8A870" stroke-width="0.8" opacity="0.4"/>
+  <line x1="0" y1="260" x2="500" y2="260" stroke="#C8A870" stroke-width="0.8" opacity="0.4"/>
+  <line x1="0" y1="300" x2="500" y2="300" stroke="#C8A870" stroke-width="0.8" opacity="0.4"/>
+  <line x1="0" y1="340" x2="500" y2="340" stroke="#C8A870" stroke-width="0.8" opacity="0.4"/>
+
+  <!-- Roof edge visible at top -->
+  <rect x="0" y="95" width="500" height="18" fill="#8B4513"/>
+
+  <!-- Open door - wide open, dark interior visible -->
+  <rect x="180" y="110" width="140" height="270" rx="5" fill="#4A2E0A"/>
+  <!-- Door frame -->
+  <rect x="175" y="105" width="150" height="278" rx="6" fill="none" stroke="#6B4020" stroke-width="10"/>
+  <!-- Interior darkness -->
+  <rect x="185" y="115" width="130" height="260" fill="#2A1808"/>
+  <!-- Interior light (warm lamp inside) -->
+  <rect x="195" y="125" width="110" height="248" rx="2" fill="#3A2010"/>
+  <!-- Warm light glow from inside -->
+  <ellipse cx="250" cy="240" rx="60" ry="80" fill="#8B6030" opacity="0.4"/>
+  <ellipse cx="250" cy="220" rx="40" ry="50" fill="#C08040" opacity="0.3"/>
+
+  <!-- Indoor items visible -->
+  <!-- Small table in background -->
+  <rect x="215" y="295" width="70" height="8" rx="2" fill="#5C3818"/>
+  <rect x="220" y="303" width="8" height="40" fill="#5C3818"/>
+  <rect x="277" y="303" width="8" height="40" fill="#5C3818"/>
+  <!-- Lamp on table -->
+  <rect x="247" y="278" width="6" height="18" fill="#888"/>
+  <ellipse cx="250" cy="276" rx="16" ry="8" fill="#F0D890"/>
+  <ellipse cx="250" cy="270" rx="10" ry="6" fill="#FFFACC"/>
+
+  <!-- Window beside door -->
+  <rect x="40" y="130" width="110" height="100" rx="4" fill="#A8C8E8"/>
+  <rect x="44" y="134" width="102" height="92" rx="3" fill="#B8D8F0"/>
+  <!-- Window cross -->
+  <line x1="95" y1="130" x2="95" y2="230" stroke="#888" stroke-width="4"/>
+  <line x1="40" y1="180" x2="150" y2="180" stroke="#888" stroke-width="4"/>
+  <!-- Window frame -->
+  <rect x="40" y="130" width="110" height="100" rx="4" fill="none" stroke="#8B6030" stroke-width="6"/>
+  <!-- Curtain -->
+  <path d="M 44 134 Q 54 160 44 185" fill="#E8D0B0" stroke="#D8C0A0" stroke-width="1"/>
+  <path d="M 148 134 Q 138 160 148 185" fill="#E8D0B0" stroke="#D8C0A0" stroke-width="1"/>
+
+  <!-- MR PATEL - elderly man at door, worried expression -->
+  <!-- Step / threshold -->
+  <rect x="168" y="358" width="164" height="22" rx="3" fill="#A08060"/>
+
+  <!-- Body -->
+  <ellipse cx="270" cy="345" rx="22" ry="7" fill="rgba(0,0,0,0.15)"/>
+  <!-- Legs -->
+  <line x1="260" y1="305" x2="256" y2="338" stroke="#4A4A4A" stroke-width="9" stroke-linecap="round"/>
+  <line x1="278" y1="305" x2="282" y2="336" stroke="#4A4A4A" stroke-width="9" stroke-linecap="round"/>
+  <!-- Shoes -->
+  <ellipse cx="253" cy="341" rx="10" ry="5" fill="#222"/>
+  <ellipse cx="284" cy="339" rx="10" ry="5" fill="#222"/>
+  <!-- Cardigan / sweater -->
+  <rect x="248" y="248" width="46" height="62" rx="7" fill="#5A5A7A"/>
+  <!-- Shirt collar visible -->
+  <path d="M 258 250 L 271 255 L 283 250" fill="#DDD" stroke="#CCC" stroke-width="1"/>
+  <!-- Arms - both slightly raised in worry/distress posture -->
+  <line x1="248" y1="262" x2="228" y2="278" stroke="#C8956A" stroke-width="7" stroke-linecap="round"/>
+  <line x1="294" y1="262" x2="316" y2="272" stroke="#C8956A" stroke-width="7" stroke-linecap="round"/>
+  <!-- Hands -->
+  <circle cx="225" cy="280" r="8" fill="#C8956A"/>
+  <circle cx="318" cy="274" r="8" fill="#C8956A"/>
+  <!-- Neck -->
+  <rect x="262" y="234" width="14" height="17" rx="4" fill="#C8956A"/>
+  <!-- Head - larger, elderly -->
+  <ellipse cx="269" cy="218" rx="30" ry="32" fill="#C8956A"/>
+  <!-- Grey/white hair - thin on top -->
+  <ellipse cx="269" cy="192" rx="28" ry="10" fill="#D8D8D8"/>
+  <ellipse cx="244" cy="203" rx="8" ry="16" fill="#D0D0D0"/>
+  <ellipse cx="294" cy="203" rx="8" ry="16" fill="#D0D0D0"/>
+  <!-- Bald spot center -->
+  <ellipse cx="269" cy="193" rx="12" ry="8" fill="#C8956A" opacity="0.5"/>
+
+  <!-- Glasses -->
+  <ellipse cx="258" cy="216" rx="12" ry="9" fill="none" stroke="#555" stroke-width="2.5"/>
+  <ellipse cx="280" cy="216" rx="12" ry="9" fill="none" stroke="#555" stroke-width="2.5"/>
+  <line x1="270" y1="216" x2="268" y2="216" stroke="#555" stroke-width="2.5"/>
+  <line x1="246" y1="216" x2="238" y2="213" stroke="#555" stroke-width="2.5"/>
+  <line x1="292" y1="216" x2="300" y2="213" stroke="#555" stroke-width="2.5"/>
+  <!-- Eyes - worried, slightly downcast -->
+  <ellipse cx="258" cy="217" rx="8" ry="6" fill="white"/>
+  <ellipse cx="280" cy="217" rx="8" ry="6" fill="white"/>
+  <circle cx="260" cy="218" r="3.5" fill="#3A2A1A"/>
+  <circle cx="282" cy="218" r="3.5" fill="#3A2A1A"/>
+  <!-- Worried eyebrows - furrowed inward, raised -->
+  <path d="M 248 203 Q 257 196 266 202" stroke="#888" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <path d="M 273 202 Q 281 196 291 203" stroke="#888" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+  <!-- Worry lines on forehead -->
+  <path d="M 255 208 Q 269 205 283 208" stroke="#A07050" stroke-width="1" fill="none" opacity="0.6"/>
+  <path d="M 257 204 Q 269 201 281 204" stroke="#A07050" stroke-width="1" fill="none" opacity="0.5"/>
+  <!-- Downturned mouth - sad/worried -->
+  <path d="M 257 233 Q 269 228 281 233" stroke="#A07050" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+  <!-- Wrinkle lines -->
+  <path d="M 242 220 Q 246 228 243 235" stroke="#A07050" stroke-width="1.5" fill="none" opacity="0.5"/>
+  <path d="M 296 220 Q 292 228 295 235" stroke="#A07050" stroke-width="1.5" fill="none" opacity="0.5"/>
+
+  <!-- Emotion cloud: worry symbol -->
+  <rect x="295" y="155" width="100" height="62" rx="12" fill="white" opacity="0.9"/>
+  <polygon points="308,213 320,217 330,213" fill="white" opacity="0.9"/>
+  <text x="345" y="182" text-anchor="middle" font-family="Arial" font-size="28" fill="#7090C0">😟</text>
+  <text x="345" y="208" text-anchor="middle" font-family="Arial" font-size="11" fill="#5070A0">worried</text>
+
+  <!-- Caption -->
+  <rect x="0" y="345" width="500" height="35" fill="rgba(0,0,0,0.65)"/>
+  <text x="250" y="358" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="white">Picture 6: An elderly man opened the door.</text>
+  <text x="250" y="374" text-anchor="middle" font-family="Georgia, serif" font-size="12" fill="white">He looked very worried and sad.</text>
+</svg>

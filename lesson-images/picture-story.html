@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>The Lost Wallet – Picture Story</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: #f0ebe0;
+      color: #222;
+    }
+
+    header {
+      background: #003F6B;
+      color: white;
+      text-align: center;
+      padding: 28px 20px 22px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: #A8CFEA;
+      font-style: italic;
+    }
+
+    .intro {
+      text-align: center;
+      padding: 20px;
+      font-size: 1.05rem;
+      color: #555;
+      font-style: italic;
+      border-bottom: 2px solid #ccc;
+      background: #faf7f0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      padding: 32px 28px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .panel {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.13);
+      overflow: hidden;
+      border: 2px solid #ddd;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .panel:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+    }
+
+    .panel-number {
+      background: #003F6B;
+      color: white;
+      font-size: 0.8rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      padding: 6px 14px;
+      text-transform: uppercase;
+    }
+
+    .panel img, .panel object, .panel embed {
+      width: 100%;
+      display: block;
+    }
+
+    .panel-caption {
+      padding: 14px 18px;
+      font-size: 1rem;
+      line-height: 1.55;
+      color: #333;
+      border-top: 2px solid #e8e0d0;
+      background: #fffdf8;
+    }
+
+    .panel-caption strong {
+      display: block;
+      color: #003F6B;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    @media print {
+      body { background: white; }
+      header { background: #003F6B !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .panel { box-shadow: none; border: 2px solid #aaa; break-inside: avoid; }
+      .panel:hover { transform: none; }
+    }
+
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; padding: 16px; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px;
+      color: #999;
+      font-size: 0.85rem;
+      border-top: 1px solid #ddd;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>THE LOST WALLET</h1>
+  <p>A Picture Story &nbsp;|&nbsp; Past Simple &nbsp;|&nbsp; Pre-Intermediate</p>
+</header>
+
+<p class="intro">Look at the pictures and read the story.</p>
+
+<div class="grid">
+
+  <div class="panel">
+    <div class="panel-number">Picture 1</div>
+    <img src="panel1.svg" alt="Sarah walking down Queen Street on a sunny day with shopping bags">
+    <div class="panel-caption">
+      <strong>Scene 1</strong>
+      It was a sunny Saturday afternoon. Sarah was walking down Queen Street after shopping.
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-number">Picture 2</div>
+    <img src="panel2.svg" alt="Sarah notices a black wallet on the footpath">
+    <div class="panel-caption">
+      <strong>Scene 2</strong>
+      Suddenly, she saw something on the footpath. It was a black wallet!
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-number">Picture 3</div>
+    <img src="panel3.svg" alt="Sarah opens the wallet and finds money, cards and a driver's licence">
+    <div class="panel-caption">
+      <strong>Scene 3</strong>
+      She picked it up. Inside, she found money, cards, and a driver's licence.
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-number">Picture 4</div>
+    <img src="panel4.svg" alt="Close-up of the NZ driver's licence showing Mr Patel's name and address">
+    <div class="panel-caption">
+      <strong>Scene 4</strong>
+      The licence had a name and an address: <strong style="color:#E05000; display:inline;">Mr Patel, 24 Valley Road, Mt Eden.</strong>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-number">Picture 5</div>
+    <img src="panel5.svg" alt="Sarah on the bus, then knocking on the door of the house in Mt Eden">
+    <div class="panel-caption">
+      <strong>Scene 5</strong>
+      Sarah took the bus to Mt Eden. She found the house and knocked on the door.
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-number">Picture 6</div>
+    <img src="panel6.svg" alt="An elderly man, Mr Patel, opens the door looking worried and sad">
+    <div class="panel-caption">
+      <strong>Scene 6</strong>
+      An elderly man opened the door. He looked very worried and sad.
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-number">Picture 7</div>
+    <img src="panel7.svg" alt="Sarah returns the wallet to Mr Patel who smiles and says thank you">
+    <div class="panel-caption">
+      <strong>Scene 7</strong>
+      Sarah gave him the wallet. Mr Patel smiled and said, <em>"Thank you, thank you!"</em>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-number">Picture 8</div>
+    <img src="panel8.svg" alt="Mr Patel and Sarah sitting at a table sharing tea and cake">
+    <div class="panel-caption">
+      <strong>Scene 8</strong>
+      Mr Patel made tea and cake. They sat together and talked for an hour.
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  The Lost Wallet &nbsp;·&nbsp; Picture Story for ESL Learners &nbsp;·&nbsp; Level: Pre-Intermediate &nbsp;·&nbsp; Focus: Past Simple
+</footer>
+
+</body>
+</html>
