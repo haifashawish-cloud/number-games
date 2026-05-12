@@ -51,6 +51,122 @@ const BLENDING_WORDS = [
   'ten','leg','pig','big','dig','lip','tip','zip',
 ];
 
+const SIGHT_WORDS = [
+  // Level 1 — Pre-primer
+  { word: 'a',      level: 1 },
+  { word: 'and',    level: 1 },
+  { word: 'big',    level: 1 },
+  { word: 'can',    level: 1 },
+  { word: 'come',   level: 1 },
+  { word: 'down',   level: 1 },
+  { word: 'find',   level: 1 },
+  { word: 'for',    level: 1 },
+  { word: 'go',     level: 1 },
+  { word: 'help',   level: 1 },
+  { word: 'here',   level: 1 },
+  { word: 'I',      level: 1 },
+  { word: 'in',     level: 1 },
+  { word: 'is',     level: 1 },
+  { word: 'it',     level: 1 },
+  { word: 'jump',   level: 1 },
+  { word: 'little', level: 1 },
+  { word: 'look',   level: 1 },
+  { word: 'make',   level: 1 },
+  { word: 'me',     level: 1 },
+  { word: 'my',     level: 1 },
+  { word: 'not',    level: 1 },
+  { word: 'one',    level: 1 },
+  { word: 'play',   level: 1 },
+  { word: 'run',    level: 1 },
+  { word: 'said',   level: 1 },
+  { word: 'see',    level: 1 },
+  { word: 'the',    level: 1 },
+  { word: 'to',     level: 1 },
+  { word: 'two',    level: 1 },
+  { word: 'up',     level: 1 },
+  { word: 'we',     level: 1 },
+  { word: 'you',    level: 1 },
+  // Level 2 — Primer
+  { word: 'all',    level: 2 },
+  { word: 'am',     level: 2 },
+  { word: 'are',    level: 2 },
+  { word: 'at',     level: 2 },
+  { word: 'be',     level: 2 },
+  { word: 'but',    level: 2 },
+  { word: 'came',   level: 2 },
+  { word: 'did',    level: 2 },
+  { word: 'do',     level: 2 },
+  { word: 'eat',    level: 2 },
+  { word: 'get',    level: 2 },
+  { word: 'good',   level: 2 },
+  { word: 'have',   level: 2 },
+  { word: 'he',     level: 2 },
+  { word: 'like',   level: 2 },
+  { word: 'new',    level: 2 },
+  { word: 'no',     level: 2 },
+  { word: 'now',    level: 2 },
+  { word: 'on',     level: 2 },
+  { word: 'out',    level: 2 },
+  { word: 'please', level: 2 },
+  { word: 'ran',    level: 2 },
+  { word: 'say',    level: 2 },
+  { word: 'she',    level: 2 },
+  { word: 'so',     level: 2 },
+  { word: 'soon',   level: 2 },
+  { word: 'that',   level: 2 },
+  { word: 'there',  level: 2 },
+  { word: 'they',   level: 2 },
+  { word: 'this',   level: 2 },
+  { word: 'too',    level: 2 },
+  { word: 'want',   level: 2 },
+  { word: 'was',    level: 2 },
+  { word: 'went',   level: 2 },
+  { word: 'what',   level: 2 },
+  { word: 'who',    level: 2 },
+  { word: 'will',   level: 2 },
+  { word: 'with',   level: 2 },
+  { word: 'yes',    level: 2 },
+  // Level 3 — Grade 1
+  { word: 'after',  level: 3 },
+  { word: 'again',  level: 3 },
+  { word: 'an',     level: 3 },
+  { word: 'any',    level: 3 },
+  { word: 'as',     level: 3 },
+  { word: 'ask',    level: 3 },
+  { word: 'by',     level: 3 },
+  { word: 'could',  level: 3 },
+  { word: 'every',  level: 3 },
+  { word: 'fly',    level: 3 },
+  { word: 'from',   level: 3 },
+  { word: 'give',   level: 3 },
+  { word: 'going',  level: 3 },
+  { word: 'had',    level: 3 },
+  { word: 'has',    level: 3 },
+  { word: 'her',    level: 3 },
+  { word: 'him',    level: 3 },
+  { word: 'his',    level: 3 },
+  { word: 'how',    level: 3 },
+  { word: 'just',   level: 3 },
+  { word: 'know',   level: 3 },
+  { word: 'let',    level: 3 },
+  { word: 'may',    level: 3 },
+  { word: 'of',     level: 3 },
+  { word: 'old',    level: 3 },
+  { word: 'once',   level: 3 },
+  { word: 'open',   level: 3 },
+  { word: 'over',   level: 3 },
+  { word: 'put',    level: 3 },
+  { word: 'some',   level: 3 },
+  { word: 'stop',   level: 3 },
+  { word: 'take',   level: 3 },
+  { word: 'thank',  level: 3 },
+  { word: 'them',   level: 3 },
+  { word: 'think',  level: 3 },
+  { word: 'walk',   level: 3 },
+  { word: 'were',   level: 3 },
+  { word: 'when',   level: 3 },
+];
+
 const SENTENCES = [
   { text: 'The cat sat on a mat.',        tts: 'The cat sat on a mat.' },
   { text: 'I can see a big red bus.',     tts: 'I can see a big red bus.' },
@@ -342,6 +458,69 @@ async function renderSentences() {
 }
 
 // ============================================================
+// RENDER: SIGHT WORDS
+// ============================================================
+
+const LEVEL_LABELS = { 1: 'Level 1', 2: 'Level 2', 3: 'Level 3' };
+const LEVEL_COLORS = { 1: '#d4edda', 2: '#fff3cd', 3: '#fde8d8' };
+
+async function renderSightWords() {
+  const container = document.getElementById('sightwords-grid');
+  container.innerHTML = '';
+  const keys = await recordedKeys();
+
+  const byLevel = { 1: [], 2: [], 3: [] };
+  SIGHT_WORDS.forEach(sw => byLevel[sw.level].push(sw));
+
+  for (const level of [1, 2, 3]) {
+    const group = document.createElement('div');
+    group.className = 'sw-group';
+
+    const heading = document.createElement('h2');
+    heading.className = 'sw-heading';
+    heading.textContent = LEVEL_LABELS[level];
+    group.appendChild(heading);
+
+    const grid = document.createElement('div');
+    grid.className = 'cards-grid sw-grid';
+    group.appendChild(grid);
+
+    for (const { word } of byLevel[level]) {
+      const key = `sight-${word}`;
+
+      const card = document.createElement('div');
+      card.className   = 'card card-sw';
+      card.dataset.key = key;
+      card.dataset.swLevel = level;
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `Sight word: ${word}. Tap to hear.`);
+
+      const mic = micButton(key, `Record your voice for the word "${word}"`, keys.has(key));
+      card.appendChild(mic);
+
+      const badge = document.createElement('span');
+      badge.className = 'sw-badge';
+      badge.textContent = `L${level}`;
+      badge.style.background = LEVEL_COLORS[level];
+      card.appendChild(badge);
+
+      card.insertAdjacentHTML('beforeend', `
+        <div class="card-main sw-word">${word}</div>
+      `);
+
+      mic.addEventListener('click', e => { e.stopPropagation(); openModal(key, `Sight word: "${word}"`); });
+      card.addEventListener('click', () => playItem(key, [word]));
+      card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') playItem(key, [word]); });
+
+      grid.appendChild(card);
+    }
+
+    container.appendChild(group);
+  }
+}
+
+// ============================================================
 // TAB SWITCHING
 // ============================================================
 
@@ -583,7 +762,7 @@ async function init() {
       closeModal();
   });
 
-  await Promise.all([renderNumbers(), renderSounds(), renderBlending(), renderSentences()]);
+  await Promise.all([renderNumbers(), renderSounds(), renderBlending(), renderSentences(), renderSightWords()]);
 }
 
 init().catch(console.error);
