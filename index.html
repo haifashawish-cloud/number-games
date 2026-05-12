@@ -3,25 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Number Games</title>
+  <title>Phonics App</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<body data-season="spring">
+<body>
 
   <header>
-    <h1><span id="title-emoji">🌸</span> Number Games</h1>
-    <nav class="seasons" aria-label="Season selector">
-      <button class="season-btn active" data-season="spring" aria-pressed="true">🌸 Spring</button>
-      <button class="season-btn" data-season="summer" aria-pressed="false">☀️ Summer</button>
-      <button class="season-btn" data-season="autumn" aria-pressed="false">🍂 Autumn</button>
-      <button class="season-btn" data-season="winter" aria-pressed="false">❄️ Winter</button>
-    </nav>
+    <h1>📚 Phonics App</h1>
   </header>
 
   <nav class="tabs" aria-label="Section selector">
     <button class="tab-btn active" data-tab="numbers" aria-selected="true">Numbers</button>
     <button class="tab-btn" data-tab="sounds" aria-selected="false">Sounds</button>
     <button class="tab-btn" data-tab="blending" aria-selected="false">Blending Words</button>
+    <button class="tab-btn" data-tab="sentences" aria-selected="false">Sentences</button>
   </nav>
 
   <main>
@@ -35,6 +30,10 @@
 
     <section id="blending-section" class="content-section" aria-label="Blending words">
       <div class="cards-grid blending-grid" id="blending-grid"></div>
+    </section>
+
+    <section id="sentences-section" class="content-section" aria-label="Simple reading sentences">
+      <div class="sentences-grid" id="sentences-grid"></div>
     </section>
   </main>
 

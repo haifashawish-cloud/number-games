@@ -8,60 +8,22 @@
 }
 
 /* ============================================================
-   SEASON VARIABLES  (pastel palette, always black text)
+   VARIABLES
    ============================================================ */
 :root {
-  --text:        #1a1a1a;
-  --text-muted:  #555555;
-  --card-bg:     #ffffff;
-  --shadow:      0 3px 10px rgba(0,0,0,0.08);
-  --shadow-hover:0 8px 22px rgba(0,0,0,0.13);
-  --radius:      18px;
-  --transition:  0.22s ease;
-}
-
-/* Spring */
-body[data-season="spring"] {
-  --bg:           #f2fce8;
-  --header-bg:    #d6f5c0;
-  --season-color: #6dbf45;
-  --season-light: #c8f0a8;
-  --tab-active:   #6dbf45;
-  --card-hover:   #eefce3;
-  --blend-chip:   #c8f0a8;
-}
-
-/* Summer */
-body[data-season="summer"] {
-  --bg:           #fffef0;
-  --header-bg:    #fff5b0;
-  --season-color: #e8a020;
-  --season-light: #fff3a8;
-  --tab-active:   #e8a020;
-  --card-hover:   #fffce8;
-  --blend-chip:   #fff3a8;
-}
-
-/* Autumn */
-body[data-season="autumn"] {
-  --bg:           #fff8f0;
-  --header-bg:    #ffd8a8;
-  --season-color: #d86030;
-  --season-light: #ffd0a0;
-  --tab-active:   #d86030;
-  --card-hover:   #fff4ea;
-  --blend-chip:   #ffd0a0;
-}
-
-/* Winter */
-body[data-season="winter"] {
-  --bg:           #f0f8ff;
-  --header-bg:    #c8e8ff;
-  --season-color: #4a90d4;
-  --season-light: #c0e0ff;
-  --tab-active:   #4a90d4;
-  --card-hover:   #e8f4ff;
-  --blend-chip:   #c0e0ff;
+  --text:         #000000;
+  --text-muted:   #444444;
+  --card-bg:      #ffffff;
+  --shadow:       0 3px 10px rgba(0,0,0,0.08);
+  --shadow-hover: 0 8px 22px rgba(0,0,0,0.13);
+  --radius:       18px;
+  --transition:   0.22s ease;
+  --bg:           #f0f7ff;
+  --header-bg:    #c8e0ff;
+  --accent:       #4a7fd4;
+  --accent-light: #c0daff;
+  --card-hover:   #e8f2ff;
+  --blend-chip:   #c0daff;
 }
 
 /* ============================================================
@@ -72,7 +34,6 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
-  transition: background var(--transition);
 }
 
 /* ============================================================
@@ -86,49 +47,14 @@ header {
   align-items: center;
   gap: 14px;
   border-bottom: 2px solid rgba(0,0,0,0.07);
-  transition: background var(--transition);
 }
 
 h1 {
   font-size: 2rem;
   font-weight: 900;
-  color: var(--text);
+  color: #000000;
   letter-spacing: -0.5px;
   text-align: center;
-}
-
-/* ============================================================
-   SEASON BUTTONS
-   ============================================================ */
-.seasons {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.season-btn {
-  padding: 8px 22px;
-  border: 2px solid rgba(0,0,0,0.12);
-  border-radius: 999px;
-  background: rgba(255,255,255,0.55);
-  color: var(--text);
-  font-size: 0.95rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all var(--transition);
-}
-
-.season-btn:hover {
-  background: rgba(255,255,255,0.85);
-  border-color: var(--season-color);
-}
-
-.season-btn.active {
-  background: var(--season-color);
-  border-color: var(--season-color);
-  color: #fff;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.18);
 }
 
 /* ============================================================
@@ -141,11 +67,11 @@ h1 {
   padding: 12px 24px 0;
   background: var(--bg);
   border-bottom: 2px solid rgba(0,0,0,0.07);
-  transition: background var(--transition);
+  flex-wrap: wrap;
 }
 
 .tab-btn {
-  padding: 10px 28px;
+  padding: 10px 22px;
   border: none;
   border-bottom: 3px solid transparent;
   background: transparent;
@@ -158,13 +84,13 @@ h1 {
 }
 
 .tab-btn:hover {
-  color: var(--text);
+  color: #000000;
   background: rgba(0,0,0,0.03);
 }
 
 .tab-btn.active {
-  color: var(--season-color);
-  border-bottom-color: var(--season-color);
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
 /* ============================================================
@@ -197,6 +123,12 @@ main {
   grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
 }
 
+.sentences-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+
 /* ============================================================
    CARD
    ============================================================ */
@@ -217,7 +149,7 @@ main {
 .card:hover {
   transform: translateY(-3px);
   box-shadow: var(--shadow-hover);
-  border-color: var(--season-color);
+  border-color: var(--accent);
   background: var(--card-hover);
 }
 
@@ -226,8 +158,8 @@ main {
 }
 
 .card.playing {
-  border-color: var(--season-color);
-  background: var(--season-light);
+  border-color: var(--accent);
+  background: var(--accent-light);
   animation: card-pop 0.45s ease;
 }
 
@@ -248,19 +180,20 @@ main {
 .card-main {
   font-size: 2rem;
   font-weight: 900;
-  color: var(--text);
+  color: #000000;
   line-height: 1;
 }
 
 .card-main-lower {
   font-size: 1.2rem;
   font-weight: 700;
+  color: #000000;
   margin-top: 2px;
 }
 
 .card-sub {
   font-size: 0.72rem;
-  color: var(--text-muted);
+  color: #444444;
   font-weight: 600;
   margin-top: 4px;
   text-transform: lowercase;
@@ -279,10 +212,28 @@ main {
   font-size: 0.82rem;
   font-weight: 800;
   background: var(--blend-chip);
-  color: var(--text);
+  color: #000000;
   border-radius: 5px;
   padding: 2px 5px;
-  transition: background var(--transition);
+}
+
+/* ============================================================
+   SENTENCE CARD
+   ============================================================ */
+.card-sentence {
+  padding: 22px 16px 18px;
+  text-align: left;
+  min-height: 80px;
+  display: flex;
+  align-items: center;
+}
+
+.sentence-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #000000;
+  line-height: 1.4;
+  padding-right: 28px;
 }
 
 /* ============================================================
@@ -308,12 +259,12 @@ main {
 }
 
 .mic-btn:hover {
-  background: var(--season-light);
+  background: var(--accent-light);
   transform: scale(1.15);
 }
 
 .mic-btn.has-rec {
-  background: var(--season-color);
+  background: var(--accent);
   color: #fff;
   box-shadow: 0 1px 5px rgba(0,0,0,0.18);
 }
@@ -366,7 +317,7 @@ main {
   border-radius: 50%;
   border: none;
   background: rgba(0,0,0,0.07);
-  color: var(--text);
+  color: #000000;
   font-size: 1rem;
   cursor: pointer;
   display: flex;
@@ -382,13 +333,13 @@ main {
 #modal-title {
   font-size: 1.35rem;
   font-weight: 900;
-  color: var(--text);
+  color: #000000;
   margin-bottom: 4px;
 }
 
 .modal-for {
   font-size: 0.88rem;
-  color: var(--text-muted);
+  color: #444444;
   margin-bottom: 20px;
 }
 
@@ -397,7 +348,7 @@ main {
    ============================================================ */
 .recorder-viz {
   height: 80px;
-  background: var(--bg, #f2fce8);
+  background: var(--bg);
   border-radius: 14px;
   margin-bottom: 12px;
   display: flex;
@@ -405,7 +356,6 @@ main {
   justify-content: center;
   overflow: hidden;
   padding: 10px 14px;
-  transition: background var(--transition);
 }
 
 .viz-idle {
@@ -426,7 +376,7 @@ main {
   width: 5px;
   min-height: 3px;
   border-radius: 3px;
-  background: var(--season-color, #6dbf45);
+  background: var(--accent);
   transition: height 0.05s ease;
 }
 
@@ -434,7 +384,7 @@ main {
   text-align: center;
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--season-color);
+  color: var(--accent);
   min-height: 1.4em;
   margin-bottom: 16px;
 }
@@ -461,7 +411,7 @@ main {
   font-weight: 700;
   cursor: pointer;
   transition: all var(--transition);
-  color: var(--text);
+  color: #000000;
 }
 
 .btn:disabled {
@@ -473,7 +423,6 @@ main {
   font-size: 1rem;
 }
 
-/* Record button */
 .btn-record {
   background: #fdd8d8;
   color: #b02020;
@@ -494,7 +443,6 @@ main {
   50%       { opacity: 0.72; }
 }
 
-/* Preview button */
 .btn-preview {
   background: #d5f0d5;
   color: #1a6e1a;
@@ -504,17 +452,15 @@ main {
   background: #b8e8b8;
 }
 
-/* Save button */
 .btn-save {
-  background: var(--season-light, #c8f0a8);
-  color: var(--text);
+  background: var(--accent-light);
+  color: #000000;
 }
 
 .btn-save:hover:not(:disabled) {
   filter: brightness(0.94);
 }
 
-/* Delete existing recording */
 .btn-delete-rec {
   display: block;
   width: 100%;
@@ -523,7 +469,7 @@ main {
   padding: 8px;
   border: none;
   background: none;
-  color: var(--text-muted);
+  color: #444444;
   font-size: 0.85rem;
   font-weight: 600;
   cursor: pointer;
@@ -536,11 +482,10 @@ main {
   color: #c0392b;
 }
 
-/* Status text */
 .record-status {
   text-align: center;
   font-size: 0.87rem;
-  color: var(--text-muted);
+  color: #444444;
   min-height: 1.2em;
 }
 
@@ -550,9 +495,7 @@ main {
 @media (max-width: 600px) {
   h1 { font-size: 1.55rem; }
 
-  .season-btn { padding: 6px 14px; font-size: 0.85rem; }
-
-  .tab-btn { padding: 9px 16px; font-size: 0.9rem; }
+  .tab-btn { padding: 9px 14px; font-size: 0.88rem; }
 
   main { padding: 16px 12px; }
 
@@ -565,16 +508,17 @@ main {
     grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   }
 
+  .sentences-grid {
+    grid-template-columns: 1fr;
+  }
+
   .card { padding: 14px 8px 12px; }
 
   .card-main { font-size: 1.7rem; }
 
   .card-emoji { font-size: 1.3rem; }
 
-  .modal { padding: 28px 20px 22px; border-radius: 20px; }
-}
+  .sentence-text { font-size: 1.1rem; }
 
-@media (max-width: 380px) {
-  .seasons { gap: 5px; }
-  .season-btn { padding: 5px 10px; font-size: 0.78rem; }
+  .modal { padding: 28px 20px 22px; border-radius: 20px; }
 }

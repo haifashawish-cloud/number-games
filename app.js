@@ -10,18 +10,10 @@ const NUMBER_WORDS = [
   'eighteen','nineteen','twenty'
 ];
 
-const SEASON_EMOJIS = {
-  spring: ['🌸','🌼','🌱','🐣','🦋','🌈','🐝','🌷','🐛','🦔',
-            '🌿','🐸','🌺','🐌','🌻','🦜','🌾','🦊','🌲','🍃'],
-  summer: ['☀️','🌊','🏖️','🍦','🌴','🌺','🦀','🐠','🌅','🏄',
-            '🍉','🌻','🦈','🐚','🌞','🍹','🦩','🐬','⛵','🏝️'],
-  autumn: ['🍂','🍁','🎃','🌾','🍄','🦔','🍇','🌰','🦃','🍎',
-            '🕷️','🌽','🦉','🐿️','🍂','🌿','🦊','🍁','🌾','🍄'],
-  winter: ['❄️','⛄','🎄','🔔','🦌','⭐','🎁','🕯️','🌨️','🧦',
-            '🍪','🔥','🌟','🧤','⛷️','🌙','🎿','🏔️','🦢','🐧'],
-};
-
-const TITLE_EMOJIS = { spring:'🌸', summer:'☀️', autumn:'🍂', winter:'❄️' };
+const NUMBER_EMOJIS = [
+  '🐱','🐶','🐸','🦋','🐝','🌈','🐣','🌷','🐛','🦔',
+  '🌿','🐢','🌺','🐌','🌻','🦜','🐠','🦊','🌲','🍃'
+];
 
 const PHONICS = {
   a:{hint:'apple',  tts:'a, apple'},
@@ -52,12 +44,35 @@ const PHONICS = {
   z:{hint:'zip',    tts:'z, zip'},
 };
 
-const BLENDING_WORDS = {
-  spring: ['cat','hat','mat','sat','map','nap','tap','cap','bag','rag','van','jam','fan','ran','pan'],
-  summer: ['sun','fun','run','bun','hot','dot','pot','mud','bug','mug','tub','hug','cup','pup','bus'],
-  autumn: ['log','fog','dog','red','bed','fed','wet','hen','ten','den','leg','peg','jet','set','beg'],
-  winter: ['win','tin','pin','bin','sit','hit','bit','fit','pig','big','dig','lip','tip','zip','lid'],
-};
+const BLENDING_WORDS = [
+  'cat','hat','mat','sat','map','nap','tap','cap',
+  'sun','fun','run','bun','hot','pot','mud','bug',
+  'mug','log','fog','dog','red','bed','wet','hen',
+  'ten','leg','pig','big','dig','lip','tip','zip',
+];
+
+const SENTENCES = [
+  { text: 'The cat sat on a mat.',        tts: 'The cat sat on a mat.' },
+  { text: 'I can see a big red bus.',     tts: 'I can see a big red bus.' },
+  { text: 'A dog ran in the mud.',        tts: 'A dog ran in the mud.' },
+  { text: 'The hen has an egg.',          tts: 'The hen has an egg.' },
+  { text: 'I like to jump and run.',      tts: 'I like to jump and run.' },
+  { text: 'A pig can dig in mud.',        tts: 'A pig can dig in mud.' },
+  { text: 'The sun is big and hot.',      tts: 'The sun is big and hot.' },
+  { text: 'My dog can sit and beg.',      tts: 'My dog can sit and beg.' },
+  { text: 'The fish can swim fast.',      tts: 'The fish can swim fast.' },
+  { text: 'I see a red hat on top.',      tts: 'I see a red hat on top.' },
+  { text: 'The bug is on a log.',         tts: 'The bug is on a log.' },
+  { text: 'I can hop like a frog.',       tts: 'I can hop like a frog.' },
+  { text: 'She has a cup of milk.',       tts: 'She has a cup of milk.' },
+  { text: 'We can run to the hill.',      tts: 'We can run to the hill.' },
+  { text: 'The pup is wet and hot.',      tts: 'The pup is wet and hot.' },
+  { text: 'I can clap and tap my hands.', tts: 'I can clap and tap my hands.' },
+  { text: 'A bat and a ball.',            tts: 'A bat and a ball.' },
+  { text: 'The rat sat in a box.',        tts: 'The rat sat in a box.' },
+  { text: 'It is a big fat pig.',         tts: 'It is a big fat pig.' },
+  { text: 'The jam is on the bun.',       tts: 'The jam is on the bun.' },
+];
 
 // ============================================================
 // INDEXEDDB
@@ -114,8 +129,6 @@ function dbGetAllKeys() {
 // STATE
 // ============================================================
 
-let currentSeason = 'spring';
-
 const rec = {
   key:      null,
   recorder: null,
@@ -144,16 +157,14 @@ function ttsSpeak(text, rate = 0.82, pitch = 1.05) {
 // ============================================================
 
 async function playItem(key, ttsTexts) {
-  // Animate the card
   const card = document.querySelector(`[data-key="${key}"]`);
   if (card) {
     card.classList.remove('playing');
-    void card.offsetWidth; // reflow to restart animation
+    void card.offsetWidth;
     card.classList.add('playing');
     setTimeout(() => card.classList.remove('playing'), 700);
   }
 
-  // Prefer custom recording
   const blob = await dbGet(key);
   if (blob) {
     const url   = URL.createObjectURL(blob);
@@ -163,7 +174,6 @@ async function playItem(key, ttsTexts) {
     return;
   }
 
-  // TTS fallback — queue each text segment
   window.speechSynthesis.cancel();
   for (const text of ttsTexts) ttsSpeak(text);
 }
@@ -187,14 +197,13 @@ function micButton(key, label, hasRec) {
 }
 
 // ============================================================
-// RENDER: NUMBERS  (1–20, season emoji)
+// RENDER: NUMBERS  (1–20)
 // ============================================================
 
 async function renderNumbers() {
   const grid    = document.getElementById('numbers-grid');
   grid.innerHTML = '';
   const keys    = await recordedKeys();
-  const emojis  = SEASON_EMOJIS[currentSeason];
 
   for (let i = 1; i <= 20; i++) {
     const key  = `number-${i}`;
@@ -211,7 +220,7 @@ async function renderNumbers() {
     card.appendChild(mic);
 
     card.insertAdjacentHTML('beforeend', `
-      <div class="card-emoji">${emojis[i - 1]}</div>
+      <div class="card-emoji">${NUMBER_EMOJIS[i - 1]}</div>
       <div class="card-main">${i}</div>
       <div class="card-sub">${word}</div>
     `);
@@ -262,18 +271,17 @@ async function renderSounds() {
 }
 
 // ============================================================
-// RENDER: BLENDING WORDS  (season-specific)
+// RENDER: BLENDING WORDS
 // ============================================================
 
 async function renderBlending() {
   const grid     = document.getElementById('blending-grid');
   grid.innerHTML = '';
   const keys     = await recordedKeys();
-  const words    = BLENDING_WORDS[currentSeason];
 
-  for (const word of words) {
+  for (const word of BLENDING_WORDS) {
     const key  = `blend-${word}`;
-    const tts  = [...word.split(''), word]; // spell then say
+    const tts  = [...word.split(''), word];
 
     const card = document.createElement('div');
     card.className   = 'card card-blend';
@@ -300,23 +308,42 @@ async function renderBlending() {
 }
 
 // ============================================================
-// SEASON & TAB SWITCHING
+// RENDER: SENTENCES
 // ============================================================
 
-function setSeason(season) {
-  currentSeason = season;
-  document.body.dataset.season = season;
-  document.getElementById('title-emoji').textContent = TITLE_EMOJIS[season];
+async function renderSentences() {
+  const grid     = document.getElementById('sentences-grid');
+  grid.innerHTML = '';
+  const keys     = await recordedKeys();
 
-  document.querySelectorAll('.season-btn').forEach(btn => {
-    const on = btn.dataset.season === season;
-    btn.classList.toggle('active', on);
-    btn.setAttribute('aria-pressed', String(on));
+  SENTENCES.forEach((sentence, idx) => {
+    const key = `sentence-${idx}`;
+
+    const card = document.createElement('div');
+    card.className   = 'card card-sentence';
+    card.dataset.key = key;
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-label', `${sentence.text} Tap to hear.`);
+
+    const mic = micButton(key, `Record your voice for: "${sentence.text}"`, keys.has(key));
+    card.appendChild(mic);
+
+    card.insertAdjacentHTML('beforeend', `
+      <div class="sentence-text">${sentence.text}</div>
+    `);
+
+    mic.addEventListener('click', e => { e.stopPropagation(); openModal(key, sentence.text); });
+    card.addEventListener('click', () => playItem(key, [sentence.tts]));
+    card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') playItem(key, [sentence.tts]); });
+
+    grid.appendChild(card);
   });
-
-  renderNumbers();  // refresh emojis
-  renderBlending(); // refresh words
 }
+
+// ============================================================
+// TAB SWITCHING
+// ============================================================
 
 function setTab(tab) {
   document.querySelectorAll('.tab-btn').forEach(btn => {
@@ -421,7 +448,6 @@ async function toggleRecording() {
   btn.querySelector('.btn-icon').textContent  = '⏹️';
   setStatus('Recording… tap Stop when done.');
 
-  // Live timer
   rec.startMs = Date.now();
   rec.timerID = setInterval(() => {
     const s   = Math.floor((Date.now() - rec.startMs) / 1000);
@@ -535,17 +561,10 @@ function clearWaveform() {
 async function init() {
   db = await openDB();
 
-  // Season switcher
-  document.querySelectorAll('.season-btn').forEach(btn =>
-    btn.addEventListener('click', () => setSeason(btn.dataset.season))
-  );
-
-  // Tab switcher
   document.querySelectorAll('.tab-btn').forEach(btn =>
     btn.addEventListener('click', () => setTab(btn.dataset.tab))
   );
 
-  // Modal controls
   document.getElementById('modal-close')
     .addEventListener('click', closeModal);
   document.getElementById('record-modal')
@@ -559,14 +578,12 @@ async function init() {
   document.getElementById('btn-delete')
     .addEventListener('click', deleteExistingRecording);
 
-  // Keyboard close
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && document.getElementById('record-modal').classList.contains('open'))
       closeModal();
   });
 
-  // Render all sections in parallel
-  await Promise.all([renderNumbers(), renderSounds(), renderBlending()]);
+  await Promise.all([renderNumbers(), renderSounds(), renderBlending(), renderSentences()]);
 }
 
 init().catch(console.error);
